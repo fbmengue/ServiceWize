@@ -1,0 +1,692 @@
+
+
+
+/* CSS for Margin */
+.mt-6{
+  margin-top: 1.75rem;
+}
+.mt-7{
+  margin-top: 2rem;
+}
+.mt-8{
+  margin-top: 2.25rem;
+}
+.mt-9{
+  margin-top: 2.50rem;
+}
+.mt-10{
+  margin-top: 2.75rem;
+}
+.mt-6{
+margin-top: 2rem;
+}
+.mb-6{
+  margin-bottom: 1.75rem;
+}
+.mb-7{
+  margin-bottom: 2rem;
+}
+.mb-8{
+  margin-bottom: 2.25rem;
+}
+.mb-9{
+  margin-bottom: 2.50rem;
+}
+.mb-10{
+  margin-bottom: 2.75rem;
+}
+
+/* CSS for Padding */
+.px-6{
+  padding-left: 3.5rem !important;
+  padding-right: 3.5rem !important;
+}
+
+/* CSS for Font (size, weight,...) */
+.fw-semibold{
+  font-weight: 500 !important;
+}
+
+/* CSS for Sizing (height, width,...) */
+.h-12 {
+  height: 3rem;
+}
+.h-50px{
+  height: 50px; 
+}
+.h-18px{
+  height: 18px; 
+}
+.h-screen{
+  height: 100vh;
+}
+.w-18px{
+  width: 18px; 
+}
+
+/* CSS for Background */
+.bg-1DB968{
+  background-color: #1db968;
+}
+.bg-green-light{
+  background-color: #98D936;
+}
+.bg-green-medium{
+  background-color: #4ABF2A;
+}
+.bg-green-dark{
+  background-color: #01261C;
+}
+.bg-blue-light{
+  background-color: #A7F2E4;
+}
+.bg-default{
+  background-color: #f2f2f2;
+}
+.bg-box-shadow{
+  box-shadow: 0px 10px 28px -10px #01261c7a;
+}
+.bg-box-shadow-thin{
+box-shadow: 7px 3px 20px -9px #01261c7a;
+}
+.bg-box-shadow-calendar{
+  box-shadow: 0px 7px 20px -18px #01261c7a;
+}
+
+
+/* CSS for Text */
+.text-sm{
+  font-size: .875rem;
+  line-height: 1.25rem;
+}
+.text-1DB968{
+  color: #1DB968;
+}
+.text-green {
+  color: #00a82d;
+}
+
+.text-green:hover {
+  color: #008f26;
+}
+
+/* CSS for Input */
+.input-outline:focus{
+  outline: 0;
+  border-color: #ebddca !important;
+  box-shadow: 0px 0px 0px 3px #f2ece4;
+}
+/* CSS for Checkbox */
+.input-outline-hover:hover{
+  outline: 0;
+  border-color: #ebddca !important;
+  box-shadow: 0px 0px 0px 3px #f2ece4;
+}
+
+/* CSS for Button */
+.button {
+  height: 50px;
+  cursor: pointer;
+}
+.hover-transition{
+  transition-timing-function: cubic-bezier(.4,0,.2,1);
+  transition-duration: .3s;
+}
+.button-google:hover {
+  border-color: rgb(234 68 53) !important;
+  background-color: rgb(234 68 53) !important;
+  color: white;
+}
+.button-google:hover img {
+ opacity: 0;
+
+}
+.button-google:hover p{
+  color: white !important;
+ }
+ .button-facebook:hover {
+  border-color: rgb(58 89 152) !important;
+  background-color: rgb(58 89 152) !important;
+  color: white;
+}
+.button-facebook:hover img {
+ opacity: 0;
+
+}
+.button-facebook:hover p{
+  color: white !important;
+ }
+
+/* CSS for DropDown / NAV */
+.dropdown-menu[data-bs-popper]{
+  right: -10px;
+  width: 244px;
+  left: initial;
+  top: 37px;
+  -webkit-box-shadow: 0 0px 5px #4a4a4a3d;
+  -moz-box-shadow: 0 0px 5px #4a4a4a3d;
+  box-shadow: 0 0px 5px #4a4a4a3d;
+}
+.nav-user-settings .dropdown-toggle::after{
+  display: none !important;
+}
+
+/* CSS for Layout */
+.container{
+  max-width: 1070px;
+}
+
+ .navbar-mobile{
+  display: none;
+}
+
+
+/* CSS for Calendar Layout */
+
+.navbar-week-header{
+  
+}
+.navbar-week-header a{
+  text-decoration: none;
+}
+.mobile-container-calendar{
+  padding: 0px 0px 10px 0px !important;
+  background-color: #F2F2F2 !important;
+}
+.nav-day{
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  min-width: 47px;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  text-transform: uppercase;
+  padding: 10px 0px;
+}
+.calendar-text{
+  font-weight: 200;
+}
+.today div{
+  color: white;
+}
+.today{
+  background-color: #F25270;
+  padding: 0rem;
+  font-size: 16px;
+  font-weight: 700;
+  min-width: 47px;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  border-radius: 18px;
+  text-transform: uppercase;
+  padding: 10px 0px;
+
+}
+
+/* CSS for Welcome widget and quick buttons/actions */
+.quick-add-menu{
+  border-left: 1px solid #ebebeb;
+    padding: 8px 0 0 30px;
+    height: 155px;
+    width: auto;
+    background-color: transparent;
+}
+.quick-add-menu .widget-title{
+  font-family: circularstd-bold;
+    font-size: 17px;
+    color: #4d4d4d;
+    font-weight: 400;
+}
+.quick-add-menu .btn-list{
+  display: flex;
+  flex-direction: row;
+  margin-top: 24px;
+}
+.quick-add-menu .btn-action{
+  list-style-type: none;
+  width: 82px;
+  height: 103px;
+  margin-right: 11px;
+  background-color: #fff;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-transition: all linear 150ms;
+  -moz-transition: all linear 150ms;
+  -o-transition: all linear 150ms;
+  transition: all linear 150ms;
+}
+.quick-add-menu .btn-list .btn-action a{
+  height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 18px;
+    outline: none;
+    text-decoration: none;
+}
+.quick-add-menu .btn-list .btn-action a .btn-title{
+  color: #4d4d4d;
+  font-size: 14px;
+  margin-top: 7px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.quick-add-menu .btn-list .btn-action a i{
+  color: #ff6c6c;
+  font-size: 43px;
+}
+.icon-expense-dashboard::before{
+  content: "\e091";
+}
+[class^=icon-]:before, [class*=" icon-"]:before{
+  font-family: organizze-icon!important;
+    font-style: normal!important;
+    font-weight: 400!important;
+    font-variant: normal!important;
+    text-transform: none!important;
+    speak: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.quick-add-menu .service{
+  
+}
+.quick-add-menu .category{
+  
+}
+.quick-add-menu .import{
+  
+}
+
+
+
+
+
+
+
+/* CSS for Mobile Device */
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: #000000f0;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+ 
+}
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #f2f2f2;
+  display: block;
+  transition: 0.3s;
+  font-weight: 400;
+  font-size: 18px;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+
+@media only screen and (max-width: 600px) {
+  .navbar-mobile{
+    background-color: #f2f2f2 !important;
+    position: fixed;
+    border-top: 1px solid lightgray;
+    display: flex !important;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    overflow: hidden;
+  }
+  .navbar-mobile a.navItem svg path{
+    fill: lightgray;
+  }
+  .navbar-mobile a.navItem:hover path{
+    fill: #01261C;
+  }
+  .navbar-mobile a.navItem-selected svg path{
+    fill: #01261C;
+  }
+  header.navbar{
+    display: none !important;
+  }
+  .main-content {
+    overflow: hidden !important;
+    left: 0px !important;
+    right: 0px !important;
+  }
+
+
+
+
+
+  /* CSS for Mobile calendar */
+  .mobile-container-calendar{
+    padding: 0px 0px 10px 0px !important;
+    background-color: #F2F2F2 !important;
+  }
+  .nav-day{
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    min-width: 47px;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+  }
+  .today div{
+    color: white;
+  }
+  .today{
+    background-color: #F25270;
+    padding: 0rem;
+    font-size: 16px;
+    font-weight: 700;
+    min-width: 47px;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    border-radius: 18px;
+  }
+
+
+
+
+    
+}
+@media only screen and (max-width: 1000px) {
+  .div-logo{
+    display: none !important;
+  }
+  .nav-user-settings .dropdown-menu[data-bs-popper]{
+    width: 100% !important;
+    position: absolute;
+  }
+  .navbar-collapse .dropdown-menu[data-bs-popper]{
+    width: 100% !important;
+  
+  }
+  .navbar nav.container .div-menu{
+    display: inline !important;
+    width: 75%;
+  }
+ 
+}
+/* CSS for WEB Device */
+@media only screen and (max-width: 4400px) {
+
+  
+  
+ 
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+* {
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  color: #6a6a6a; /** #0D0D0D **/
+  line-height: 16px;
+}
+
+body {
+  margin: 0;
+  line-height: inherit;
+  background-color: white;
+}
+
+
+
+
+
+
+.hr-text {
+  line-height: 1em;
+  position: relative;
+  margin-bottom: 18px;
+  margin-top: 17px;
+  outline: 0;
+  border: 0;
+  color: #818078;
+  font-size: 14px;
+  text-align: center;
+  height: 1.5em;
+  opacity: 0.5;
+}
+
+.hr-text::before {
+  content: "";
+  background: #818078;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 1px;
+}
+
+.hr-text::after {
+  content: attr(data-content);
+  position: relative;
+  display: inline-block;
+  padding: 0 0.5em;
+  line-height: 1.5em;
+  color: #818078;
+  background-color: #fcfcfa;
+}
+
+.blank_space {
+  margin-bottom: 30px;
+}
+
+@media only screen and (max-width: 709px) {
+  .main {
+    padding-bottom: 100px;
+  }
+}
+
+.card {
+  position: relative;
+  max-width: 512px;
+  margin: 30px auto 60px auto;
+  background-color: white;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+  padding: 62.12px 99px 48px;
+  border-radius: 2px;
+}
+
+@media only screen and (max-width: 709px) {
+  .mobile-device {
+    width: 314px;
+    margin: 0 auto;
+    box-shadow: none;
+  }
+
+  .card {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+    max-width: 512px;
+    margin: 0 0;
+    background-color: white;
+    box-shadow: none;
+    padding: 0;
+    border-radius: 2px;
+  }
+}
+
+.heading {
+  text-align: center;
+}
+
+.heading .logo {
+  margin-bottom: 19px;
+}
+
+.heading .tagline {
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  margin-bottom: 44px;
+  color: rgb(255, 0, 0);
+}
+
+.login-form {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+.login-form .OAuth .login-google {
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.login-form .OAuth button {
+  width: 100%;
+  background-color: white;
+  cursor: pointer;
+  height: 42px;
+  border: solid 1px #d0d0d0;
+  border-radius: 7px;
+  text-align: center;
+}
+
+.login-form .OAuth button:hover {
+  background-color: #f8f8f8;
+}
+
+.login-form .OAuth .btn-submit {
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+@media only screen and (max-width: 709px) {
+  .login-form {
+    margin: 10px 10px;
+  }
+
+  .login-form .btn-submit {
+    font-size: 14px;
+    padding: 5px 0;
+  }
+}
+
+.form__input {
+  width: 100%;
+  color: #333;
+  background-color: white;
+  border: solid 1px #e6e6e6;
+  border-radius: 7px;
+  appearance: none;
+  padding: 12px 16px;
+}
+
+.form__input::-webkit-input-placeholder {
+  color: #878a91;
+}
+
+.form__input:focus::-webkit-input-placeholder {
+  color: #a8abb1;
+}
+
+.form__input:focus {
+  outline: none !important;
+  -webkit-box-shadow: 0 0 0 1px #dff2e6, 0 0 4px 0 #dff2e6;
+  box-shadow: 0 0 0 1px #dff2e6, 0 0 4px 0 #dff2e6;
+}
+
+.form__liners {
+  justify-content: center;
+  align-items: center;
+  order: 3;
+  flex-wrap: nowrap;
+  margin-top: 1rem;
+}
+
+.form__line {
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  width: 50%;
+}
+
+.form__line--caption {
+  margin: 0 0.5rem 0.2rem 0.5rem;
+}
+
+.remember-me {
+  font-size: 14px;
+}
+
+.create-account {
+  margin-top: 50px;
+}
+
+.create-account_question {
+  font-size: 14px;
+}
+
+.create-account_link {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.footer-wrapper {
+  margin: 0 auto 10px;
+  position: relative;
+}
+
+.footer-wrapper .footer-item {
+  color: #ababab;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-size: 11px;
+  padding: 2px 15px;
+}
+
+@media only screen and (max-width: 709px) {
+  .footer-wrapper .footer-item {
+    display: block;
+    border: none;
+  }
+}
+
+.footer-wrapper a {
+  text-decoration: none;
+}
+
+.footer-wrapper a:hover {
+  text-decoration: underline;
+  color: #4a8db8;
+}
+
+
+
+

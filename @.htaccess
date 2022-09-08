@@ -1,0 +1,19 @@
+RewriteEngine on
+
+# RewriteCond %{REQUEST_FILENAME} !-d
+
+# RewriteCond %{REQUEST_FILENAME}\.php -f 
+
+# RewriteRule ^ServiceWize/([0-9a-zA-Z_-]+)$ index.php?page=$1 [NC,L]
+
+
+
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteRule ^([^\.]+)$ $1.php
+
+# RewriteRule ^register index.php
+
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d 
+# RewriteRule ^(.*)$ index.php?$1 
+
