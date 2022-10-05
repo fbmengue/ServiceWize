@@ -3,7 +3,7 @@
 session_start();
 
 //HEADER / NAVBAR
-include __DIR__ . '/../widgets/navbar.php';
+include __DIR__ . '/../../widgets/navbar.php';
 
 ?>
 
@@ -21,7 +21,7 @@ include __DIR__ . '/../widgets/navbar.php';
                 <div class="welcome-container d-flex flex-wrap flex-row justify-content-between">
                     <div class="name w-50 d-flex flex-column">
                         <p class="title-label">Welcome back,</p>
-                        <p class="name-label"><?php echo $_SESSION["userName"] . " " . $_SESSION["userLastName"] ?> </p>
+                        <p class="name-label"><?php echo $_SESSION["userFullName"]?> </p>
                     </div>
                     <div class="balance w-50 flex-column">
                         <p class="title-label" translate="">overall balance</p>
@@ -63,11 +63,11 @@ include __DIR__ . '/../widgets/navbar.php';
                                 <div class="offcanvas-body">
                                     <form class="row g-3" id="form-add-appointment" method="POST">
                                         <div class="col-md-12">
-                                            <?php include __DIR__ . '/../includes/client/clientList.inc.php'; ?>
+                                            <?php include __DIR__ . '/../../includes/client/clientList.inc.php'; ?>
                                         </div>
 
                                         <div class="col-md-12">
-                                            <?php include __DIR__ . '/../includes/service/serviceList.inc.php'; ?>
+                                            <?php include __DIR__ . '/../../includes/service/myServiceList.inc.php'; ?>
                                         </div>
                                         <div class="col-md-12">
                                             <label for="inputAppointmentDate" class="form-label">Date</label>
@@ -137,11 +137,6 @@ include __DIR__ . '/../widgets/navbar.php';
                                                 name="inputServicePrice" value="" required>
                                         </div>
                                         <div class="col-12">
-                                              
-                                            <?php include __DIR__ . '/../includes/professional/professionalListService.inc.php';?>
-                                        
-                                        </div>
-                                        <div class="col-12">
                                             <button type="submit" class="btn btn-primary" form="form-add-service"
                                                 name="submit"
                                                 formaction="view/includes/service/service.inc.php">SUBMIT</button>
@@ -195,41 +190,6 @@ include __DIR__ . '/../widgets/navbar.php';
                                 </div>
                             </div>
                         </li>
-                        <li class="btn-action" style="margin: 0px;">
-                            <button class="quick-add-button" type="button" data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvasProfessional" aria-controls="offcanvasProfessional">
-                                Professional
-                            </button>
-
-
-                            <div class="offcanvas form-popup offcanvas-start" tabindex="-1" id="offcanvasProfessional"
-                                aria-labelledby="offcanvasProfessionalLabel">
-                                <div class="offcanvas-header">
-                                    <h5 class="offcanvas-title" id="offcanvasProfessionalLabel">Add New Professional
-                                    </h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="offcanvas-body">
-                                    <form class="row g-3" id="form-add-professional" method="POST">
-                                        <div class="col-md-12">
-                                            <label for="inputProfessionalFullName" class="form-label">Professional Full
-                                                Name</label>
-                                            <input type="text" class="form-control" id="inputProfessionalFullName"
-                                                name="inputProfessionalFullName" required>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <?php include __DIR__ . '/../includes/user/userEmailList.inc.php';?>
-                                        </div>
-                                        <div class="col-12">
-                                            <button type="submit" class="btn btn-primary" form="form-add-professional"
-                                                name="submit"
-                                                formaction="view/includes/professional/professional.inc.php">SUBMIT</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </li>
 
                     </ul>
                 </div>
@@ -240,7 +200,7 @@ include __DIR__ . '/../widgets/navbar.php';
             style="max-width: 1070px">
             <?php
 
-            include __DIR__ . '/../widgets/calendar-homeView.php';
+            include __DIR__ . '/../../widgets/calendar-homeView.php';
             ?>
         </div>
 
@@ -251,7 +211,7 @@ include __DIR__ . '/../widgets/navbar.php';
                 <div class="col-sm-6 pe-2 ps-0">
                     <div class="col-sm-12 bg-widget mt-3 p-3 rounded-3 bg-box-shadow-thin">
                         <?php
-                        include __DIR__ . '/../widgets/widgetInfoACSPreview.php';
+                        include __DIR__ . '/../../widgets/professional/widgetInfoACSPreview.php';
                         ?>
                     </div>
                     <div class="col-sm-12 d-flex flex-column bg-widget mt-3 p-3 rounded-3 bg-box-shadow-thin">

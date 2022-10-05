@@ -24,15 +24,18 @@ class Cadastro extends Database
     }
     protected function setUtilizador($nome, $sobrenome, $pwd, $email, $tel)
     {
-        $stmt = $this->connect()->prepare('INSERT INTO user(userFirstName, userLastName, userPassword,userEmail,userMobile) VALUES (?,?,?,?,?);');
+        $stmt = $this->connect()->prepare('INSERT INTO user(userFullName, userPassword,userEmail,userMobile,userType) VALUES (?,?,?,?,?);');
 
         $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
+        $fullName = $nome . " " . $sobrenome;
+        $userType = 'client';
 
-        if (!$stmt->execute(array($nome,$sobrenome,$hashedPwd, $email, $tel))) {
+        if (!$stmt->execute(array($fullName,$hashedPwd, $email, $tel,$userType))) {
             $stmt = null;
             header("location: ../marcaConsultoria.php?error=stmtfailed");
             exit();
         }
+
 
         $stmt = null;
     }

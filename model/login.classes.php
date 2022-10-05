@@ -71,8 +71,8 @@ class Login extends Database
 
             session_start();
             $_SESSION["userID"] = $user[0]["userID"];
-            $_SESSION["userName"] = $user[0]["userFirstName"];
-            $_SESSION["userLastName"] = $user[0]["userLastName"];
+            $_SESSION["userFullName"] = $user[0]["userFullName"];
+            $_SESSION["userEmail"] = $user[0]["userEmail"];
             $_SESSION["userType"] = $user[0]["userType"];
             $stmtEmailPass = null;
             $stmtPass = null;

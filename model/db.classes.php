@@ -35,7 +35,7 @@ class Database
         //     $hostname = 'localhost';
         //     $username = 'root';
         //     $password = 'S!MPLEX@)II';
-        //     $dbname = 'casopraticophp';
+        //     $dbname = 'appmanagement';
         //    // $conn = new PDO('mysqli:host=localhost',$dbname, $username, $password);
         //     $conn = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
         //     return $conn;

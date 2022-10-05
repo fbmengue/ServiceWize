@@ -19,9 +19,12 @@ if (isset($_GET['texto'])) {
 }
 
 //If date empty set date today
-if (empty($_GET['date']) || !isset($_GET['date'])) {
+if (empty($_GET['date'])) {
     $_GET["date"] = date('Y-m-d', time());
 }
+
+
+
 
 
     $hoje = date('Y-m-d', time());
@@ -79,15 +82,16 @@ if (empty($_GET['date']) || !isset($_GET['date'])) {
 
 
      //Instancias
-    include __DIR__ . '/../../../model/db.classes.php';
-    include __DIR__ . '/../../../model/appointment.classe.php';
-    include __DIR__ . '/../../../controller/appointment-contr.classes.php';
+    //include __DIR__ . '/../../model/db.classes.php';
+    include __DIR__ . '/../../model/appointment.classe.php';
+    include __DIR__ . '/../../controller/appointment-contr.classes.php';
+
 
     //New appointment list by date
-    $servicePerDayList = new AppointmentContr();
+    $servicePerDayListHome = new AppointmentContr();
 
     //Roda erros
-    $appointmentPerDayList = $servicePerDayList->getAppointmentsPerDayList();
+    $appointmentPerDayListHome = $servicePerDayListHome->getAppointmentsPerDayList();
     // print_r("<pre>");
     // print_r($appointmentPerDayList);
     // print_r("</pre>");
@@ -99,28 +103,27 @@ if (empty($_GET['date']) || !isset($_GET['date'])) {
     <div class="navbar-week-header">
         <div class="next-prev d-flex justify-content-between">
             <div class="prev-week d-flex flex-column justify-content-center">
-                <a href="?page=calendar/dayView&date=<?php echo $_GET['date'] ?>&texto=<?php echo $CurrentDayPrev; ?>">&lt;
+                <a href="?page=home&date=<?php echo $_GET['date'] ?>&texto=<?php echo $CurrentDayPrev; ?>">&lt;
                 </a>
             </div>
-            <a href="?page=calendar/dayView&date=<?php echo $hoje ?>&texto=0">HOJE</a>
+            <a href="?page=home&date=<?php echo $hoje ?>&texto=0">HOJE</a>
             <div><?php echo $dateFormatForView?></div>
             <div class="next-week d-flex flex-column justify-content-center">
                 <a
-                    href="?page=calendar/dayView&date=<?php echo $_GET['date'] ?>&texto=<?php echo $CurrentDayNext; ?>">&gt;</a>
+                    href="?page=home&date=<?php echo $_GET['date'] ?>&texto=<?php echo $CurrentDayNext; ?>">&gt;</a>
             </div>
         </div>
 
     </div>
-    
     <div class="navbar-days d-flex flex-row text-center justify-content-between">
 
         <?php
 
         foreach ($weekWidget as $weekWidget) {
-            $itemID = array_search($weekWidget['fullDate'], array_column($appointmentPerDayList, 'appointmentDate'));
-            if ($itemID !== false) {
+            $itemIDHome = array_search($weekWidget['fullDate'], array_column($appointmentPerDayListHome, 'appointmentDate'));
+            if ($itemIDHome !== false) {
                 ?>
-        
+
         <a href="?page=calendar/dayView&date=<?php echo $weekWidget['fullDate'];?>&texto=<?php echo $CurrentDay ?>"
             class="<?php  if ($weekWidget['fullDate'] == $_GET['date'] && $weekWidget['fullDate'] < $hoje) {
                                     echo "pass-day-selected";
@@ -134,7 +137,7 @@ if (empty($_GET['date']) || !isset($_GET['date'])) {
             <div class="calendar-text" style="padding-bottom: 10px;"><?php echo $weekWidget['dayText'];?></div>
             <div class="calendar-number"> <?php echo $weekWidget['dayInt'];?>
                 <span
-                    class="calendar-service-per-day"><?php echo $appointmentPerDayList[$itemID]['servicesPerDay'];?></span>
+                    class="calendar-service-per-day"><?php echo $appointmentPerDayListHome[$itemIDHome]['servicesPerDay'];?></span>
             </div>
         </a> <?php
             } else {
@@ -160,18 +163,3 @@ if (empty($_GET['date']) || !isset($_GET['date'])) {
 
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
