@@ -125,6 +125,32 @@ class Appointment extends Database
         $stmt = null;
         return $results;
     }
+    protected function getMyAppointmentsDate($date, $userEmail)
+    {
+        $stmt = $this->connect()->prepare('SELECT * from appointment
+        INNER JOIN client ON client_clientID=clientID
+        INNER JOIN professional ON professional_professionalID=professionalID
+        INNER JOIN service ON service_serviceID=serviceID WHERE appointmentDate=? and professionalEmail=?;');
+
+        // print_r($name . "\n");
+        // print_r($duration . "\n");
+
+
+
+        if (!$stmt->execute(array($date,$userEmail))) {
+            $stmt = null;
+            header("location: ../../../index.php?error=stmtfailed");
+
+            exit();
+        }
+
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+
+        $stmt = null;
+        return $results;
+    }
     protected function getProfessionalID($email)
     {
         $stmt = $this->connect()->prepare('SELECT professionalID FROM professional WHERE professionalEmail = ?;');
@@ -159,6 +185,31 @@ class Appointment extends Database
         // exit;
 
         if (!$stmt->execute()) {
+            $stmt = null;
+            header("location: ../../../index.php?error=stmtfailed");
+
+            exit();
+        }
+
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $stmt = null;
+        return $results;
+    }
+
+    protected function getMyAppointmentsPerDay($userEmail)
+    {
+        $stmt = $this->connect()->prepare('SELECT COUNT(*) as servicesPerDay, appointmentDate FROM appointment 
+        INNER JOIN professional ON professional_professionalID=professionalID
+        where professionalEmail = ?
+        GROUP BY appointmentDate;');
+
+        // print_r($name . "\n");
+        // print_r($duration . "\n");
+        // print_r($price . "\n");
+        // exit;
+
+        if (!$stmt->execute([$userEmail])) {
             $stmt = null;
             header("location: ../../../index.php?error=stmtfailed");
 

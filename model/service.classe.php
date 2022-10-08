@@ -56,7 +56,7 @@ class Service extends Database
 
     protected function getServices()
     {
-        $stmt = $this->connect()->prepare("SELECT *, date_format(serviceTime, '%H:%i') as 'time' from service;");
+        $stmt = $this->connect()->prepare("SELECT *, date_format(serviceTime, '%H:%i') as 'time' from service");
 
         // print_r($name . "\n");
         // print_r($duration . "\n");
@@ -75,6 +75,30 @@ class Service extends Database
         $stmt = null;
         return $results;
     }
+    protected function getProfessionalServices($professionalID)
+    {
+        $stmt = $this->connect()->prepare("SELECT *, date_format(serviceTime, '%H:%i') as 'time' from service
+        INNER JOIN professional ON professional_professionalID=professionalID
+        where professionalID = ?;");
+
+        // print_r($name . "\n");
+        // print_r($duration . "\n");
+        // print_r($price . "\n");
+        // exit;
+
+        if (!$stmt->execute([$professionalID])) {
+            $stmt = null;
+            header("location: ../../../index.php?error=stmtfailed");
+
+            exit();
+        }
+
+        $results = $stmt->fetchAll();
+
+        $stmt = null;
+        return $results;
+    }
+
     protected function getMyServices($userEmail)
     {
         $stmt = $this->connect()->prepare("SELECT *, date_format(serviceTime, '%H:%i') as 'time' from service INNER JOIN professional ON professional_professionalID=professionalID

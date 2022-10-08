@@ -16,4 +16,11 @@ class UserContr extends User
         $results = $this->getUserEmails();
         return $results;
     }
+
+    public function getMyProfileByID($userID)
+    {
+
+        $results = $this->getMyProfile($userID);
+        return $results;
+    }
 }

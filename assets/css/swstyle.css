@@ -1,6 +1,4 @@
 
-
-
 /* CSS for Margin */
 .mt-6{
   margin-top: 1.75rem;
@@ -119,6 +117,11 @@ box-shadow: 2px 1px 12px -7px #01261c7a;
   border-color: #ebddca !important;
   box-shadow: 0px 0px 0px 3px #f2ece4;
 }
+.input-outline-profile:focus{
+  outline: 0;  
+  border-color: #589873 !important;
+  box-shadow: 0px 0px 0px 3px #58987352;
+}
 /* CSS for Checkbox */
 .input-outline-hover:hover{
   outline: 0;
@@ -159,6 +162,78 @@ box-shadow: 2px 1px 12px -7px #01261c7a;
 .button-facebook:hover p{
   color: white !important;
  }
+ .parent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.client-new-appointment{
+  position: fixed;
+  width: 100%;
+  bottom: 10px;
+  right: 0px;
+}
+.client-new-appointment div.container{
+  display: flex;
+  justify-content: end;
+}
+.client-new-appointment button span{
+  transform: translateY(-6px);
+  color: #f4eee1;
+}
+ .client-new-appointment button{
+  background-color: #589873;
+  border: none;
+  font-size: 60px;
+  height: 80px;
+  width: 80px;
+  box-shadow: 0 2px 4px darkslategrey;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ }
+ .client-new-appointment button:active {
+  background-color: #5c7e6a;
+  box-shadow: 0 0 2px darkslategrey;
+  transform: translateY(2px);
+}
+.my-profile-form label{
+  font-weight: 500;
+    text-transform: uppercase;
+    
+}
+.my-profile-form input{
+  margin-top: 1.25rem!important;
+  border: 0px;
+  background: transparent;
+  border-width: 1px;
+  border-style: solid;
+  border-image: linear-gradient(to right, #3FB6A8, rgba(126, 211, 134, 0.5)) 1 0%;
+  border-top: 0;
+  width: 100%;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1em;
+  padding: 10px 0px;
+  letter-spacing: 2px;
+}
+.my-profile-form input:focus{
+  outline: 0;
+  box-shadow: 0px 0px 0px 3px #58987352;
+  border-image: linear-gradient(to right, #3fb6a800, rgb(126 211 134 / 0%)) 1 0%;
+  border-radius: 10px;
+  padding: 10px 10px;
+}
+
+.edit-my-profile{
+  color: #f4eee1;
+}
+.edit-my-profile:hover{
+  box-shadow: 0 0px 8px 3px rgb(255 255 255 / 97%), 0 0px 10px 0 #589873;
+  background: #5c7e6a;
+}
 
 /* CSS for DropDown / NAV */
 .dropdown-menu[data-bs-popper]{
@@ -173,6 +248,13 @@ box-shadow: 2px 1px 12px -7px #01261c7a;
 .nav-user-settings .dropdown-toggle::after{
   display: none !important;
 }
+
+
+
+
+
+
+
 
 /* CSS ASC Widget */
 .appointments-text,
@@ -221,17 +303,28 @@ box-shadow: 2px 1px 12px -7px #01261c7a;
   text-decoration: none;
 }
 .mobile-container-calendar{
-  padding: 10px 10px 10px 10px !important;
+  padding: 15px !important;
   background-color: #F2ECE4 !important;
-  border-bottom-left-radius: 0.5rem;
-  border-bottom-right-radius: 0.5rem;
+  border-radius: 0.5rem;
 }
 .today .calendar-number,
+.today-home .calendar-number,
 .pass-day-selected .calendar-number,
 .nav-day-future .calendar-number,
 .nav-day-pass .calendar-number{
   position: relative;
 }
+.today-home .calendar-number{
+  background: #f4eee1;
+  color: #F25270;
+  padding: 9px;
+  border-radius: 10px;
+  font-weight: 500;
+  border: 1px solid #F25270;
+  }
+.today-home .calendar-number .calendar-service-per-day{  
+  background-color: #F25270;  
+  }
 .nav-day-future .calendar-number{
 background: #589873;
 color: #f4eee1;
@@ -277,6 +370,9 @@ display: flex;
 flex-direction: column;
 text-transform: uppercase;
 padding: 10px 0px;
+}
+.today-home{
+
 }
 .calendar-text{
   
@@ -331,16 +427,16 @@ padding: 10px 0px;
   z-index: 1;
   }
 
-  .pass-day-selected .calendar-number{
-    background-color: #767676;
-    padding: 10px;
-    border-radius: 10px;
-    font-weight: 500;
-    color: #f4eee1;
-    }
-    .pass-day-selected .calendar-number .calendar-service-per-day{
-      background-color: #767676;
-      }
+.pass-day-selected .calendar-number{
+  background-color: #767676;
+  padding: 10px;
+  border-radius: 10px;
+  font-weight: 500;
+  color: #f4eee1;
+  }
+.pass-day-selected .calendar-number .calendar-service-per-day{
+  background-color: #767676;
+}
 
 .appointment-dayview .appointment-dayview-header div{
   color: #8F9BB3;
@@ -407,13 +503,17 @@ padding: 10px 0px;
 .welcome-container{
   width: 100%;
 }
+.welcome-container .profile-label{
+  margin-bottom: 3rem;
+}
 
 .quick-add-menu{
   width: 70%;
   margin-left: 50px;
 }
-.quick-add-menu .widget-title{
-  font-size: 19px;
+.quick-add-menu .widget-title,
+.welcome-container .widget-title{
+  font-size: 21px;
   font-weight: 700;
   text-transform: uppercase;
 }
@@ -469,14 +569,10 @@ padding: 10px 0px;
   
 }
 
-/* .form-popup{
-position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    transition-duration: 0s;
-    bottom: auto;
-} */
+/* CSS for Profile Data */
+.hide{
+  display: none;
+}
 
 
 
@@ -531,6 +627,9 @@ position: absolute !important;
     bottom: 0;
     transition: transform .3s ease-in-out !important;
     } */
+  .main-content{
+    padding-top: 0px !important;
+  }
   .offcanvas{
     width: 90% !important;
   }
@@ -572,9 +671,9 @@ position: absolute !important;
     margin: 0px;
   }
   .mobile-container-calendar{
-    padding: 10px 0px 10px 0px !important;
-    background-color: #F2ECE4 !important;
+    padding: 10px !important;
   }
+ 
 
 
 

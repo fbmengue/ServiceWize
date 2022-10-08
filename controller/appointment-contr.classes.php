@@ -47,6 +47,14 @@ class AppointmentContr extends Appointment
 
         return $results;
     }
+    public function getMyAppointmentsPerDayList($userEmail)
+    {
+
+
+        $results = $this->getMyAppointmentsPerDay($userEmail);
+
+        return $results;
+    }
 
     public function getAppointmentListByDate($date)
     {
@@ -54,6 +62,15 @@ class AppointmentContr extends Appointment
 
         return $results;
     }
+
+    public function getMyAppointmentListByDate($date, $userEmail)
+    {
+
+        $results = $this->getMyAppointmentsDate($date, $userEmail);
+
+        return $results;
+    }
+
     public function getProfessionalIDByEmail($email)
     {
         $results = $this->getProfessionalID($email);

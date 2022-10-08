@@ -107,9 +107,9 @@ $(function() {
 
   //Function that auto select service duration and price
   $(function() {
-    $("#selectServiceName").change(function() {
-      $("#selectServiceDuration").val($(this).val());
-      $("#selectServicePrice").val($(this).val());
+    $("[id^=selectServiceName]").change(function() {
+      $("[id^=selectServiceDuration]").val($(this).val());
+      $("[id^=selectServicePrice]").val($(this).val());
     });
   })
 
@@ -134,6 +134,50 @@ $(function() {
   })
 
     
+
+
+  $( document ).ready(function() {
+    $("#selectProfessionalForClient").change(function() {
+      var professionalID = this.value;
+      const elements1 = document.querySelectorAll('[data-edit]');
+
+      console.log(elements1);
+      
+      for (const item of elements1) {
+        if (item.dataset.edit == professionalID) {
+          item.classList.remove("hide");
+        }else{
+          item.classList.add("hide");
+        }
+      }
+    
+    });
+});
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   //Animation for bottom menu mobile

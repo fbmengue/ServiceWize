@@ -196,11 +196,11 @@ include __DIR__ . '/../../widgets/navbar.php';
             </div>
         </div>
         <!-- ADD CALENDAR WIDGET -->
-        <div class="d-flex flex-column w-100 align-items-center bg-white rounded-2 bg-box-shadow-calendar"
+        <div class="d-flex flex-column w-100 align-items-center bg-white rounded-2 bg-box-shadow-calendar mt-3"
             style="max-width: 1070px">
             <?php
 
-            include __DIR__ . '/../../widgets/calendar-homeView.php';
+            include __DIR__ . '/../../widgets/professional/calendar-homeView.php';
             ?>
         </div>
 

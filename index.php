@@ -3,9 +3,9 @@
  // add the pagenames In session login
 $allowedLogin = array('index','home','calendar/dayView');
  // add the pagenames In session login
- $allowedLoginProfessional = array('index','professional/home','calendar/dayView');
+ $allowedLoginProfessional = array('index','professional/home','calendar/professional/dayView');
   // add the pagenames In session login
-$allowedLoginClient = array('index','client/homec','calendar/dayView');
+$allowedLoginClient = array('index','client/home');
 // add the pagenames
 $allowedLogout = array('register', 'login', 'index', 'forgotPassword');
 session_start();
@@ -54,7 +54,7 @@ switch ($_SESSION["userType"]) {
         }
         break;
     case 'client':
-        $page = ( isset($_GET['page']) ) ? $_GET['page'] : 'client/homec'; // IF PAGE EMPTY SET TO HOME
+        $page = ( isset($_GET['page']) ) ? $_GET['page'] : 'client/home'; // IF PAGE EMPTY SET TO HOME
 
 
         if (in_array($page, $allowedLoginClient)) {
@@ -65,7 +65,7 @@ switch ($_SESSION["userType"]) {
            //FOOTER
             include __DIR__ . '/view/pages/footer.php';
         } else {
-            $page = 'client/homec';
+            $page = 'client/home';
             //HEADER
             include __DIR__ . '/view/pages/header.php';
             //PAGE BODY
