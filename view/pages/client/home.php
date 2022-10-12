@@ -34,39 +34,40 @@ include __DIR__ . '/../../widgets/navbar.php';
                     </div>
                 </div>
                 <div class="quick-add-menu">
-                    <h2 class="widget-title" translate="">MY Futures Appointments</h2>
-                    
+                    <h2 class="widget-title" translate="">Next Appointments</h2>
+                    <?php
+                        include __DIR__ . '/../../widgets/client/clientWidget-NextApp.php';
+                    ?>                    
                 </div>
             </div>
-        </div>
-        <!-- ADD CALENDAR WIDGET -->
-        <div class="d-flex flex-column w-100 align-items-center bg-white rounded-2 bg-box-shadow-calendar"
-            style="max-width: 1070px">
-            calendar widget
         </div>
 
 
 
         <div class="container" style="max-width: 1070px;">
             <div class="row">
-                <div class="col-sm-6 pe-2 ps-0">
+                <div class="left-col col-sm-6 pe-2 ps-0">
                     <div class="col-sm-12 bg-widget mt-3 p-3 rounded-3 bg-box-shadow-thin">
                         <?php
-                        include __DIR__ . '/../widgets/widgetInfoACSPreview.php';
+                        include __DIR__ . '/../../widgets/client/clientWidget-CountApp.php';
                         ?>
                     </div>
                     <div class="col-sm-12 d-flex flex-column bg-widget mt-3 p-3 rounded-3 bg-box-shadow-thin">
-                        <h1>Client Home</h1>
+                    <h2 class="widget-title" translate="">All Future Appointments</h2>
+                    <?php
+                        include __DIR__ . '/../../widgets/client/clientWidget-FuturesApp.php';
+                    ?> 
                     </div>
                     
 
 
                 </div>
-                <div class="col-sm-6 ps-2 ps-0">
+                <div class="right-col col-sm-6 ps-2 pe-0">
                     <div class="col-sm-12 bg-widget mt-3 p-3 rounded-3 bg-box-shadow-thin">
-                        <h1>home<h1>home</h1>
-                        </h1>
-                        <p>AECTEP - ASDASDIh</p>
+                    <h2 class="widget-title" translate="">All Past Appointments</h2>
+                    <?php
+                        include __DIR__ . '/../../widgets/client/clientWidget-PastApp.php';
+                    ?> 
                     </div>
                    
                 </div>
@@ -79,7 +80,9 @@ include __DIR__ . '/../../widgets/navbar.php';
             <div class="client-new-appointment">
                 <div class="container">
                     <button type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasAppoint" aria-controls="offcanvasAppoint"><span>+</span></button>
+                    data-bs-target="#offcanvasAppoint" aria-controls="offcanvasAppoint">
+                        <span>+</span>
+                    </button>
                 </div>
             </div>
             
@@ -98,13 +101,9 @@ include __DIR__ . '/../../widgets/navbar.php';
                         <div class="col-md-12">
                             <?php include __DIR__ . '/../../includes/professional/professionalListForClient.inc.php';?>
                         </div>
-
-                        
+    
+                        <?php include __DIR__ . '/../../includes/service/serviceListForClient.inc.php'; ?>
                             
-                                <?php include __DIR__ . '/../../includes/service/serviceListForClient.inc.php'; ?>
-                            
-                        
-
                         <div class="col-md-12">
                             <label for="inputAppointmentDate" class="form-label">Date</label>
                             <input type="date" class="form-control" id="inputAppointmentDate"
@@ -128,8 +127,7 @@ include __DIR__ . '/../../widgets/navbar.php';
                         <div class="col-12">
                             <button type="submit" class="btn btn-primary" form="form-add-appointment"
                                 name="submit"
-                                formaction="view/includes/appointment/clientAndAppointment.inc.php">Add
-                                Client and Appointment</button>
+                                formaction="view/includes/client/appointment.inc.php">Add Appointment</button>
                         </div>
                     </form>
                 </div>

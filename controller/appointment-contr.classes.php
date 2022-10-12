@@ -20,6 +20,8 @@ class AppointmentContr extends Appointment
         $this->setAppointment($clientID, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice);
     }
 
+
+
     private function campoVazio($clientID, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice)
     {
         $result = true;
@@ -40,6 +42,21 @@ class AppointmentContr extends Appointment
     {
         $this->setClientAndAppointment($fullName, $birthDate, $email, $mobile, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice);
     }
+
+    public function addClientAndAppointmentForClient($fullName, $birthDate, $email, $mobile, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice)
+    {
+        if (
+            empty($fullName) || empty($birthDate) || empty($email) || empty($mobile)
+            || empty($professionalID) || empty($serviceID) || empty($appointmentDate) || empty($appointmentStartTime)
+            || empty($appointmentEndTime) || empty($serviceDuration) || empty($servicePrice)
+        ) {
+            header("location: ../../../index.php?page=home&error=campovazio");
+            exit();
+        }
+        $this->setClientAndAppointment($fullName, $birthDate, $email, $mobile, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice);
+    }
+
+
 
     public function getAppointmentsPerDayList()
     {

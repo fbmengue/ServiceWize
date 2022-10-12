@@ -447,6 +447,13 @@ padding: 10px 0px;
   font-style: italic;
   letter-spacing: 3px;
 }
+.appointment-dayview .appointment-dayview-service-past h5{
+  margin-top: 0.5rem;
+  text-transform: capitalize;
+  font-style: italic;
+  letter-spacing: 3px;
+  color: #8F9BB3;
+}
 .appointment-dayview .appointment-dayview-client div{
   color: #8F9BB3;
   font-weight: 500;
@@ -467,12 +474,23 @@ padding: 10px 0px;
     margin: 0px 14px 0px 0px;
   
 }
+.appointment-dot-click{
+  padding: 10px;
+    position: absolute;
+    right: -11px;
+    transition: all 0.5s ease-in;
+}
 
+div.appointment-dot-actions.dropdown-toggle::after{
+  border-top: 0;
+  border-right: 0;
+}
 .appointment-dot-actions::before, .appointment-dot-actions::after {
   content: '';
   display: inline-block;
   position: absolute;
   top: 0;
+  transition: all 0.5s ease-in;
 }
 .appointment-dot-actions::before{
   left: -7px;
@@ -481,6 +499,7 @@ padding: 10px 0px;
     border-radius: 5px;
     background-color: #8F9BB3;
     color: #9880ff;
+    
 }
 .appointment-dot-actions{
   position: relative;
@@ -489,7 +508,19 @@ padding: 10px 0px;
     border-radius: 5px;
     background-color: #8F9BB3;
     color: #9880ff;
+    transition: all 0.5s ease-in;
 }
+.dropdown-item.active, .dropdown-item:active{
+  background: #F2ECE4;
+    color: #19191B;
+}
+.appointment-dot-click:hover .appointment-dot-actions,
+.appointment-dot-click:hover .appointment-dot-actions::after,
+.appointment-dot-click:hover .appointment-dot-actions::before{
+background: #589873;
+  transition: all 0.2s ease-in;
+}
+
 .appointment-dot-actions::after{
   left: 7px;
   width: 5px;
@@ -497,6 +528,25 @@ padding: 10px 0px;
   border-radius: 5px;
   background-color: #8F9BB3;
   color: #9880ff;
+}
+.appointment-date{
+  display: flex;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.appointment-content{
+  border: 1px solid #3FB6A8;
+  border-radius: 12px;
+  padding: 10px;
+
+}
+.appointment-content-past{
+  border: 1px solid #8F9BB3;
+  border-radius: 12px;
+  padding: 10px;
+
 }
 
 /* CSS for Welcome widget and quick buttons/actions */
@@ -513,6 +563,11 @@ padding: 10px 0px;
 }
 .quick-add-menu .widget-title,
 .welcome-container .widget-title{
+  font-size: 21px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.widget-title{
   font-size: 21px;
   font-weight: 700;
   text-transform: uppercase;
@@ -673,9 +728,17 @@ padding: 10px 0px;
   .mobile-container-calendar{
     padding: 10px !important;
   }
- 
-
-
+  .appointment-dayview .appointment-dayview-service h5,
+  .appointment-dayview .appointment-dayview-service-past h5{
+    letter-spacing: 2px;
+    font-size: 15px;
+  }
+.left-col{
+  padding-left: 0.5rem!important;
+}
+.right-col{
+  padding-right: 0.5rem!important;
+}
 
 
 

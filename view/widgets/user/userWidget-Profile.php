@@ -40,7 +40,7 @@ if (isset($_SESSION["userID"])) {
             <div class="row mb-3">
                 <div class="col-12">
                     <div>
-                        <label>Nome:</label>
+                        <label>Full Name:</label>
                     </div>
                     <div>
                         <input class="profile-name" id="utilizador-nome" name="utilizadorNome" 
@@ -73,7 +73,7 @@ if (isset($_SESSION["userID"])) {
             <div class="row mb-3">
                 <div class="col-6">
                     <div>
-                        <label>Telemovél:</label>
+                        <label>Phone:</label>
                     </div>
                     <div >
                         <input class="profile-mobile" id="utilizador-tel" name="utilizadorTel" 

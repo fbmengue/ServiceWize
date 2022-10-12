@@ -135,13 +135,17 @@ $(function() {
 
     
 
-
+//Enable Professional search for Client Appointment Add 
+$(function() {
+  $('#selectProfessionalForClient').selectize({
+    sortField: 'text',
+  });
+})
   $( document ).ready(function() {
     $("#selectProfessionalForClient").change(function() {
       var professionalID = this.value;
       const elements1 = document.querySelectorAll('[data-edit]');
 
-      console.log(elements1);
       
       for (const item of elements1) {
         if (item.dataset.edit == professionalID) {

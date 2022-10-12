@@ -49,6 +49,11 @@ class ServiceContr extends Service
         $results = $this->getServices();
         return $results;
     }
+    public function getServiceDataListByID($serviceID)
+    {
+        $results = $this->getServiceByID($serviceID);
+        return $results;
+    }
     public function getProfessionalServiceList($professionalID)
     {
         $results = $this->getProfessionalServices($professionalID);

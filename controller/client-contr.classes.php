@@ -33,11 +33,37 @@ class ClientContr extends Client
         return $result;
     }
 
+    public function getClientDataListByUserEmail($userEmail)
+    {
+        $results = $this->getClientDataByUserEmail($userEmail);
+        return $results;
+    }
 
+    public function getMyClientFutureAppointmentByEmail($userEmail, $todayDate)
+    {
+        $results = $this->getMyFutureAppointmentByEmail($userEmail, $todayDate);
+        return $results;
+    }
+    public function getMyClientPastAppointmentByEmail($userEmail, $todayDate)
+    {
+        $results = $this->getMyPastAppointmentByEmail($userEmail, $todayDate);
+        return $results;
+    }
+    public function getMyClientNextAppointmentByEmail($userEmail, $todayDate)
+    {
+        $results = $this->getMyNextAppointmentByEmail($userEmail, $todayDate);
+        return $results;
+    }
 
     public function getClientList()
     {
         $results = $this->getClients();
+        return $results;
+    }
+
+    public function getMyClientAppointmentCount($userEmail)
+    {
+        $results = $this->getMyAppointmentsCount($userEmail);
         return $results;
     }
 

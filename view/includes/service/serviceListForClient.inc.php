@@ -28,7 +28,7 @@ if (true) {
 <div class="col-md-12 hide" data-edit="<?php echo $itemProfessional['professionalID']?>">    
 <label for="selectServiceName" class="form-label">Service</label>
 <select id="selectServiceName-<?php echo $itemProfessional['professionalID']?>"
-name="selectServiceName" class="form-select" placeholder="">
+name="selectServiceName-<?php echo $itemProfessional['professionalID']?>" class="form-select" placeholder="">
 <option value=""></option>
         <?php
         foreach ($serviceList as $itemService) {
@@ -44,7 +44,7 @@ name="selectServiceName" class="form-select" placeholder="">
 <div class="col-md-6 hide" data-edit="<?php echo $itemProfessional['professionalID']?>">
     <label for="selectServiceDuration" class="form-label">Duration</label>
     <select id="selectServiceDuration-<?php echo $itemProfessional['professionalID']?>"
-    name="selectServiceDuration" class="form-select" placeholder="" disabled>
+    name="selectServiceDuration-<?php echo $itemProfessional['professionalID']?>" class="form-select" placeholder="" disabled>
     <option value=""></option>
         <?php
         foreach ($serviceList as $itemService) {
@@ -60,7 +60,7 @@ name="selectServiceName" class="form-select" placeholder="">
 <div class="col-md-6 hide" data-edit="<?php echo $itemProfessional['professionalID']?>">
     <label for="selectServicePrice" class="form-label">Price</label>
     <select id="selectServicePrice-<?php echo $itemProfessional['professionalID']?>" 
-    name="selectServicePrice" class="form-select" placeholder="" disabled>
+    name="selectServicePrice-<?php echo $itemProfessional['professionalID']?>" class="form-select" placeholder="" disabled>
         <option value=""></option>
         <?php
         foreach ($serviceList as $itemService) {

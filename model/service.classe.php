@@ -75,6 +75,23 @@ class Service extends Database
         $stmt = null;
         return $results;
     }
+    protected function getServiceByID($serviceID)
+    {
+        $stmt = $this->connect()->prepare("SELECT *, date_format(serviceTime, '%H:%i') as 'time' from service WHERE serviceID=?");
+
+        if (!$stmt->execute([$serviceID])) {
+            $stmt = null;
+            header("location: ../../../index.php?error=stmtfailed");
+
+            exit();
+        }
+
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $stmt = null;
+        return $results;
+    }
+
     protected function getProfessionalServices($professionalID)
     {
         $stmt = $this->connect()->prepare("SELECT *, date_format(serviceTime, '%H:%i') as 'time' from service

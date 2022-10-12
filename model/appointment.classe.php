@@ -48,6 +48,10 @@ class Appointment extends Database
         $stmt3 = null;
     }
 
+
+
+
+
     protected function setClientAndAppointment($fullName, $birthDate, $email, $mobile, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice)
     {
 
@@ -99,6 +103,8 @@ class Appointment extends Database
         $stmt3 = null;
         $stmt4 = null;
     }
+
+
 
     protected function getAppointmentsDate($date)
     {
@@ -262,6 +268,7 @@ class Appointment extends Database
             $stmt = null;
             $stmt2 = null;
             $stmt3 = null;
+            $stmt4 = null;
             header("location: ../../../index.php?error=stmtfailed");
 
             exit();
