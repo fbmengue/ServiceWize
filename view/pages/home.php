@@ -63,11 +63,11 @@ include __DIR__ . '/../widgets/navbar.php';
                                 <div class="offcanvas-body">
                                     <form class="row g-3" id="form-add-appointment" method="POST">
                                         <div class="col-md-12">
-                                            <?php include __DIR__ . '/../includes/client/clientList.inc.php'; ?>
+                                            <?php //include __DIR__ . '/../includes/client/clientList.inc.php'; ?>
                                         </div>
 
                                         <div class="col-md-12">
-                                            <?php include __DIR__ . '/../includes/service/serviceList.inc.php'; ?>
+                                            <?php //include __DIR__ . '/../includes/service/serviceList.inc.php'; ?>
                                         </div>
                                         <div class="col-md-12">
                                             <label for="inputAppointmentDate" class="form-label">Date</label>
@@ -87,7 +87,7 @@ include __DIR__ . '/../widgets/navbar.php';
                                             </select>
                                         </div>
                                         <div class="col-md-12">
-                                            <?php include __DIR__ . '/../includes/professional/professionalList.inc.php';?>
+                                            <?php //include __DIR__ . '/../includes/professional/professionalList.inc.php';?>
                                         </div>
 
                                         <div class="col-12">
@@ -137,9 +137,9 @@ include __DIR__ . '/../widgets/navbar.php';
                                                 name="inputServicePrice" value="" required>
                                         </div>
                                         <div class="col-12">
-                                              
-                                            <?php include __DIR__ . '/../includes/professional/professionalListService.inc.php';?>
-                                        
+
+                                            <?php //include __DIR__ . '/../includes/professional/professionalListService.inc.php';?>
+
                                         </div>
                                         <div class="col-12">
                                             <button type="submit" class="btn btn-primary" form="form-add-service"
@@ -219,7 +219,7 @@ include __DIR__ . '/../widgets/navbar.php';
                                                 name="inputProfessionalFullName" required>
                                         </div>
                                         <div class="col-md-12">
-                                            <?php include __DIR__ . '/../includes/user/userEmailList.inc.php';?>
+                                            <?php //include __DIR__ . '/../includes/user/userEmailList.inc.php';?>
                                         </div>
                                         <div class="col-12">
                                             <button type="submit" class="btn btn-primary" form="form-add-professional"
@@ -240,7 +240,7 @@ include __DIR__ . '/../widgets/navbar.php';
             style="max-width: 1070px">
             <?php
 
-            include __DIR__ . '/../widgets/calendar-homeView.php';
+            //include __DIR__ . '/../widgets/calendar-homeView.php';
             ?>
         </div>
 
@@ -251,13 +251,13 @@ include __DIR__ . '/../widgets/navbar.php';
                 <div class="col-sm-6 pe-2 ps-0">
                     <div class="col-sm-12 bg-widget mt-3 p-3 rounded-3 bg-box-shadow-thin">
                         <?php
-                        include __DIR__ . '/../widgets/widgetInfoACSPreview.php';
+                        //include __DIR__ . '/../widgets/widgetInfoACSPreview.php';
                         ?>
                     </div>
                     <div class="col-sm-12 d-flex flex-column bg-widget mt-3 p-3 rounded-3 bg-box-shadow-thin">
                         <h1>home</h1>
                     </div>
-                    
+
 
 
                 </div>
@@ -267,7 +267,7 @@ include __DIR__ . '/../widgets/navbar.php';
                         </h1>
                         <p>AECTEP - ASDASDIh</p>
                     </div>
-                   
+
                 </div>
             </div>
         </div>

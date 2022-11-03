@@ -4,7 +4,7 @@ use controller\ServiceContr;
 
 session_start();
 
-if (isset($_POST["submit"])) {
+if (isset($_POST["inputServiceName"])) {
     //Get dados
     $name = $_POST["inputServiceName"];
     $duration = $_POST["inputServiceDuration"];
@@ -36,5 +36,5 @@ if (isset($_POST["submit"])) {
 
 
     //volta para a home
-    header("location: ../../../index.php?page=home");
+    echo '<div class="alert alert-success">Service Saved</div>';
 }

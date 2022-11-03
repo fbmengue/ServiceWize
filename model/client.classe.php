@@ -78,14 +78,16 @@ class Client extends Database
         INNER JOIN client ON client_clientID=clientID
         INNER JOIN professional ON professional_professionalID=professionalID
         INNER JOIN service ON service_serviceID=serviceID
-        WHERE clientEmail=? AND appointmentDate>=?;');
+        WHERE clientEmail=? AND appointmentDate>=? AND appointmentCanceled=?;');
+
+        $appointmentNotCanceled = 0;
 
         // print_r($name . "\n");
         // print_r($duration . "\n");
         // print_r($price . "\n");
         // exit;
 
-        if (!$stmt->execute(array($userEmail,$todayDate))) {
+        if (!$stmt->execute(array($userEmail,$todayDate,$appointmentNotCanceled))) {
             $stmt = null;
             header("location: ../../../index.php?error=stmtfailed");
 
@@ -104,14 +106,16 @@ class Client extends Database
         INNER JOIN client ON client_clientID=clientID
         INNER JOIN professional ON professional_professionalID=professionalID
         INNER JOIN service ON service_serviceID=serviceID
-        WHERE clientEmail=? AND appointmentDate<?;');
+        WHERE clientEmail=? AND appointmentDate<? AND appointmentCanceled=?;');
+
+        $appointmentNotCanceled = 0;
 
         // print_r($name . "\n");
         // print_r($duration . "\n");
         // print_r($price . "\n");
         // exit;
 
-        if (!$stmt->execute(array($userEmail,$todayDate))) {
+        if (!$stmt->execute(array($userEmail,$todayDate,$appointmentNotCanceled))) {
             $stmt = null;
             header("location: ../../../index.php?error=stmtfailed");
 
@@ -130,15 +134,17 @@ class Client extends Database
         INNER JOIN client ON client_clientID=clientID
         INNER JOIN professional ON professional_professionalID=professionalID
         INNER JOIN service ON service_serviceID=serviceID
-        WHERE clientEmail=? AND appointmentDate>=?
+        WHERE clientEmail=? AND appointmentDate>=? AND appointmentCanceled=?
         order by appointmentDate LIMIT 2;');
+
+        $appointmentNotCanceled = 0;
 
         // print_r($name . "\n");
         // print_r($duration . "\n");
         // print_r($price . "\n");
         // exit;
 
-        if (!$stmt->execute(array($userEmail,$todayDate))) {
+        if (!$stmt->execute(array($userEmail,$todayDate,$appointmentNotCanceled))) {
             $stmt = null;
             header("location: ../../../index.php?error=stmtfailed");
 

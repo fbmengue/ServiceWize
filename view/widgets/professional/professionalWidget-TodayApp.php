@@ -1,6 +1,6 @@
 <?php
 
-use controller\ClientContr;
+use controller\ProfessionalContr;
 
 session_start();
 
@@ -12,33 +12,29 @@ $hoje = date('Y-m-d', time());
 
     //Instancias
     //include __DIR__ . '/../../../model/db.classes.php';
-    include __DIR__ . '/../../../model/client.classe.php';
-    include __DIR__ . '/../../../controller/client-contr.classes.php';
     include __DIR__ . '/../../../model/professional.classe.php';
-    include __DIR__ . '/../../../controller/professional-contr.classes.php';
-    include __DIR__ . '/../../../model/service.classe.php';
-    include __DIR__ . '/../../../controller/service-contr.classes.php';
+   include __DIR__ . '/../../../controller/professional-contr.classes.php';
 
     // New appointment list by date
-    $myAppointmentList = new ClientContr();
+    $myTodayAppointmentList = new ProfessionalContr();
 
     // Roda erros
-     $myClientAppointmentList = $myAppointmentList->getMyClientNextAppointmentByEmail($_SESSION["userEmail"], $hoje);
+     $todayList = $myTodayAppointmentList->getMyTodayAppointmentsByEmail($_SESSION["userEmail"], $hoje);
 
     // print_r("<pre>");
-    // print_r($myClientAppointmentList);
+
     // print_r("</pre>");
 
     //$dateFormatForView = date("d-m-Y", $time);
 
-if (!empty($myClientAppointmentList)) {
+if (!empty($todayList)) {
     ?>
 
 
 
 <div class="row">
     <div class="col-sm-12 pe-2 ps-2">
-        <?php foreach ($myClientAppointmentList as $item) {
+        <?php foreach ($todayList as $item) {
                         $startTime = substr($item['appointmentStartTime'], 0, -3);
                         $endTime = substr($item['appointmentEndTime'], 0, -3);
             ?>
@@ -65,26 +61,29 @@ if (!empty($myClientAppointmentList)) {
                                     id="edit-button-<?php echo $item['appointmentID'] . "-" . $item['appointmentDate']; ?>"
                                     data-bs-toggle="offcanvas" data-bs-target="#offcanvasEditAppointment"
                                     aria-controls="offcanvasEditAppointment"
-                                    onclick="loadAppointmentForClientEdit(this); return false;">Edit</button>
+                                    onclick="loadAppointmentEditForProfessional(this); return false;">Edit</button>
                             </li>
                             <li><button class="dropdown-item" id="cancel-button-<?php echo $item['appointmentID']; ?>"
                                     data-bs-toggle="offcanvas" data-bs-target="#offcanvasCancelAppointment"
                                     aria-controls="offcanvasCancelAppointment"
-                                    onclick="loadAppointmentCancelForClient(this); return false;">Cancel</button>
+                                    onclick="loadAppointmentCancelForProfessional(this); return false;">Cancel</button>
                             </li>
                             <li><button class="dropdown-item">Something else here</button></li>
                         </ul>
 
 
-
                     </div>
+
+
+
+
 
                 </div>
                 <div class="appointment-dayview-service col-sm-12">
                     <h5><?php echo $item['serviceName']; ?></h5>
                 </div>
                 <div class="appointment-dayview-client col-sm-12">
-                    <div><?php echo $item['professionalFullName']; ?></div>
+                    <div><?php echo $item['clientFullName']; ?></div>
                 </div>
             </div>
 
@@ -101,7 +100,7 @@ if (!empty($myClientAppointmentList)) {
 
 <?php
 } else {
-    echo "Sem marcações";
+    echo "No Appointments";
 }
 
 ?>

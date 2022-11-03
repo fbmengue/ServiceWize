@@ -6,7 +6,7 @@ use controller\ServiceContr;
 
 session_start();
 
-if (isset($_POST["selectProfessionalForClientAdd"])) {
+if (isset($_POST["submit"])) {
     //Instancias Appointment
     include __DIR__ . '/../../../model/db.classes.php';
     include __DIR__ . '/../../../model/appointment.classe.php';
@@ -23,14 +23,24 @@ if (isset($_POST["selectProfessionalForClientAdd"])) {
     $newClientData = new ClientContr();
     $newServiceData = new ServiceContr();
 
-    //Get dados
-    $professionalID = $_POST["selectProfessionalForClientAdd"];
+    $appointmentID = $_POST["appID"];
 
-    $serviceArrayID = explode('|', $_POST['selectServiceNameForClientAdd']);
+
+    //Get dados
+    $professionalID = $_POST["selectProfessionalForClient"];
+
+    $serviceArrayID = explode('|', $_POST['selectServiceName-' . $professionalID]);
     $serviceID = $serviceArrayID[0];
 
     $clientDataList = $newClientData->getClientDataListByUserEmail($_SESSION["userEmail"]);
     $clientID = $clientDataList[0]['clientID'];
+
+
+
+
+
+
+
 
     $serviceDataList = $newServiceData->getServiceDataListByID($serviceID);
     $serviceDuration = $serviceDataList[0]['serviceTime'];
@@ -54,15 +64,13 @@ if (isset($_POST["selectProfessionalForClientAdd"])) {
 
 
     //Roda erros
-    if (is_numeric($clientID)) {
-        $newAppointment->addAppointment($clientID, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice);
-    } else {
-        $fullName = $_SESSION["userFullName"];
-        $email = $_SESSION["userEmail"];
-        $birthDate = $_SESSION["userBirthDate"];
-        $mobile = $_SESSION["userMobile"];
-        $newAppointment->addClientAndAppointmentForClient($fullName, $birthDate, $email, $mobile, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice);
-    }
+    $fullName = $_SESSION["userFullName"];
+    $email = $_SESSION["userEmail"];
+    $birthDate = $_SESSION["userBirthDate"];
+    $mobile = $_SESSION["userMobile"];
+
+    $newAppointment->editMyClientAppointmentByID($appointmentID, $clientID, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice);
+
 
 
 
@@ -70,7 +78,5 @@ if (isset($_POST["selectProfessionalForClientAdd"])) {
 
 
     //volta para a home
-    //header("location: ../../../index.php?page=home");
-
-    echo '<div class="alert alert-success">Appointment Saved</div>';
+    header("location: ../../../index.php?page=home");
 }

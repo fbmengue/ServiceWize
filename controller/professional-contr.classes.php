@@ -39,4 +39,15 @@ class ProfessionalContr extends Professional
         $results = $this->getProfessional();
         return $results;
     }
+    public function getProfessionalListByEmail($userEmail)
+    {
+        $results = $this->getProfessionalByEmail($userEmail);
+        return $results;
+    }
+
+    public function getMyTodayAppointmentsByEmail($userEmail, $todayDate)
+    {
+        $results = $this->getTodayAppointmentsByEmail($userEmail, $todayDate);
+        return $results;
+    }
 }

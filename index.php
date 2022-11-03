@@ -1,11 +1,11 @@
 <?php
 
  // add the pagenames In session login
-$allowedLogin = array('index','home','calendar/dayView');
+$allowedLogin = array('index','home','calendar/dayView','user/account');
  // add the pagenames In session login
- $allowedLoginProfessional = array('index','professional/home','calendar/professional/dayView');
+ $allowedLoginProfessional = array('index','professional/home','calendar/professional/dayView','user/account');
   // add the pagenames In session login
-$allowedLoginClient = array('index','client/home');
+$allowedLoginClient = array('index','client/home','user/account');
 // add the pagenames
 $allowedLogout = array('register', 'login', 'index', 'forgotPassword');
 session_start();

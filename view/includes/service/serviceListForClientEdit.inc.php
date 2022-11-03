@@ -3,8 +3,8 @@
 use controller\ServiceContr;
 
 session_start();
-if (isset($_POST['selectProfessionalForClientAdd'])) {
-    $professionalID = $_POST['selectProfessionalForClientAdd'];
+if (isset($_POST['selectProfessionalForClientEdit'])) {
+    $professionalID = $_POST['selectProfessionalForClientEdit'];
 
 
     //Instancias
@@ -27,9 +27,9 @@ if (isset($_POST['selectProfessionalForClientAdd'])) {
     // exit;
     ?>
 <div class="col-md-12 p-0" data-add="<?php echo $professionalID?>">
-    <label for="selectServiceNameForClientAdd" class="form-label">Service</label>
-    <select id="selectServiceNameForClientAdd" name="selectServiceNameForClientAdd"
-        onchange="showServiceDurationPrice();" class="form-select form_data" placeholder="">
+    <label for="selectServiceNameForClientEdit" class="form-label">Service</label>
+    <select id="selectServiceNameForClientEdit" name="selectServiceNameForClientEdit"
+        onchange="showServiceDurationPriceEdit(); return false;" class="form-select form_data_edit" placeholder="">
         <option value=""></option>
         <?php
         foreach ($serviceList as $itemService) {
@@ -47,8 +47,8 @@ if (isset($_POST['selectProfessionalForClientAdd'])) {
 </div>
 
 <div class="col-md-6 ps-0 pe-3" data-add="<?php echo $professionalID?>">
-    <label for="selectServiceDurationForClientAdd" class="form-label">Duration</label>
-    <select id="selectServiceDurationForClientAdd" name="selectServiceDurationForClientAdd" class="form-select"
+    <label for="selectServiceDurationForClientEdit" class="form-label">Duration</label>
+    <select id="selectServiceDurationForClientEdit" name="selectServiceDurationForClientEdit" class="form-select"
         placeholder="" disabled>
         <option value=""></option>
         <?php
@@ -66,9 +66,9 @@ if (isset($_POST['selectProfessionalForClientAdd'])) {
 </div>
 
 <div class="col-md-6 ps-3 pe-0" data-add="<?php echo $professionalID?>">
-    <label for="selectServicePriceForClientAdd" class="form-label">Price</label>
-    <select id="selectServicePriceForClientAdd" name="selectServicePriceForClientAdd" class="form-select" placeholder=""
-        disabled>
+    <label for="selectServicePriceForClientEdit" class="form-label">Price</label>
+    <select id="selectServicePriceForClientEdit" name="selectServicePriceForClientEdit" class="form-select"
+        placeholder="" disabled>
         <option value=""></option>
         <?php
         foreach ($serviceList as $itemService) {

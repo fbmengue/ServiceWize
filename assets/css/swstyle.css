@@ -205,7 +205,7 @@ box-shadow: 2px 1px 12px -7px #01261c7a;
     text-transform: uppercase;
     
 }
-.my-profile-form input{
+.my-profile-form .profile-data{
   margin-top: 1.25rem!important;
   border: 0px;
   background: transparent;
@@ -219,7 +219,7 @@ box-shadow: 2px 1px 12px -7px #01261c7a;
   padding: 10px 0px;
   letter-spacing: 2px;
 }
-.my-profile-form input:focus{
+.my-profile-form .profile-data:focus{
   outline: 0;
   box-shadow: 0px 0px 0px 3px #58987352;
   border-image: linear-gradient(to right, #3fb6a800, rgb(126 211 134 / 0%)) 1 0%;
@@ -229,10 +229,14 @@ box-shadow: 2px 1px 12px -7px #01261c7a;
 
 .edit-my-profile{
   color: #f4eee1;
+  text-decoration: none;
+  transition: all 0.2s ease-in;
 }
 .edit-my-profile:hover{
   box-shadow: 0 0px 8px 3px rgb(255 255 255 / 97%), 0 0px 10px 0 #589873;
   background: #5c7e6a;
+  color: #f4eee1;
+  transition: all 0.2s ease-in;
 }
 
 /* CSS for DropDown / NAV */
@@ -419,7 +423,7 @@ padding: 10px 0px;
   background-color: white;
     padding: 10px;
     border-radius: 20px 20px 0px 0px;
-    transform: translateY(21px);
+    transform: translateY(26px);
     transition-duration: 0.3s;
 }
 .today .calendar-number .calendar-service-per-day{
@@ -437,9 +441,17 @@ padding: 10px 0px;
 .pass-day-selected .calendar-number .calendar-service-per-day{
   background-color: #767676;
 }
-
+.appointment-dayview .appointment-dayview-header div.alert-success{
+  color: #0f5132 !important;
+}
 .appointment-dayview .appointment-dayview-header div{
   color: #8F9BB3;
+}
+.appointment-dayview .appointment-dayview-header div.item{
+  color: #212529;
+}
+.appointment-dayview .appointment-dayview-header div.option{
+  color: #212529;
 }
 .appointment-dayview .appointment-dayview-service h5{
   margin-top: 0.5rem;
@@ -484,6 +496,9 @@ padding: 10px 0px;
 div.appointment-dot-actions.dropdown-toggle::after{
   border-top: 0;
   border-right: 0;
+}
+iframe{
+  display: none;
 }
 .appointment-dot-actions::before, .appointment-dot-actions::after {
   content: '';
@@ -540,7 +555,13 @@ background: #589873;
   border: 1px solid #3FB6A8;
   border-radius: 12px;
   padding: 10px;
+  transition: all 0.2s ease-in;
 
+}
+.appointment-content.row:hover {
+  background: #eaeaea;
+  box-shadow: 3px 4px 12px 0px #c7c5c5;
+  transition: all 0.2s ease-in;
 }
 .appointment-content-past{
   border: 1px solid #8F9BB3;
@@ -738,6 +759,14 @@ background: #589873;
 }
 .right-col{
   padding-right: 0.5rem!important;
+}
+.client-new-appointment{
+  display: none;
+}
+
+.today .calendar-number{
+    transform: translateY(22px);
+
 }
 
 
@@ -1194,7 +1223,12 @@ body {
     padding: 5px 0;
   }
 }
-
+.invalid-form-data{
+border-color: #f5c2c7;
+outline: 0;
+box-shadow: 0 0 0 0.25rem #f8d7da;
+color: #842029;
+}
 .form__input {
   width: 100%;
   color: #333;

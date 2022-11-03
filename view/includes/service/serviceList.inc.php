@@ -18,15 +18,17 @@ session_start();
 ?>
 <label for="selectServiceName" class="form-label">Service</label>
 <select id="selectServiceName" name="selectServiceName" placeholder="">
-<option value=""></option>
+    <option value=""></option>
     <?php
     foreach ($serviceList as $itemService) {
         ?>
 
-    <option value="<?php echo $itemService['serviceID'] . "|" . $itemService['time'] . "|" . $itemService['servicePrice'] ?>"><?php echo $itemService['serviceName'] ?></option>
+    <option
+        value="<?php echo $itemService['serviceID'] . "|" . $itemService['time'] . "|" . $itemService['servicePrice'] ?>">
+        <?php echo $itemService['serviceName'] ?></option>
 
 
-        <?php
+    <?php
     }
     ?>
 </select>
@@ -34,31 +36,35 @@ session_start();
 <div class="col-md-6">
     <label for="selectServiceDuration" class="form-label">Duration</label>
     <select id="selectServiceDuration" name="selectServiceDuration" class="form-select" placeholder="">
-    <option value=""></option>
-    <?php
-    foreach ($serviceList as $itemService) {
-        ?>
+        <option value=""></option>
+        <?php
+        foreach ($serviceList as $itemService) {
+            ?>
 
-        <option value="<?php echo $itemService['serviceID'] . "|" . $itemService['time'] . "|" . $itemService['servicePrice']  ?>"><?php echo $itemService['time'] ?></option>
+        <option
+            value="<?php echo $itemService['serviceID'] . "|" . $itemService['time'] . "|" . $itemService['servicePrice']  ?>">
+            <?php echo $itemService['time'] ?></option>
 
 
         <?php
-    }
-    ?>
-</select>
+        }
+        ?>
+    </select>
 </div>
 <div class="col-md-6">
     <label for="selectServicePrice" class="form-label">Price</label>
     <select id="selectServicePrice" name="selectServicePrice" class="form-select" placeholder="">
         <option value=""></option>
-    <?php
-    foreach ($serviceList as $itemService) {
-        ?>
+        <?php
+        foreach ($serviceList as $itemService) {
+            ?>
 
-        <option value="<?php echo $itemService['serviceID'] . "|" . $itemService['time'] . "|" . $itemService['servicePrice']  ?>"><?php echo $itemService['servicePrice'] ?></option>
+        <option
+            value="<?php echo $itemService['serviceID'] . "|" . $itemService['time'] . "|" . $itemService['servicePrice']  ?>">
+            <?php echo $itemService['servicePrice'] ?></option>
 
 
         <?php
-    }
-    ?>
-</select>
+        }
+        ?>
+    </select>

@@ -33,6 +33,8 @@ class ClientContr extends Client
         return $result;
     }
 
+
+
     public function getClientDataListByUserEmail($userEmail)
     {
         $results = $this->getClientDataByUserEmail($userEmail);
@@ -54,6 +56,8 @@ class ClientContr extends Client
         $results = $this->getMyNextAppointmentByEmail($userEmail, $todayDate);
         return $results;
     }
+
+
 
     public function getClientList()
     {

@@ -13,11 +13,31 @@ class AppointmentContr extends Appointment
     public function addAppointment($clientID, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice)
     {
         if ($this->campoVazio($clientID, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice) == false) {
-            header("location:../../index.php?page=register&error=campovazio");
+            //header("location:../../index.php?page=register&error=campovazio");
+            echo '<div class="alert alert-danger">Fill all Fields</div>';
             exit();
         }
 
         $this->setAppointment($clientID, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice);
+    }
+
+    public function editMyClientAppointmentByID($appointmentID, $clientID, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice)
+    {
+
+        $this->setMyAppointmentByID($appointmentID, $clientID, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice);
+    }
+
+    public function cancelAppointment($appointmentID)
+    {
+        $this->cancelAppointmentByID($appointmentID);
+    }
+    public function cancelAppointmentForProfessional($userEmail, $appointmentID)
+    {
+        $this->cancelAppointmentByIDProfessionalEmail($userEmail, $appointmentID);
+    }
+    public function cancelAppointmentForClient($userEmail, $appointmentID)
+    {
+        $this->cancelAppointmentByIDClientEmail($userEmail, $appointmentID);
     }
 
 
@@ -57,6 +77,23 @@ class AppointmentContr extends Appointment
     }
 
 
+    public function getAppointmentDataListByIDEmail($appointmentID, $userEmail, $appointmentDate)
+    {
+
+
+        $results = $this->getAppointmentDataByIDEmail($appointmentID, $userEmail, $appointmentDate);
+
+        return $results;
+    }
+
+
+    public function getTimeAvailableByProfessionalDateService($professionalID, $serviceID, $appointmentDate)
+    {
+
+        $results = $this->getHoursAvailableByProfessionalDateService($professionalID, $serviceID, $appointmentDate);
+
+        return $results;
+    }
 
     public function getAppointmentsPerDayList()
     {

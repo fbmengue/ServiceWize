@@ -83,15 +83,15 @@ if (empty($_GET['date'])) {
 
      //Instancias
     //include __DIR__ . '/../../model/db.classes.php';
-    include __DIR__ . '/../../model/appointment.classe.php';
-    include __DIR__ . '/../../controller/appointment-contr.classes.php';
+    //include __DIR__ . '/../../model/appointment.classe.php';
+    //include __DIR__ . '/../../controller/appointment-contr.classes.php';
 
 
     //New appointment list by date
-    $servicePerDayListHome = new AppointmentContr();
+    //$servicePerDayListHome = new AppointmentContr();
 
     //Roda erros
-    $appointmentPerDayListHome = $servicePerDayListHome->getAppointmentsPerDayList();
+    //$appointmentPerDayListHome = $servicePerDayListHome->getAppointmentsPerDayList();
     // print_r("<pre>");
     // print_r($appointmentPerDayList);
     // print_r("</pre>");
@@ -109,8 +109,7 @@ if (empty($_GET['date'])) {
             <a href="?page=home&date=<?php echo $hoje ?>&texto=0">HOJE</a>
             <div><?php echo $dateFormatForView?></div>
             <div class="next-week d-flex flex-column justify-content-center">
-                <a
-                    href="?page=home&date=<?php echo $_GET['date'] ?>&texto=<?php echo $CurrentDayNext; ?>">&gt;</a>
+                <a href="?page=home&date=<?php echo $_GET['date'] ?>&texto=<?php echo $CurrentDayNext; ?>">&gt;</a>
             </div>
         </div>
 

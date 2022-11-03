@@ -23,4 +23,9 @@ class UserContr extends User
         $results = $this->getMyProfile($userID);
         return $results;
     }
+    public function setMyUserProfileByID($userID, $fullName, $email, $mobile, $birthDate)
+    {
+
+        $this->setUserProfileByID($userID, $fullName, $email, $mobile, $birthDate);
+    }
 }

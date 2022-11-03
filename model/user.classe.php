@@ -42,4 +42,23 @@ class User extends Database
         $stmt = null;
         return $results;
     }
+    protected function setUserProfileByID($userID, $fullName, $email, $mobile, $birthDate)
+    {
+
+        $stmt = $this->connect()->prepare("UPDATE user
+        SET userFullName=?, userEmail=?, userMobile=?, userBirthDate=?
+        WHERE userID=?;");
+
+
+        if (!$stmt->execute(array($fullName, $email, $mobile, $birthDate,$userID))) {
+            $stmt = null;
+            header("location: ../../../index.php?error=stmtfailed");
+
+            exit();
+        }
+
+
+
+        $stmt = null;
+    }
 }

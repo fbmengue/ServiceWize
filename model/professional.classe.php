@@ -90,4 +90,54 @@ class Professional extends Database
         $stmt = null;
         return $results;
     }
+    protected function getProfessionalByEmail($userEmail)
+    {
+        $stmt = $this->connect()->prepare('SELECT * from professional WHERE professionalEmail=?;');
+
+        // print_r($name . "\n");
+        // print_r($duration . "\n");
+        // print_r($price . "\n");
+        // exit;
+
+        if (!$stmt->execute([$userEmail])) {
+            $stmt = null;
+            header("location: ../../../index.php?error=stmtfailed");
+
+            exit();
+        }
+
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $stmt = null;
+        return $results;
+    }
+
+    protected function getTodayAppointmentsByEmail($userEmail, $todayDate)
+    {
+        $stmt = $this->connect()->prepare('SELECT *
+        FROM appointment
+        INNER JOIN client ON client_clientID=clientID
+        INNER JOIN professional ON professional_professionalID=professionalID
+        INNER JOIN service ON service_serviceID=serviceID
+        WHERE professionalEmail=? AND appointmentDate=? AND appointmentCanceled=?;');
+
+        $appointmentNotCanceled = 0;
+
+        // print_r($name . "\n");
+        // print_r($duration . "\n");
+        // print_r($price . "\n");
+        // exit;
+
+        if (!$stmt->execute(array($userEmail,$todayDate,$appointmentNotCanceled))) {
+            $stmt = null;
+            header("location: ../../../index.php?error=stmtfailed");
+
+            exit();
+        }
+
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $stmt = null;
+        return $results;
+    }
 }

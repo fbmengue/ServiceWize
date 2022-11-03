@@ -4,7 +4,7 @@ use controller\ClientContr;
 
 session_start();
 
-if (isset($_POST["submit"])) {
+if (isset($_POST["inputClientEmail"])) {
     //Get dados
     $fullName = $_POST["inputClientFullName"];
     $email = $_POST["inputClientEmail"];
@@ -27,5 +27,5 @@ if (isset($_POST["submit"])) {
 
 
     //volta para a home
-    header("location: ../../../index.php?page=home");
+    echo '<div class="alert alert-success">Client Saved</div>';
 }
