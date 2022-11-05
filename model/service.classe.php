@@ -98,6 +98,29 @@ class Service extends Database
         $stmt = null;
         return $results;
     }
+    protected function getServicesByProfessionalEmail($professionalEmail)
+    {
+        $stmt = $this->connect()->prepare("SELECT *, date_format(serviceTime, '%H:%i') as 'time' from service
+        INNER JOIN professional ON professional_professionalID=professionalID;
+        WHERE professionalEmail=?");
+
+        // print_r($name . "\n");
+        // print_r($duration . "\n");
+        // print_r($price . "\n");
+        // exit;
+
+        if (!$stmt->execute([$professionalEmail])) {
+            $stmt = null;
+            header("location: ../../../index.php?error=stmtfailed");
+
+            exit();
+        }
+
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $stmt = null;
+        return $results;
+    }
 
     protected function getServiceByID($serviceID)
     {

@@ -112,6 +112,10 @@ box-shadow: 2px 1px 12px -7px #01261c7a;
 }
 
 /* CSS for Input */
+.selectize-control .selectize-input.disabled{
+  background-color: #e9ecef !important;
+    opacity: 1 !important;
+}
 .input-outline:focus{
   outline: 0;
   border-color: #ebddca !important;

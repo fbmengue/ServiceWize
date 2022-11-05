@@ -272,6 +272,7 @@ include __DIR__ . '/../../../controller/service-contr.classes.php';
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body" id="offcanvas-body-edit">
+                <span id="messageProfessionalAppEdit"></span>
                 <form class="row g-3" id="form-professional-edit-appointment" method="POST">
 
 

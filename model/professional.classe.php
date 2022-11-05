@@ -111,6 +111,28 @@ class Professional extends Database
         $stmt = null;
         return $results;
     }
+    protected function getProfessionalIDByEmail($userEmail)
+    {
+        $stmt = $this->connect()->prepare('SELECT professionalID from professional WHERE professionalEmail=?;');
+
+        // print_r($name . "\n");
+        // print_r($duration . "\n");
+        // print_r($price . "\n");
+        // exit;
+
+        if (!$stmt->execute([$userEmail])) {
+            $stmt = null;
+            header("location: ../../../index.php?error=stmtfailed");
+
+            exit();
+        }
+
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $resultID = $results[0]['professionalID'];
+
+        $stmt = null;
+        return $resultID;
+    }
 
     protected function getTodayAppointmentsByEmail($userEmail, $todayDate)
     {

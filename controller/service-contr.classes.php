@@ -48,6 +48,12 @@ class ServiceContr extends Service
         $results = $this->getServicesByProfessionalID($professionalID);
         return $results;
     }
+    public function getServiceListByProfessionalEmail($professionalID)
+    {
+        $results = $this->getServicesByProfessionalEmail($professionalID);
+        return $results;
+    }
+
     public function getServiceList()
     {
         $results = $this->getServices();

@@ -98,6 +98,109 @@ $(function() {
     });
   })
 
+  //Enable Client Name Search on Professioanl Appointment Edit
+ 
+function selectizeClientAppointmentEdit() {
+  
+  
+  $(function() {
+    $('#selectClientNameEdit').selectize({
+      sortField: 'text',
+    });
+    $("#selectClientNameEdit").change(function() {
+      var d = new Date();
+      var now = d.getTime();
+      var upd = localStorage.getItem('updating_date');
+      if(!upd) {
+        localStorage.setItem('updating_date', now);
+      } 
+
+      // Only trigger the change if we're on the initial call - one millisecond later we won't be, preventing the loop
+      if(localStorage.getItem('updating_date') == d.getTime()) {
+        $('#selectClientEmailEdit').data('selectize').setValue($(this).val());
+        $("#selectClientBirthDateEdit").data('selectize').setValue($(this).val());
+        $("#selectClientMobileEdit").data('selectize').setValue($(this).val());
+      }
+      setTimeout(function() {
+        localStorage.removeItem('updating_date');
+      }, 1);
+    });
+  })
+
+
+  //Enable Client Email Search on Professioanl Appointment Edit
+  $(function() {
+    $('#selectClientEmailEdit').selectize({
+      sortField: 'text',
+    });
+    $("#selectClientEmailEdit").change(function() {
+      var d = new Date();
+      var now = d.getTime();
+      var upd = localStorage.getItem('updating_date');
+      if(!upd) {
+        localStorage.setItem('updating_date', now);
+      } 
+
+      // Only trigger the change if we're on the initial call - one millisecond later we won't be, preventing the loop
+      if(localStorage.getItem('updating_date') == d.getTime()) {
+        $('#selectClientNameEdit').data('selectize').setValue($(this).val());
+        $("#selectClientBirthDateEdit").data('selectize').setValue($(this).val());
+        $("#selectClientMobileEdit").data('selectize').setValue($(this).val());
+      }
+      setTimeout(function() {
+        localStorage.removeItem('updating_date');
+      }, 1);
+    });
+  })
+   //Enable Client Birth Date creation
+   $(function() {
+    $('#selectClientBirthDateEdit').selectize({
+      
+      
+    });
+  })
+
+ //Enable Client Mobile Search on Professioanl Appointment Edit
+  $(function() {
+    $('#selectClientMobileEdit').selectize({
+      sortField: 'text',
+    });
+    $("#selectClientMobileEdit").change(function() {
+      var d = new Date();
+      var now = d.getTime();
+      var upd = localStorage.getItem('updating_date');
+      if(!upd) {
+        localStorage.setItem('updating_date', now);
+      } 
+
+      // Only trigger the change if we're on the initial call - one millisecond later we won't be, preventing the loop
+      if(localStorage.getItem('updating_date') == d.getTime()) {
+        $('#selectClientNameEdit').data('selectize').setValue($(this).val());
+        $("#selectClientBirthDateEdit").data('selectize').setValue($(this).val());
+        $("#selectClientEmailEdit").data('selectize').setValue($(this).val());
+      }
+      setTimeout(function() {
+        localStorage.removeItem('updating_date');
+      }, 1);
+
+
+    });
+  })
+}
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
   //Enable Service search
   $(function() {
     $('#selectServiceName').selectize({
@@ -289,6 +392,16 @@ function showServiceDurationPriceEdit(){
   
 }
 
+function showServiceDurationPriceEditForProfessional(){
+  var serviceValue = document.getElementById('selectServiceNameForProfessionalEdit').value;
+  document.getElementById('selectServiceDurationForProfessionalEdit').value = serviceValue;
+  document.getElementById('selectServicePriceForProfessionalEdit').value = serviceValue;
+
+  $('#inputAppointmentTimeEdit').empty();
+  document.getElementById('inputAppointmentDateEdit').value = "";
+
+  
+}
 
 
 
@@ -815,6 +928,66 @@ function showHoursAvailableForProfessional()
 }
 
 /**
+ * Method for Display hour available base on date and service duration for professional user edit appointment
+ * @returns success or error msg
+ */
+ function showHoursAvailableEditForProfessional()
+ {
+   var appointmentDate = document.getElementById('inputAppointmentDateEdit').value;
+ 
+   if(isFutureDateConsulta(appointmentDate)){
+     var appointmentService = document.getElementById('selectServiceNameForProfessionalEdit').value;
+     
+     if(!(appointmentService == "")){
+       document.getElementById('messageProfessionalAppEdit').innerHTML = "";
+       var appointmentDate = document.getElementById('inputAppointmentDateEdit').value;
+       var appointmentService = document.getElementById('selectServiceNameForProfessionalEdit').value;
+ 
+       var form_data = new FormData();
+ 
+       
+       form_data.append('appointmentDate', appointmentDate);
+       form_data.append('appointmentService', appointmentService);
+       
+ 
+       //document.getElementById('submit').disabled = true;
+ 
+       var ajax_request = new XMLHttpRequest();
+ 
+       ajax_request.open('POST', 'http://localhost/servicewise/ServiceWize/view/includes/professional/appointmentTimeSelectEdit.inc.php');
+ 
+       ajax_request.send(form_data);
+       
+ 
+       ajax_request.onreadystatechange = function()
+       {
+         
+         if(ajax_request.readyState == 4 && ajax_request.status == 200)
+         {
+           //document.getElementById('submit').disabled = false;
+ 
+           
+           //var response = JSON.parse(ajax_request.responseText);
+ 
+             //document.getElementById('form-add-appointment').reset();
+             //document.getElementById('addSelectProfessionalForClient').reset();
+             
+             
+             document.getElementById('divInputAppointmentTimeProfessionalEdit').innerHTML = ajax_request.responseText;
+         }
+       }
+     }else{
+       document.getElementById('messageProfessionalAppEdit').innerHTML = '<div class="alert alert-danger">Choose a Service</div>';
+       $('#inputAppointmentTimeEdit').empty();
+     }
+   }else{
+     document.getElementById('messageProfessionalAppEdit').innerHTML = '<div class="alert alert-danger">Date Must be future</div>';
+     $('#inputAppointmentTimeEdit').empty();
+   }
+ }
+
+
+/**
  * Method for save Appointment data for professional user
  * @returns success or error msg
  */
@@ -880,6 +1053,67 @@ function saveAppointmentForProfessional()
     // }
 	}
 }
+
+/**
+ * Method for edit Appointment data for professional user
+ * @returns success or error msg
+ */
+ function saveAppointmentEditForProfessional(objButton)
+ {
+    buttonID = objButton.id;
+    
+    appointmentID = buttonID.split('-');
+   var form_element = document.getElementById('form-professional-edit-appointment').getElementsByClassName('form_data_edit');
+ 
+   var form_data = new FormData();
+ 
+   for(var count = 0; count < form_element.length; count++)
+   {
+     if(form_element[count].value == ""){
+       document.getElementById('messageProfessionalAppEdit').innerHTML = '<div class="alert alert-danger">Complete All Fields</div>';
+       return false; 
+     }else{
+       form_data.append(form_element[count].name, form_element[count].value);
+     }
+   }
+   form_data.append('appointmentID', appointmentID[1]);
+ 
+   document.getElementById(buttonID).disabled = true;
+ 
+   var ajax_request = new XMLHttpRequest();
+ 
+   ajax_request.open('POST', 'http://localhost/servicewise/ServiceWize/view/includes/appointment/appointmentEditForProf.inc.php');
+ 
+   ajax_request.send(form_data);
+   
+ 
+   ajax_request.onreadystatechange = function()
+   {
+     
+     if(ajax_request.readyState == 4 && ajax_request.status == 200)
+     {
+       document.getElementById(buttonID).disabled = false;
+ 
+       
+         
+         document.getElementById('messageProfessionalAppEdit').innerHTML = ajax_request.responseText;
+ 
+         setTimeout(function(){
+ 
+           document.getElementById('messageProfessionalAppEdit').innerHTML = '';
+           
+ 
+         }, 5000);
+ 
+         $("#professionalContents").load(location.href+" #professionalContents>*","");
+         $("#professionalCalendarHome").load(location.href+" #professionalCalendarHome>*","");
+ 
+         
+       
+     }
+   
+   }
+ }
 
 
 /**
@@ -1040,13 +1274,11 @@ function saveClientForProfessional()
 
 function loadAppointmentEditForProfessional(objButton)
 {
-  //debugger;
+  
   buttonID = objButton.id;
   
   appointmentID = buttonID.split('-');
-  console.log(appointmentID[2]);
-  appointmentDate = appointmentID[3]+"-"+appointmentID[4]+"-"+appointmentID[5]
-  console.log(appointmentDate);
+  appointmentDate = appointmentID[3]+"-"+appointmentID[4]+"-"+appointmentID[5];
 	//var form_element = document.getElementById('form_data_cancel_'+appointmentID[1]);
 	var form_data = new FormData();
 
@@ -1058,7 +1290,7 @@ function loadAppointmentEditForProfessional(objButton)
 
 	var ajax_request = new XMLHttpRequest();
 
-	ajax_request.open('POST', 'http://localhost/servicewise/ServiceWize/view/includes/appointment/clientAppointmentListData.inc.php');
+	ajax_request.open('POST', 'http://localhost/servicewise/ServiceWize/view/includes/appointment/professionalAppointmentListData.inc.php');
 
 	ajax_request.send(form_data);
   
@@ -1078,6 +1310,8 @@ function loadAppointmentEditForProfessional(objButton)
         
         
 				document.getElementById('form-professional-edit-appointment').innerHTML = ajax_request.responseText;
+
+        selectizeClientAppointmentEdit();
 
 				// setTimeout(function(){
 

@@ -133,6 +133,8 @@ class Appointment extends Database
         $stmt5 = $this->connect()->prepare('UPDATE appointment 
         SET appointmentCanceled=? WHERE appointmentID = ?;');
 
+
+
         $appointmentCanceled = 1;
         // print_r($name . "\n");
         // print_r($duration . "\n");
@@ -203,6 +205,25 @@ class Appointment extends Database
         $stmt2 = null;
         $stmt3 = null;
         $stmt4 = null;
+    }
+
+    protected function setMyProfessionalAppointmentByID($appointmentID, $clientID, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice)
+    {
+        $stmt = $this->connect()->prepare('UPDATE appointment
+        SET client_clientID=?, service_serviceID=?, appointmentDate=?, appointmentStartTime=?, appointmentEndTime=?,appointmentDuration=?,appointmentPrice=?
+        WHERE appointmentID=? AND professional_professionalID=?;');
+
+
+        if (!$stmt->execute(array($clientID,$serviceID, $appointmentDate,$appointmentStartTime,$appointmentEndTime, $serviceDuration, $servicePrice,$appointmentID,$professionalID))) {
+            $stmt = null;
+            header("location: ../../../index.php?error=stmtfailed");
+
+            exit();
+        }
+
+
+
+        $stmt = null;
     }
 
     protected function cancelAppointmentByID($appointmentID)
@@ -418,6 +439,41 @@ class Appointment extends Database
         $stmt = null;
         return $results;
     }
+
+    protected function getProfAppointmentDataByIDEmail($appointmentID, $userEmail, $appointmentDate)
+    {
+        $stmt = $this->connect()->prepare('SELECT *, date_format(appointmentStartTime, "%H:%i") as "appointmentTime" from appointment
+        INNER JOIN client ON client_clientID=clientID
+        INNER JOIN professional ON professional_professionalID=professionalID
+        INNER JOIN service ON service_serviceID=serviceID 
+        WHERE appointmentID=? and professionalEmail=? and appointmentDate=? and appointmentCanceled=?;');
+
+
+
+
+        // print_r($name . "\n");
+        // print_r($duration . "\n");
+        $appointmentCanceled = 0;
+
+
+        if (!$stmt->execute(array($appointmentID,$userEmail,$appointmentDate,$appointmentCanceled))) {
+            $stmt = null;
+            //header("location: ../../../index.php?error=stmtfailed");
+            echo "Error Mysql";
+            exit();
+        }
+
+
+
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+
+
+        $stmt = null;
+        return $results;
+    }
+
 
 
 

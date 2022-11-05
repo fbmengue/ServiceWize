@@ -24,7 +24,14 @@ class AppointmentContr extends Appointment
     public function editMyClientAppointmentByID($appointmentID, $clientID, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice)
     {
 
+
         $this->setMyAppointmentByID($appointmentID, $clientID, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice);
+    }
+
+    public function editMyProfessionalAppointmentByID($appointmentID, $clientID, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice)
+    {
+
+        $this->setMyProfessionalAppointmentByID($appointmentID, $clientID, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice);
     }
 
     public function cancelAppointment($appointmentID)
@@ -82,6 +89,14 @@ class AppointmentContr extends Appointment
 
 
         $results = $this->getAppointmentDataByIDEmail($appointmentID, $userEmail, $appointmentDate);
+
+        return $results;
+    }
+    public function getProfAppointmentDataListByIDEmail($appointmentID, $userEmail, $appointmentDate)
+    {
+
+
+        $results = $this->getProfAppointmentDataByIDEmail($appointmentID, $userEmail, $appointmentDate);
 
         return $results;
     }
