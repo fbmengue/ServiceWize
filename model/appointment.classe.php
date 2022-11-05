@@ -489,6 +489,7 @@ class Appointment extends Database
 
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+
         $stmt = null;
         return $results;
     }

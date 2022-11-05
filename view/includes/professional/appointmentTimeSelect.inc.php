@@ -141,6 +141,7 @@ if (isset($_POST["professionalID"])) {
     $serviceDurationBegin = '00:00';
     $serviceDurationBeginTimeStamp = strtotime($serviceDurationBegin);
     $serviceDurationTimeStamp = strtotime($serviceDuration);
+
     while ($serviceDurationTimeStamp > $serviceDurationBeginTimeStamp) {
         $interval_timestamp = $serviceDurationBeginTimeStamp += 60 * 30;
         $timeDurationAvailable[] = date('H:i', $interval_timestamp);//output as needed.
@@ -150,8 +151,9 @@ if (isset($_POST["professionalID"])) {
     } else {
         $arrayAvailableFinal = $timeAvailableArray;
     }
-
-
+    // print_r("<pre>");
+    // print_r($timeDurationAvailable);
+    // print_r("</pre>");
 
     if (!empty($arrayAvailableFinal)) {
         foreach ($arrayAvailableFinal as $key => $item) {
@@ -164,6 +166,8 @@ if (isset($_POST["professionalID"])) {
             //     continue;
             // }
             $startSlots = 0;
+            unset($arrayTemp);
+            $arrayTemp[] = [];
 
             while ($startSlots < $durationSlots) {
                 $nextKey = key($arrayAvailableFinal);
@@ -172,24 +176,26 @@ if (isset($_POST["professionalID"])) {
 
 
                 if (($key + $startSlots + 1) === $nextKeyFunction) {
-                    $arrayTemp[] = $key . " " . $startSlots . " " . $nextKeyFunction;
-                } else {
-                    if ((($startSlots + 1) === $durationSlots)) {
-                        if (!($key + $startSlots + 1 === $nextKeyFunction)) {
-                            unset($arrayTemp);
-                        }
-                    }
+                    $arrayTemp[] = $key . " " . $startSlots . " " . $nextKeyFunction ;
+                    $timeNotAvailableTESTE3[] = $currentElement;
                 }
+                //else {
+                //     if ((($startSlots + 1) === $durationSlots)) {
+                //         if (!($key + $startSlots + 1 === $nextKeyFunction)) {
+                //             unset($arrayTemp);
+                //         }
+                //     }
+                // }
 
 
-                    $timeNotAvailableTESTE[] = $key   . " " . $startSlots . " " . $nextKeyFunction;
-                    $nextElement = next($arrayAvailableFinal);
+                $timeNotAvailableTESTE[] = $key   . " " . $startSlots . " " . $nextKeyFunction . " " . $currentElement;
+                $nextElement = next($arrayAvailableFinal);
 
 
                 $startSlots += 1;
             }
-
-            if (!empty($arrayTemp)) {
+            $teste[] = count($arrayTemp) - 1 . " " . $durationSlots;
+            if ((!empty($arrayTemp)) && count($arrayTemp) - 1 == $durationSlots) {
                 $arrayAvailableAppService[] = $currentElement;
             }
             //reset($arrayAvailableFinal);
@@ -203,65 +209,38 @@ if (isset($_POST["professionalID"])) {
             //$timeNotAvailableTESTE[] = date('H:i', $interval_timestamp);//output as needed.
         }
     } else {
-        foreach ($timeAvailableArray as $key => $item) {
-            $currentElement = $item;
-            $nextElement = next($timeAvailableArray);
-
-            $durationSlots = count($timeDurationAvailable);
-            // if (!($key + 1 === key($arrayAvailableFinal)) || $key === array_key_last($timeAvailableArray)) {
-            //     $timeNotAvailableTESTE[] = $key . " " . $currentElement;
-            //     continue;
-            // }
-            $startSlots = 0;
-
-            while ($startSlots < $durationSlots) {
-                $nextKey = key($timeAvailableArray);
-
-                $nextKeyFunction = prefix_get_next_key_array($timeAvailableArray, $key + $startSlots);
-
-
-                if (($key + $startSlots + 1) === $nextKeyFunction) {
-                    $arrayTemp[] = $key . " " . $startSlots . " " . $nextKeyFunction;
-                } else {
-                    if ((($startSlots + 1) === $durationSlots)) {
-                        if (!($key + $startSlots + 1 === $nextKeyFunction)) {
-                            unset($arrayTemp);
-                        }
-                    }
-                }
-
-
-                    $timeNotAvailableTESTE[] = $key   . " " . $startSlots . " " . $nextKeyFunction;
-                    $nextElement = next($timeAvailableArray);
-
-
-                $startSlots += 1;
-            }
-
-            if (!empty($arrayTemp)) {
-                $arrayAvailableAppService[] = $currentElement;
-            }
-        }
+        $arrayAvailableAppService[] = "No time Available";
     }
 
 
 
 
-    // print_r("<pre>");
+    // print_r(" < pre > ");
     // print_r($timeAvailableArray);
-    // print_r("</pre>");
-    // print_r("<pre>");
+    // print_r(" < / pre > ");
+    // print_r(" < pre > ");
     // print_r($timeNotAvailable);
-    // print_r("</pre>");
-    // print_r("<pre>");
+    // print_r(" < / pre > ");
+    // print_r(" <pre> ");
     // print_r($arrayAvailableFinal);
-    // print_r("</pre>");
-    // print_r("<pre>");
+    // print_r(" </pre> ");
+
+    // print_r(" <pre> ");
     // print_r($timeNotAvailableTESTE);
-    // print_r("</pre>");
-    // print_r("<pre>");
+    // print_r(" </pre> ");
+    // print_r(" <pre> ");
+    // print_r($timeNotAvailableTESTE3);
+    // print_r(" </pre> ");
+    // print_r(" <pre> ");
+    // print_r($teste);
+    // print_r(" </pre> ");
+    // print_r(" <pre> ");
     // print_r($arrayAvailableAppService);
-    // print_r("</pre>");
+    // print_r(" </pre> ");
+    // print_r(" <pre> ");
+    // print_r($timeNotAvailableTESTE4);
+    // print_r(" </pre> ");
+
 
 
 
@@ -270,13 +249,21 @@ if (isset($_POST["professionalID"])) {
         ?>
 <label for="inputAppointmentTimeProfessionalAdd" class="form-label">Time</label>
 <select class="form-select form_data_professional" id="inputAppointmentTimeProfessionalAdd"
-    name="inputAppointmentTimeProfessionalAdd" aria-label="Default select example">
+    name="inputAppointmentTimeProfessionalAdd" aria-label="default select example">
     <option value=""></option>
 
     <?php
+        if (empty($arrayAvailableAppService)) {
+            ?>
 
-        foreach ($arrayAvailableAppService as $AllTimes) {
-            // if (!in_array($AllTimes, $timeNotAvailable)) {
+    <option value="">No time Available</option>
+
+
+
+    <?php
+        } else {
+            foreach ($arrayAvailableAppService as $AllTimes) {
+              // if (!in_array($AllTimes, $timeNotAvailable)) {
                 // if (isset($timeAvailableArray[$key + 1])) {
                 //     $currentHourPlus = strtotime($AllTimes) + strtotime('00:30');
                 //     $rightDiff = $currentHourPlus - strtotime($AllTimes);
@@ -286,15 +273,15 @@ if (isset($_POST["professionalID"])) {
                 //     }
 
 
-            ?>
+                ?>
 
-    <option value="<?php echo $AllTimes ?>"><?php echo $AllTimes; ?></option>
+    <option value=" <?php echo $AllTimes ?>"><?php echo $AllTimes; ?></option>
 
 
 
     <?php
+            }
         }
-
         ?>
 
 </select>
@@ -329,5 +316,5 @@ if (isset($_POST["professionalID"])) {
 <?php
     }
 } else {
-    echo "Error";
+    echo "No time Available";
 }

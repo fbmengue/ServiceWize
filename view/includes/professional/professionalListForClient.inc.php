@@ -18,7 +18,7 @@ session_start();
 ?>
 <label for="selectProfessionalForClientAdd" class="form-label">Professional</label>
 <select id="selectProfessionalForClientAdd" name="selectProfessionalForClientAdd" placeholder=""
-    onchange="showServicesAvailable(); return false;" class="form-select form_data">
+    onchange="showServicesAvailableForClient(); return false;" class="form-select form_data">
     <option value=""></option>
     <?php
     foreach ($professionalList as $itemProfessional) {

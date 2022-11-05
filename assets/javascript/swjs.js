@@ -269,6 +269,7 @@ $(function() {
 
 
 function showServiceDurationPrice(){
+  debugger;
   var serviceValue = document.getElementById('selectServiceNameForClientAdd').value;
   document.getElementById('selectServiceDurationForClientAdd').value = serviceValue;
   document.getElementById('selectServicePriceForClientAdd').value = serviceValue;
@@ -1156,7 +1157,7 @@ function cancelAppointmentForProfessional(objButton)
 
 function nextWeekHomeProfessional()
 {
- //debugger;
+ 
   var today = new Date().toISOString().slice(0, 10);
 	//document.getElementById('appointmentButtonForProfessionalAdd').disabled = true;
   const queryString = window.location.search;
@@ -1185,7 +1186,7 @@ function prevWeekHomeProfessional()
   const urlParams = new URLSearchParams(queryString);
   var next = 0;
   if(queryString == "" || urlParams.get('texto') == ""){
-    next = 7; 
+    next = -7; 
   }else{next = parseInt(urlParams.get('texto'))+ -7;}
   
   var t = next;

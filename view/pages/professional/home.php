@@ -226,9 +226,7 @@ include __DIR__ . '/../../../controller/service-contr.classes.php';
                         include __DIR__ . '/../../widgets/professional/widgetInfoACSPreview.php';
                         ?>
                     </div>
-                    <div class="col-sm-12 d-flex flex-column bg-widget mt-3 p-3 rounded-3 bg-box-shadow-thin">
-                        <h1>home</h1>
-                    </div>
+
 
 
 
