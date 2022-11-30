@@ -168,11 +168,8 @@ include __DIR__ . '/../../widgets/navbar.php';
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body" id="offcanvas-body-edit">
+            <span id="messageAdminAppEdit"></span>
             <form class="row g-3" id="form-edit-appointment" method="POST">
-
-
-                <?php //include __DIR__ . '/../../includes/appointment/clientAppointmentListData.inc.php'; ?>
-
 
 
             </form>

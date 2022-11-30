@@ -102,19 +102,18 @@ if (empty($_GET['date']) || !isset($_GET['date'])) {
     <div class="navbar-week-header">
         <div class="next-prev d-flex justify-content-between">
             <div class="prev-week d-flex flex-column justify-content-center">
-                <a href="?page=calendar/professional/dayView&date=<?php echo $_GET['date'] ?>&texto=<?php echo $CurrentDayPrev; ?>">&lt;
+                <a href="#" onclick="prevWeekDayViewProfessional();return false;">&lt;
                 </a>
             </div>
-            <a href="?page=calendar/professional/dayView&date=<?php echo $hoje ?>&texto=0">HOJE</a>
-            <div><?php echo $dateFormatForView?></div>
+            <a href="#" onclick="todayWeekDayViewProfessional();return;">TODAY</a>
+            <div class="date-header"><?php echo $dateFormatForView?></div>
             <div class="next-week d-flex flex-column justify-content-center">
-                <a
-                    href="?page=calendar/professional/dayView&date=<?php echo $_GET['date'] ?>&texto=<?php echo $CurrentDayNext; ?>">&gt;</a>
+                <a onclick="nextWeekDayViewProfessional();return false;" href="#">&gt;</a>
             </div>
         </div>
 
     </div>
-    
+
     <div class="navbar-days d-flex flex-row text-center justify-content-between">
 
         <?php
@@ -123,17 +122,17 @@ if (empty($_GET['date']) || !isset($_GET['date'])) {
             $itemID = array_search($weekWidget['fullDate'], array_column($appointmentPerDayList, 'appointmentDate'));
             if ($itemID !== false) {
                 ?>
-        
-        <a href="?page=calendar/professional/dayView&date=<?php echo $weekWidget['fullDate'];?>&texto=<?php echo $CurrentDay ?>"
-            class="<?php  if ($weekWidget['fullDate'] == $_GET['date'] && $weekWidget['fullDate'] < $hoje) {
+
+        <a id="<?php echo $weekWidget['fullDate'] . '|' . $CurrentDay ;?>" href="#"
+            onclick="dateDayViewProfessional(this);return false;" class="<?php  if ($weekWidget['fullDate'] == $_GET['date'] && $weekWidget['fullDate'] < $hoje) {
                                     echo "pass-day-selected";
-                   } elseif ($weekWidget['fullDate'] == $_GET['date']) {
-                       echo "today";
-                   } elseif ($weekWidget['fullDate'] >= $hoje) {
-                       echo "nav-day nav-day-future";
-                   } else {
-                       echo "nav-day nav-day-pass";
-                   }; ?>">
+                                                                         } elseif ($weekWidget['fullDate'] == $_GET['date']) {
+                                                                             echo "today";
+                                                                         } elseif ($weekWidget['fullDate'] >= $hoje) {
+                                                                             echo "nav-day nav-day-future";
+                                                                         } else {
+                                                                             echo "nav-day nav-day-pass";
+                                                                         }; ?>">
             <div class="calendar-text" style="padding-bottom: 10px;"><?php echo $weekWidget['dayText'];?></div>
             <div class="calendar-number"> <?php echo $weekWidget['dayInt'];?>
                 <span
@@ -143,16 +142,16 @@ if (empty($_GET['date']) || !isset($_GET['date'])) {
             } else {
                 ?>
 
-        <a href="?page=calendar/professional/dayView&date=<?php echo $weekWidget['fullDate'];?>&texto=<?php echo $CurrentDay ?>"
-            class="<?php  if ($weekWidget['fullDate'] == $_GET['date'] && $weekWidget['fullDate'] < $hoje) {
+        <a id="<?php echo $weekWidget['fullDate'] . '|' . $CurrentDay ;?>" href="#"
+            onclick="dateDayViewProfessional(this);return false;" class="<?php  if ($weekWidget['fullDate'] == $_GET['date'] && $weekWidget['fullDate'] < $hoje) {
                                     echo "pass-day-selected";
-                   } elseif ($weekWidget['fullDate'] == $_GET['date']) {
-                       echo "today";
-                   } elseif ($weekWidget['fullDate'] >= $hoje) {
-                       echo "nav-day nav-day-future";
-                   } else {
-                       echo "nav-day nav-day-pass";
-                   }; ?>">
+                                                                         } elseif ($weekWidget['fullDate'] == $_GET['date']) {
+                                                                             echo "today";
+                                                                         } elseif ($weekWidget['fullDate'] >= $hoje) {
+                                                                             echo "nav-day nav-day-future";
+                                                                         } else {
+                                                                             echo "nav-day nav-day-pass";
+                                                                         }; ?>">
             <div class="calendar-text" style="padding-bottom: 10px;"><?php echo $weekWidget['dayText'];?></div>
             <div class="calendar-number"> <?php echo $weekWidget['dayInt'];?>
             </div>
@@ -163,18 +162,3 @@ if (empty($_GET['date']) || !isset($_GET['date'])) {
 
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

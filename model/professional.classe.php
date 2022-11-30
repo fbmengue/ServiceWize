@@ -11,13 +11,22 @@ class Professional extends Database
     {
         $stmt = $this->connect()->prepare('INSERT INTO professional(professionalFullName,professionalEmail) VALUES (?,?);');
         $stmt2 = $this->connect()->prepare('SELECT userID FROM user WHERE userEmail = ?;');
+        $stmt4 = $this->connect()->prepare('SELECT userType FROM user WHERE userEmail = ?;');
         $userType = "professional";
 
         if (!$stmt2->execute([$email])) {
             $stmt = null;
             $stmt2 = null;
             $stmt3 = null;
-            header("location: ../../../index.php?error=stmtfailed");
+            echo '<div class="alert alert-danger">Server Error Try Again in a Moment</div>';
+
+            exit();
+        }
+        if (!$stmt4->execute([$email])) {
+            $stmt = null;
+            $stmt2 = null;
+            $stmt3 = null;
+            echo '<div class="alert alert-danger">Server Error Try Again in a Moment</div>';
 
             exit();
         }
@@ -28,16 +37,27 @@ class Professional extends Database
             $stmt = null;
             $stmt2 = null;
             $stmt3 = null;
-            header("location: ../../../index.php?error=stmtfailed");
+            echo '<div class="alert alert-danger">Server Error Try Again in a Moment</div>';
 
             exit();
         }
+
+        $userTypeFetch = $stmt4->fetchAll(PDO::FETCH_ASSOC);
+        if ($userTypeFetch[0]['userType'] !== 'client') {
+            $stmt = null;
+            $stmt2 = null;
+            $stmt3 = null;
+            echo '<div class="alert alert-danger">Professional Already Saved or Admin User</div>';
+
+            exit();
+        }
+
 
         if (!$stmt->execute(array($fullName, $email))) {
             $stmt = null;
             $stmt2 = null;
             $stmt3 = null;
-            header("location: ../../../index.php?error=stmtfailed");
+            echo '<div class="alert alert-danger">Server Error Try Again in a Moment</div>';
 
             exit();
         }
@@ -54,7 +74,7 @@ class Professional extends Database
             $stmt = null;
             $stmt2 = null;
             $stmt3 = null;
-            header("location: ../../../index.php?error=stmtfailed");
+            echo '<div class="alert alert-danger">Server Error Try Again in a Moment</div>';
 
             exit();
         }

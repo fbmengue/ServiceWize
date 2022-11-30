@@ -154,8 +154,8 @@ if (empty($_GET['date'])) {
                 <a onclick="prevWeekHomeProfessional();return false;" href="#">&lt;
                 </a>
             </div>
-            <a onclick="todayWeekHomeProfessional(); return false;" href="#">HOJE</a>
-            <div><?php echo $dateFormatForView?></div>
+            <a onclick="todayWeekHomeProfessional(); return false;" href="#">TODAY</a>
+            <div class="date-header"><?php echo $dateFormatForView?></div>
             <div class="next-week d-flex flex-column justify-content-center">
                 <a onclick="nextWeekHomeProfessional();return false;" href="#">&gt;</a>
             </div>

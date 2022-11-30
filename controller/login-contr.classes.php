@@ -18,7 +18,7 @@ class LoginContr extends Login
     public function loginUtilizador()
     {
         if ($this->campoVazio() == false) {
-            header("location: ../../index.php?page=register&error=campovazio");
+            echo '<div class="alert alert-danger">Complete All Fields</div>';
             exit();
         }
         // if (is_numeric($this->userID)) {

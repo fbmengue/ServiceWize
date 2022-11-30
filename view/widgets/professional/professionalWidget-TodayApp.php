@@ -68,7 +68,7 @@ if (!empty($todayList)) {
                                     aria-controls="offcanvasCancelAppointment"
                                     onclick="loadAppointmentCancelForProfessional(this); return false;">Cancel</button>
                             </li>
-                            <li><button class="dropdown-item">Something else here</button></li>
+                            <li><button class="dropdown-item">Coming Soon</button></li>
                         </ul>
 
 

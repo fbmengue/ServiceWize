@@ -11,24 +11,23 @@ session_start();
     //include __DIR__ . '/../../../controller/professional-contr.classes.php';
 
     //New Service
-    $newProfessionalService = new ProfessionalContr();
+    $newProfessionalServicea = new ProfessionalContr();
 
     //Roda erros
-    $professionalListService = $newProfessionalService->getProfessionalList();
+    $professionalListService = $newProfessionalServicea->getProfessionalList();
 ?>
 <label for="inputServiceProfessional" class="form-label">Professional</label>
-<select id="inputServiceProfessional" name="inputServiceProfessional" placeholder="">
-<option value=""></option>
+<select id="inputServiceProfessional" name="inputServiceProfessional" class="form-control form_data" placeholder="">
+    <option value=""></option>
     <?php
     foreach ($professionalListService as $itemProfessionalService) {
         ?>
 
-    <option value="<?php echo $itemProfessionalService['professionalID'] ?>"><?php echo $itemProfessionalService['professionalFullName'] ?></option>
+    <option value="<?php echo $itemProfessionalService['professionalID'] ?>">
+        <?php echo $itemProfessionalService['professionalFullName'] ?></option>
 
 
-        <?php
+    <?php
     }
     ?>
 </select>
-
-

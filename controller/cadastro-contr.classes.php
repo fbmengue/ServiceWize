@@ -6,64 +6,56 @@ use model\Cadastro;
 
 class CadastroContr extends Cadastro
 {
-    private $nome;
-    private $sobrenome;
+    private $firstName;
+    private $lastName;
     private $pwd;
     private $pwdRepeat;
     private $email;
-    private $tel;
+    private $mobile;
 
-    public function __construct($nome, $sobrenome, $pwd, $pwdRepeat, $email, $tel)
+    public function __construct($firstName, $lastName, $pwd, $pwdRepeat, $email, $mobile)
     {
-        $this->nome = $nome;
-        $this->sobrenome = $sobrenome;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
         $this->pwd = $pwd;
         $this->pwdRepeat = $pwdRepeat;
         $this->email = $email;
-        $this->tel = $tel;
+        $this->mobile = $mobile;
     }
 
     public function cadastroUtilizador()
     {
         if ($this->campoVazio() == false) {
-            header("location:../../index.php?page=register&error=campovazio");
+            echo '<div class="alert alert-danger">Complete All Fields</div>';
             exit();
         }
         if ($this->utilizadorinvalido() == false) {
-            $textMsg = "Utilizador inválido!";
-            $display = "falha";
-            header("location: ../../index.php?page=register&error=" . $textMsg . "&status=" . $display);
+            echo '<div class="alert alert-danger">Invalid User Name</div>';
             exit();
         }
         if ($this->invalidoEmail() == false) {
-            $textMsg = "Email inválido!";
-            $display = "falha";
-            header("location: ../../index.php?page=register&error=" . $textMsg . "&status=" . $display);
+            echo '<div class="alert alert-danger">Invalid Email</div>';
             exit();
         }
 
 
         if ($this->senhaMatch() == false) {
-            $textMsg = "Confirmar senha inválido!";
-            $display = "falha";
-            header("location: ../../index.php?page=register&error=" . $textMsg . "&status=" . $display);
+            echo '<div class="alert alert-danger">Password Do Not Match</div>';
             exit();
         }
         if ($this->utilizadorIDCheck() == false) {
-            $textMsg = "Utilizador já registado!";
-            $display = "falha";
-            header("location: ../../index.php?page=register&error=" . $textMsg . "&status=" . $display);
+            echo '<div class="alert alert-danger">User Already Registered</div>';
             exit();
         }
 
-        $this->setUtilizador($this->nome, $this->sobrenome, $this->pwd, $this->email, $this->tel);
+        $this->setUtilizador($this->firstName, $this->lastName, $this->pwd, $this->email, $this->mobile);
     }
  //empty($this->nome) || empty($this->password) || empty($this->passwordRepeat) || empty($this->email)
     private function campoVazio()
     {
         $result = true;
         if (
-            empty($this->nome) || empty($this->pwd) || empty($this->sobrenome) ||
+            empty($this->firstName) || empty($this->pwd) || empty($this->lastName) ||
             empty($this->pwdRepeat) || empty($this->email)
         ) {
             $result = false;
@@ -76,7 +68,7 @@ class CadastroContr extends Cadastro
     private function utilizadorinvalido()
     {
         $result = false;
-        if (!preg_match("/^[a-zA-z0-9]*$/", $this->nome)) {
+        if (!preg_match('/^[a-zA-Z\s]+$/', $this->firstName) || !preg_match('/^[a-zA-Z\s]+$/', $this->lastName)) {
             $result = false;
         } else {
             $result = true;

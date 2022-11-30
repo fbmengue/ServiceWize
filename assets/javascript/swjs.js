@@ -98,6 +98,32 @@ $(function() {
     });
   })
 
+  function selectizeClientFilterAdminSetup() {
+   
+    
+    //Enable Client Email FILTER ADMIN
+    $(function() {
+      $('#filterClientEmail').selectize({
+        sortField: 'text',
+      });
+      $('#filterAppointmentCanceled').selectize({
+        sortField: 'text',
+      });
+      $('#filterProfessional').selectize({
+        sortField: 'text',
+      });
+    })   
+  }
+
+
+
+
+
+
+
+
+
+
   //Enable Client Name Search on Professioanl Appointment Edit
  
 function selectizeClientAppointmentEdit() {
@@ -372,10 +398,12 @@ $(function() {
 
 
 function showServiceDurationPrice(){
-  debugger;
+  
   var serviceValue = document.getElementById('selectServiceNameForClientAdd').value;
   document.getElementById('selectServiceDurationForClientAdd').value = serviceValue;
   document.getElementById('selectServicePriceForClientAdd').value = serviceValue;
+
+  document.getElementById('message').innerHTML = '';
 
   document.getElementById('inputAppointmentDate').value = "";
   $('#inputAppointmentTime').empty();
@@ -402,7 +430,26 @@ function showServiceDurationPriceEditForProfessional(){
 
   
 }
+function showServiceDurationPriceAdmin(){
+  var serviceValue = document.getElementById('selectServiceNameForAdminAdd').value;
+  document.getElementById('selectServiceDurationForAdminAdd').value = serviceValue;
+  document.getElementById('selectServicePriceForAdminAdd').value = serviceValue;
 
+  $('#inputAppointmentTimeEdit').empty();
+  document.getElementById('inputAppointmentDate').value = "";
+
+  
+}
+function showServiceDurationPriceEditAdmin(){
+  var serviceValue = document.getElementById('selectServiceNameForAdminEdit').value;
+  document.getElementById('selectServiceDurationForAdminEdit').value = serviceValue;
+  document.getElementById('selectServicePriceForAdminEdit').value = serviceValue;
+
+  $('#inputAppointmentTimeEdit').empty();
+  document.getElementById('inputAppointmentDateEdit').value = "";
+
+  
+}
 
 
 
@@ -445,6 +492,7 @@ function showServicesAvailableForClient()
         
         
 				document.getElementById('divInputAppointmentService').innerHTML = ajax_request.responseText;
+        document.getElementById('message').innerHTML = '';
 
         document.getElementById('inputAppointmentDate').value = "";
         $('#inputAppointmentTime').empty();
@@ -536,7 +584,30 @@ function showServicesAvailableEditForClient()
  */
 function showHoursAvailableForClient()
 {
+
 	var form_element = document.getElementsByClassName('form_data');
+  var appointmentDate = document.getElementById('inputAppointmentDate').value;
+  if(document.getElementById('selectServiceNameForClientAdd')){
+    var appointmentService = document.getElementById('selectServiceNameForClientAdd').value;
+  }else{
+    var appointmentService = "";
+  }
+  
+  var appointmentProfessional = document.getElementById('selectProfessionalForClientAdd').value;
+  
+  if(!(appointmentProfessional)){
+    document.getElementById('message').innerHTML = '<div class="alert alert-danger">Choose a Professional</div>';
+    return false;
+  }
+  if(!isFutureDateConsulta(appointmentDate)){
+    document.getElementById('message').innerHTML = '<div class="alert alert-danger">Date Must Be Future</div>';
+    $('#inputAppointmentTime').empty();
+    return false;
+  }
+  if((appointmentService == "")){
+    document.getElementById('message').innerHTML = '<div class="alert alert-danger">Choose a Service</div>';
+    return false;
+  }
 
 	var form_data = new FormData();
 
@@ -559,14 +630,8 @@ function showHoursAvailableForClient()
     
 		if(ajax_request.readyState == 4 && ajax_request.status == 200)
 		{
-			//document.getElementById('submit').disabled = false;
-
-      
-			//var response = JSON.parse(ajax_request.responseText);
-
-				//document.getElementById('form-add-appointment').reset();
-        //document.getElementById('addSelectProfessionalForClient').reset();
-        
+			
+         document.getElementById('message').innerHTML = '';
         
 				document.getElementById('divInputAppointmentTime').innerHTML = ajax_request.responseText;
 			
@@ -623,6 +688,23 @@ function showHoursAvailableEditForClient()
 function saveAppointmentForClient()
 {
 	var form_element = document.getElementsByClassName('form_data');
+
+  var appointmentDate = document.getElementById('inputAppointmentDate').value;
+  var appointmentService = document.getElementById('selectServiceNameForClientAdd').value;
+  var appointmentProfessional = document.getElementById('selectProfessionalForClientAdd').value;
+  
+  if((appointmentProfessional == "")){
+    document.getElementById('message').innerHTML = '<div class="alert alert-danger">Choose a Professional</div>';
+    return false;
+  }
+  if(!isFutureDateConsulta(appointmentDate)){
+    document.getElementById('message').innerHTML = '<div class="alert alert-danger">Date Must Be Future</div>';
+    return false;
+  }
+  if((appointmentService == "")){
+    document.getElementById('message').innerHTML = '<div class="alert alert-danger">Choose a Service</div>';
+    return false;
+  }
 
 	var form_data = new FormData();
 
@@ -851,6 +933,8 @@ function updateUseProfile()
 				}, 3000);
 
         $("#accountContent").load(location.href+" #accountContent>*","");
+        $("#navUserFullName").load(location.href+" #navUserFullName>*","");
+        
 
         
 			
@@ -994,6 +1078,23 @@ function showHoursAvailableForProfessional()
 function saveAppointmentForProfessional()
 {
 	var form_element = document.getElementById('form-add-appointment').getElementsByClassName('form_data_professional');
+  var appointmentDate = document.getElementById('inputAppointmentDateProfessionalAdd').value;
+  var clientBirthDateList = document.getElementById('selectClientBirthDate').value;
+  var clientBirthDate = new Date(clientBirthDateList[3]);
+
+  if(!isOver18(clientBirthDate)){
+    document.getElementById('messageProfessionalAppAdd').innerHTML = '<div class="alert alert-danger">Client Must Be 18 years old</div>';
+    return false;
+  }
+
+  if(!isFutureDateConsulta(appointmentDate)){
+    document.getElementById('messageProfessionalAppAdd').innerHTML = '<div class="alert alert-danger">Date Must Be Future</div>';
+    return false;
+   }
+  if(!isFutureDateConsulta(appointmentDate)){
+    document.getElementById('messageProfessionalAppAdd').innerHTML = '<div class="alert alert-danger">Date Must Be Future</div>';
+    return false;
+   }
 
 	var form_data = new FormData();
 
@@ -1064,6 +1165,20 @@ function saveAppointmentForProfessional()
     
     appointmentID = buttonID.split('-');
    var form_element = document.getElementById('form-professional-edit-appointment').getElementsByClassName('form_data_edit');
+   var appointmentDate = document.getElementById('inputAppointmentDateEdit').value;
+
+   var clientBirthDateList = document.getElementById('selectClientBirthDateEdit').value;
+   var clientBirthDate = new Date(clientBirthDateList[3]);
+ 
+   if(!isOver18(clientBirthDate)){
+     document.getElementById('messageProfessionalAppEdit').innerHTML = '<div class="alert alert-danger">Client Must Be 18 years old</div>';
+     return false;
+   }
+   
+   if(!isFutureDateConsulta(appointmentDate)){
+    document.getElementById('messageProfessionalAppEdit').innerHTML = '<div class="alert alert-danger">Date Must Be Future</div>';
+    return false;
+   }
  
    var form_data = new FormData();
  
@@ -1104,9 +1219,20 @@ function saveAppointmentForProfessional()
            
  
          }, 5000);
+
+         const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+
+      if(urlParams.get('page') === 'calendar/professional/dayView'){
+        $("#dayViewContent").load(location.href+" #dayViewContent>*","");
+      $("#dayViewHeader").load(location.href+" #dayViewHeader>*","");
+      }
+      if(urlParams.get('page') || urlParams.get('page') === '?page=home'){
+        $("#professionalContents").load(location.href+" #professionalContents>*","");
+      $("#professionalCalendarHome").load(location.href+" #professionalCalendarHome>*","");
+      }
  
-         $("#professionalContents").load(location.href+" #professionalContents>*","");
-         $("#professionalCalendarHome").load(location.href+" #professionalCalendarHome>*","");
+       
  
          
        
@@ -1214,7 +1340,7 @@ function saveClientForProfessional()
     email.classList.add('invalid-form-data');
     return false;
   }
-  var mobile = document.getElementById('inputClientEmail');
+  var mobile = document.getElementById('inputClientMobile');
   if (!mobileCheck(mobile)) {
     document.getElementById('messageProfessionalClientAdd').innerHTML = '<div class="alert alert-danger">Invalid Mobile</div>';
     mobile.classList.add('invalid-form-data');
@@ -1330,6 +1456,7 @@ function loadAppointmentEditForProfessional(objButton)
 }
 
 function loadAppointmentCancelForProfessional(objButton){
+
   buttonID = objButton.id;
   
   appointmentID = buttonID.split('-');
@@ -1340,6 +1467,7 @@ function loadAppointmentCancelForProfessional(objButton){
 
 function cancelAppointmentForProfessional(objButton)
 {
+
   appointmentID =  document.getElementById("appointmentCancelNumber").value;
   
 	//var form_element = document.getElementById('form_data_cancel_'+appointmentID[1]);
@@ -1373,16 +1501,30 @@ function cancelAppointmentForProfessional(objButton)
         
 				document.getElementById('messageCancel').innerHTML = ajax_request.responseText;
 
+       
+
 				setTimeout(function(){
 
 					document.getElementById('messageCancel').innerHTML = '';
+          $('#offcanvasCancelAppointment').css("transform", "translateX(-100%)");
+          $('.offcanvas-backdrop').remove();
           
+				}, 1500);
+        setTimeout(function(){
+          $("#offCanvasDiv").load(location.href+" #offCanvasDiv>*","");
+      }, 2000);
 
-				}, 4000);
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
 
+      if(urlParams.get('page') === 'calendar/professional/dayView'){
+        $("#dayViewContent").load(location.href+" #dayViewContent>*","");
+      $("#dayViewHeader").load(location.href+" #dayViewHeader>*","");
+      }
+      if(urlParams.get('page') || urlParams.get('page') === '?page=home'){
         $("#professionalContents").load(location.href+" #professionalContents>*","");
-        $("#professionalCalendarHome").load(location.href+" #professionalCalendarHome>*","");
-
+      $("#professionalCalendarHome").load(location.href+" #professionalCalendarHome>*","");
+      }
         
 			
 		}
@@ -1390,24 +1532,20 @@ function cancelAppointmentForProfessional(objButton)
 }
 
 function nextWeekHomeProfessional()
-{
- 
+{ 
   var today = new Date().toISOString().slice(0, 10);
 	//document.getElementById('appointmentButtonForProfessionalAdd').disabled = true;
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   var next = 0;
-  if(queryString == "" || urlParams.get('texto') == ""){
-    next = 7; 
-  }else{next = parseInt(urlParams.get('texto'))+ 7;}
+  if(urlParams.get('texto')){
+    next = parseInt(urlParams.get('texto'))+ 7;
+  }else{next = 7;}
   
-  var t = next;
 
-	var ajax_request = new XMLHttpRequest();
 
   history.pushState({}, null, 'http://localhost/servicewise/ServiceWize/?page=home&date='+today+'&texto='+next);
   $("#professionalCalendarHome").load(location.href+" #professionalCalendarHome>*","");
-
 	
 }
 
@@ -1419,13 +1557,11 @@ function prevWeekHomeProfessional()
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   var next = 0;
-  if(queryString == "" || urlParams.get('texto') == ""){
-    next = -7; 
-  }else{next = parseInt(urlParams.get('texto'))+ -7;}
-  
-  var t = next;
+  if(urlParams.get('texto')){
+    next = parseInt(urlParams.get('texto'))+ -7;
+  }else{next = -7; }
 
-	var ajax_request = new XMLHttpRequest();
+
 
   history.pushState({}, null, 'http://localhost/servicewise/ServiceWize/?page=home&date='+today+'&texto='+next);
   $("#professionalCalendarHome").load(location.href+" #professionalCalendarHome>*","");
@@ -1434,10 +1570,76 @@ function prevWeekHomeProfessional()
 }
 function todayWeekHomeProfessional()
 {
-	var ajax_request = new XMLHttpRequest();
 
   history.pushState({}, null, 'http://localhost/servicewise/ServiceWize/');
   $("#professionalCalendarHome").load(location.href+" #professionalCalendarHome>*","");
+}
+
+function nextWeekDayViewProfessional()
+{ 
+  
+  var today = new Date().toISOString().slice(0, 10);
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  var next = 0;
+
+  if(urlParams.get('date')){
+    var date = urlParams.get('date');
+  }else{var date = today;}
+  if(urlParams.get('texto')){
+    next = parseInt(urlParams.get('texto'))+7;
+  }else{   next = 7; }
+  
+
+  history.pushState({}, null, 'http://localhost/servicewise/ServiceWize/?page=calendar/professional/dayView&date='+date+'&texto='+next);
+  $("#dayViewHeader").load(location.href+" #dayViewHeader>*","");
+  $("#dayViewContent").load(location.href+" #dayViewContent>*","");
+	
+}
+
+function prevWeekDayViewProfessional()
+{
+ 
+  var today = new Date().toISOString().slice(0, 10);
+	//document.getElementById('appointmentButtonForProfessionalAdd').disabled = true;
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  var next = 0;
+
+  if(urlParams.get('date')){
+    var date = urlParams.get('date');
+  }else{var date = today;}
+  if(urlParams.get('texto')){
+    next = parseInt(urlParams.get('texto')) -7;
+  }else{   next = -7; }
+
+
+  history.pushState({}, null, 'http://localhost/servicewise/ServiceWize/?page=calendar/professional/dayView&date='+date+'&texto='+next);
+  $("#dayViewHeader").load(location.href+" #dayViewHeader>*","");
+  $("#dayViewContent").load(location.href+" #dayViewContent>*","");
+
+	
+}
+function dateDayViewProfessional(objButton)
+{
+  buttonID = objButton.id;
+  
+  buttonSplit = buttonID.split('|');
+  date = buttonSplit[0];
+  next = buttonSplit[1];
+
+  history.pushState({}, null, 'http://localhost/servicewise/ServiceWize/?page=calendar/professional/dayView&date='+date+'&texto='+next);
+  $("#dayViewHeader").load(location.href+" #dayViewHeader>*","");
+  $("#dayViewContent").load(location.href+" #dayViewContent>*","");
+
+	
+}
+function todayWeekDayViewProfessional()
+{
+
+  history.pushState({}, null, 'http://localhost/servicewise/ServiceWize/?page=calendar/professional/dayView');
+  $("#dayViewHeader").load(location.href+" #dayViewHeader>*","");
+  $("#dayViewContent").load(location.href+" #dayViewContent>*","");
 }
 
 
@@ -1445,7 +1647,1421 @@ function todayWeekHomeProfessional()
 
 
 
+
+
+
+
+
+
+// ########################## ADMIN FUNCTIONS #################################################################
+// ########################## ADMIN FUNCTIONS #################################################################
+// ########################## ADMIN FUNCTIONS #################################################################
+
+
+function loadAdminSetup(objButton)
+{
+  var form_element = objButton.value;
+
   
+  
+  
+
+	var form_data = new FormData();
+
+	form_data.append('adminSetupSelect', form_element);
+
+	//document.getElementById('submit').disabled = true;
+
+	var ajax_request = new XMLHttpRequest();
+
+	ajax_request.open('POST', 'http://localhost/servicewise/ServiceWize/view/includes/admin/adminSetupSelect.inc.php');
+
+	ajax_request.send(form_data);
+  
+
+	ajax_request.onreadystatechange = function()
+	{
+    
+		if(ajax_request.readyState == 4 && ajax_request.status == 200)
+		{
+				document.getElementById('divAdminSetup').innerHTML = ajax_request.responseText;
+        document.getElementById('divAdminSetupFilter').innerHTML = '';
+        
+        selectizeClientFilterAdminSetup();
+			
+		}
+	}
+}
+function editAdminSetup(objButton)
+{
+  var buttonID = objButton.id;
+  var buttonSplit = buttonID.split('-');
+  var buttonNumber = buttonSplit[2];
+  var divButtonsSetup = 'divButtonsSetup-'+buttonNumber;
+
+  objButton.innerHTML = "<div id='load-edit' class='lds-ring lds-ring-show'><div></div><div></div><div></div><div></div></div>"
+//  var loadIcon =  document.getElementById('load-edit-'+buttonNumber);
+//  loadIcon.classList.add("lds-ring-show");
+
+  var editButtons = document.getElementsByClassName('edit-button');
+  for(var count = 0; count < editButtons.length; count++)
+  {
+    editButtons[count].disabled = true;
+    
+  }
+
+	var form_data = new FormData();
+
+	form_data.append('rowID', buttonNumber);
+
+	
+
+  
+	var ajax_request = new XMLHttpRequest();
+
+	ajax_request.open('POST', 'http://localhost/servicewise/ServiceWize/view/includes/admin/adminSetupButtons.inc.php');
+
+	ajax_request.send(form_data);
+  
+
+	ajax_request.onreadystatechange = function()
+	{
+    
+		if(ajax_request.readyState == 4 && ajax_request.status == 200)
+		{
+			
+        setTimeout(function(){
+          loadAdminSetup(document.getElementById('adminSetupSelect'));
+      }, 0800);
+      
+      
+      
+
+      
+      setTimeout(function(){
+        
+         form_element = document.getElementById("adminSetupRow-"+buttonNumber).getElementsByTagName('input');
+         for(var count = 0; count < form_element.length; count++)
+         {
+          form_element[count].disabled = false;
+          
+         }
+        
+				document.getElementById(divButtonsSetup).innerHTML = ajax_request.responseText;
+      }, 1000);
+			
+		}
+	}
+}
+function editAdminSetupFilter(objButton)
+{
+  var buttonID = objButton.id;
+  var buttonSplit = buttonID.split('-');
+  var buttonNumber = buttonSplit[2];
+  var divButtonsSetup = 'divButtonsSetup-'+buttonNumber;
+
+  objButton.innerHTML = "<div id='load-edit' class='lds-ring lds-ring-show'><div></div><div></div><div></div><div></div></div>"
+//  var loadIcon =  document.getElementById('load-edit-'+buttonNumber);
+//  loadIcon.classList.add("lds-ring-show");
+
+  var editButtons = document.getElementsByClassName('edit-button');
+  for(var count = 0; count < editButtons.length; count++)
+  {
+    editButtons[count].disabled = true;
+    
+  }
+
+	var form_data = new FormData();
+
+	form_data.append('rowID', buttonNumber);
+
+	
+
+  
+	var ajax_request = new XMLHttpRequest();
+
+	ajax_request.open('POST', 'http://localhost/servicewise/ServiceWize/view/includes/admin/adminSetupButtons.inc.php');
+
+	ajax_request.send(form_data);
+  
+
+	ajax_request.onreadystatechange = function()
+	{
+    
+		if(ajax_request.readyState == 4 && ajax_request.status == 200)
+		{
+			var selectOption = document.getElementById('adminSetupSelect').value;
+
+      if(selectOption === 'appointments'){
+        setTimeout(function(){
+          loadFilterAdminSetup();
+      }, 0800);
+      }
+      
+      setTimeout(function(){
+        
+         form_element = document.getElementById("adminSetupRow-"+buttonNumber).getElementsByTagName('input');
+         for(var count = 0; count < form_element.length; count++)
+         {
+          form_element[count].disabled = false;
+          
+         }
+        
+				document.getElementById(divButtonsSetup).innerHTML = ajax_request.responseText;
+      }, 1000);
+			
+		}
+	}
+}
+function cancelAdminSetup(objButton)
+{
+  var buttonID = objButton.id;
+  var buttonSplit = buttonID.split('-');
+  var buttonNumber = buttonSplit[1];
+  var divButtonsSetup = 'divButtonsSetup-'+buttonNumber;
+  
+  
+
+	var form_data = new FormData();
+
+	form_data.append('rowID', buttonNumber);
+
+	//document.getElementById('submit').disabled = true;
+
+	var ajax_request = new XMLHttpRequest();
+
+	ajax_request.open('POST', 'http://localhost/servicewise/ServiceWize/view/includes/admin/adminSetupButtonEdit.inc.php');
+
+	ajax_request.send(form_data);
+  
+
+	ajax_request.onreadystatechange = function()
+	{
+    
+		if(ajax_request.readyState == 4 && ajax_request.status == 200)
+		{
+			
+      var selectOption = document.getElementById('adminSetupSelect').value;
+
+      if(selectOption === 'appointments'){
+          loadFilterAdminSetup();
+      }else{
+        loadAdminSetup(document.getElementById('adminSetupSelect'));
+      }
+      
+			
+		}
+	}
+}
+
+function loadFilterAdminSetup(objButton)
+{
+  
+  var form_element = document.getElementById('filterRow').getElementsByClassName('filter_data')
+
+	var form_data = new FormData();
+  
+  for(var count = 0; count < form_element.length; count++)
+	{
+    form_data.append(form_element[count].name, form_element[count].value);
+  }
+  
+	form_data.append('adminSetupSelect', 'appointmentFilter');
+
+	//document.getElementById('submit').disabled = true;
+
+	var ajax_request = new XMLHttpRequest();
+
+	ajax_request.open('POST', 'http://localhost/servicewise/ServiceWize/view/includes/admin/adminSetupSelect.inc.php');
+
+	ajax_request.send(form_data);
+  
+
+	ajax_request.onreadystatechange = function()
+	{
+    
+		if(ajax_request.readyState == 4 && ajax_request.status == 200)
+		{
+				document.getElementById('divAdminSetupFilter').innerHTML = ajax_request.responseText;
+        selectizeClientFilterAdminSetup();
+			
+		}
+	}
+}
+
+function sendEditAdminSetup(objButton)
+{
+  debugger;
+  var buttonID = objButton.id;
+  var buttonSplit = buttonID.split('-');
+  var buttonNumber = buttonSplit[1];
+  var divButtonsSetup = 'divButtonsSetup-'+buttonNumber;
+
+  var selectOption = document.getElementById('adminSetupSelect').value;
+
+  var form_data = new FormData();
+  
+  form_element = document.getElementById("adminSetupRow-"+buttonNumber).getElementsByTagName('input');
+  for(var count = 0; count < form_element.length; count++)
+  {
+    form_data.append(form_element[count].name, form_element[count].value);
+   
+  }
+	
+  form_data.append('adminSetupSelect', selectOption);
+
+	//document.getElementById('submit').disabled = true;
+
+	var ajax_request = new XMLHttpRequest();
+
+	ajax_request.open('POST', 'http://localhost/servicewise/ServiceWize/view/includes/admin/adminSetupSendData.inc.php');
+
+	ajax_request.send(form_data);
+  
+
+	ajax_request.onreadystatechange = function()
+	{
+    
+		if(ajax_request.readyState == 4 && ajax_request.status == 200)
+		{
+      document.getElementById('messageAdminSetup').innerHTML = ajax_request.responseText;
+
+				setTimeout(function(){
+					document.getElementById('messageAdminSetup').innerHTML = '';
+				}, 4000);
+
+      if(selectOption === 'appointments'){
+          loadFilterAdminSetup();
+      }else{
+        loadAdminSetup(document.getElementById('adminSetupSelect'));
+      }
+      
+			
+		}
+	}
+}
+
+
+function deleteAdminSetup(objButton)
+{
+  debugger;
+  var buttonID = objButton.id;
+  var buttonSplit = buttonID.split('-');
+  var buttonNumber = buttonSplit[1];
+  var divButtonsSetup = 'divButtonsSetup-'+buttonNumber;
+
+  var selectOption = document.getElementById('adminSetupSelect').value;
+
+  var form_data = new FormData();
+  
+ 
+	form_data.append('ID', buttonNumber);
+  form_data.append('adminSetupSelect', selectOption);
+
+	//document.getElementById('submit').disabled = true;
+
+	var ajax_request = new XMLHttpRequest();
+
+	ajax_request.open('POST', 'http://localhost/servicewise/ServiceWize/view/includes/admin/adminSetupDeleteData.inc.php');
+
+	ajax_request.send(form_data);
+  
+
+	ajax_request.onreadystatechange = function()
+	{
+    
+		if(ajax_request.readyState == 4 && ajax_request.status == 200)
+		{
+      document.getElementById('messageAdminSetup').innerHTML = ajax_request.responseText;
+
+				setTimeout(function(){
+					document.getElementById('messageAdminSetup').innerHTML = '';
+				}, 4000);
+
+      if(selectOption === 'appointments'){
+          loadFilterAdminSetup();
+      }else{
+        loadAdminSetup(document.getElementById('adminSetupSelect'));
+      }
+      
+			
+		}
+    
+
+      // if(selectOption === 'appointments'){
+      //     loadFilterAdminSetup();
+      // }else{
+      //   loadAdminSetup(document.getElementById('adminSetupSelect'));
+      // }
+      
+			
+		
+	}
+}
+
+
+
+
+
+
+function saveProfessionalForAdmin(objButton)
+{
+  
+	var form_element = document.getElementById('form-add-professional').getElementsByClassName('form_data');
+
+	var form_data = new FormData();
+  
+
+	for(var count = 0; count < form_element.length; count++)
+	{
+    if(form_element[count].value == ""){
+      document.getElementById('messageAdminProfAdd').innerHTML = '<div class="alert alert-danger">Complete All Fields</div>';
+      form_element[count].classList.add('invalid-form-data');
+      return false;
+    }else{
+      form_data.append(form_element[count].name, form_element[count].value);
+    }
+    
+  }
+  var email = document.getElementById('inputProfessionalEmail');
+  if (!emailCheck(email)) {
+    document.getElementById('messageAdminProfAdd').innerHTML = '<div class="alert alert-danger">Invalid Email</div>';
+    email.classList.add('invalid-form-data');
+    return false;
+  }
+
+  
+
+	objButton.disabled = true;
+
+	var ajax_request = new XMLHttpRequest();
+
+	ajax_request.open('POST', 'http://localhost/servicewise/ServiceWize/view/includes/professional/professional.inc.php');
+
+	ajax_request.send(form_data);
+  
+
+	ajax_request.onreadystatechange = function()
+	{
+    
+		if(ajax_request.readyState == 4 && ajax_request.status == 200)
+		{
+			objButton.disabled = false;
+
+      
+			//var response = JSON.parse(ajax_request.responseText);
+
+      form_element = document.getElementById('form-add-professional').reset();
+    
+
+      $('form').find('.selectized').each(function(index, element) {
+        element.selectize && element.selectize.clear() 
+       })
+        
+        
+        
+				document.getElementById('messageAdminProfAdd').innerHTML = ajax_request.responseText;
+
+				setTimeout(function(){
+
+					document.getElementById('messageAdminProfAdd').innerHTML = '';
+          
+
+				}, 4000);
+
+        $("#adminContents").load(location.href+" #adminContents>*","");
+        $("#form-add-service").load(location.href+" #form-add-service>*","");
+
+        
+        
+			
+		}
+    // if(ajax_request.readyState == 1 && ajax_request.status == 500)
+		// {
+    //   document.getElementById('messageProfessionalAppAdd').innerHTML = ajax_request.responseText;
+    // }
+	}
+}
+function saveClientForAdmin(objButton)
+{
+  
+	var form_element = document.getElementById('form-add-client').getElementsByClassName('form_data');
+
+	var form_data = new FormData();
+
+	for(var count = 0; count < form_element.length; count++)
+	{
+    if(form_element[count].value == ""){
+      document.getElementById('messageAdminClientAdd').innerHTML = '<div class="alert alert-danger">Complete All Fields</div>';
+      form_element[count].classList.add('invalid-form-data');
+      return false;
+    }else{
+      form_data.append(form_element[count].name, form_element[count].value);
+    }
+    
+  }
+  var email = document.getElementById('inputClientEmail');
+  if (!emailCheck(email)) {
+    document.getElementById('messageAdminClientAdd').innerHTML = '<div class="alert alert-danger">Invalid Email</div>';
+    email.classList.add('invalid-form-data');
+    return false;
+  }
+  var mobile = document.getElementById('inputClientMobile');
+  if (!mobileCheck(mobile)) {
+    document.getElementById('messageAdminClientAdd').innerHTML = '<div class="alert alert-danger">Invalid Mobile</div>';
+    mobile.classList.add('invalid-form-data');
+    return false;
+  }
+  
+
+	objButton.disabled = true;
+
+	var ajax_request = new XMLHttpRequest();
+
+	ajax_request.open('POST', 'http://localhost/servicewise/ServiceWize/view/includes/client/client.inc.php');
+
+	ajax_request.send(form_data);
+  
+
+	ajax_request.onreadystatechange = function()
+	{
+    
+		if(ajax_request.readyState == 4 && ajax_request.status == 200)
+		{
+			objButton.disabled = false;
+
+      
+			//var response = JSON.parse(ajax_request.responseText);
+
+      form_element = document.getElementsByTagName('form');
+      for(var count = 0; count < form_element.length; count++)
+	    {
+		    form_element[count].reset();
+        
+	    }
+        
+        
+        
+				document.getElementById('messageAdminClientAdd').innerHTML = ajax_request.responseText;
+
+				setTimeout(function(){
+
+					document.getElementById('messageAdminClientAdd').innerHTML = '';
+          
+
+				}, 4000);
+
+        $("#adminContents").load(location.href+" #adminContents>*","");
+        
+			
+		}
+    // if(ajax_request.readyState == 1 && ajax_request.status == 500)
+		// {
+    //   document.getElementById('messageProfessionalAppAdd').innerHTML = ajax_request.responseText;
+    // }
+	}
+}
+
+function saveServiceForAdmin(objButton)
+{
+	var form_element = document.getElementById('form-add-service').getElementsByClassName('form_data');
+
+	var form_data = new FormData();
+
+	for(var count = 0; count < form_element.length; count++)
+	{
+    if(form_element[count].value == ""){
+      document.getElementById('messageAdminServiceAdd').innerHTML = '<div class="alert alert-danger">Complete All Fields</div>';
+      for(var count = 0; count < form_element.length; count++)
+      {
+        if(form_element[count].value == ""){
+          form_element[count].classList.add('invalid-form-data');
+        }else{form_element[count].classList.remove('invalid-form-data');}
+      }
+      return false; 
+    }else{
+      
+      form_data.append(form_element[count].name, form_element[count].value);
+    }
+  }
+
+	objButton.disabled = true;
+
+	var ajax_request = new XMLHttpRequest();
+
+	ajax_request.open('POST', 'http://localhost/servicewise/ServiceWize/view/includes/service/service.inc.php');
+
+	ajax_request.send(form_data);
+  
+
+	ajax_request.onreadystatechange = function()
+	{
+    
+		if(ajax_request.readyState == 4 && ajax_request.status == 200)
+		{
+			objButton.disabled = false;
+
+      
+			//var response = JSON.parse(ajax_request.responseText);
+
+      form_element = document.getElementsByTagName('form');
+      for(var count = 0; count < form_element.length; count++)
+	    {
+		    form_element[count].reset();
+        
+	    }
+      $('form').find('.selectized').each(function(index, element) {
+        element.selectize && element.selectize.clear() 
+       })
+        
+        
+        
+				document.getElementById('messageAdminServiceAdd').innerHTML = ajax_request.responseText;
+
+				setTimeout(function(){
+
+					document.getElementById('messageAdminServiceAdd').innerHTML = '';
+          
+
+				}, 4000);
+
+        $("#adminContents").load(location.href+" #adminContents>*","");
+       
+
+        
+			
+		}
+    // if(ajax_request.readyState == 1 && ajax_request.status == 500)
+		// {
+    //   document.getElementById('messageProfessionalAppAdd').innerHTML = ajax_request.responseText;
+    // }
+	}
+}
+
+function showServicesPerProfessional()
+{
+	var form_element = document.getElementsByClassName('form_data');
+
+	var form_data = new FormData();
+
+	for(var count = 0; count < form_element.length; count++)
+	{
+		form_data.append(form_element[count].name, form_element[count].value);
+	}
+
+	//document.getElementById('submit').disabled = true;
+
+	var ajax_request = new XMLHttpRequest();
+
+	ajax_request.open('POST', 'http://localhost/servicewise/ServiceWize/view/includes/service/serviceListForAdmin.inc.php');
+
+	ajax_request.send(form_data);
+  
+
+	ajax_request.onreadystatechange = function()
+	{
+    
+		if(ajax_request.readyState == 4 && ajax_request.status == 200)
+		{
+			//document.getElementById('submit').disabled = false;
+
+      
+			//var response = JSON.parse(ajax_request.responseText);
+
+				//document.getElementById('form-add-appointment').reset();
+        //document.getElementById('addSelectProfessionalForClient').reset();
+        
+        
+				document.getElementById('divInputAppointmentService').innerHTML = ajax_request.responseText;
+
+        document.getElementById('inputAppointmentDate').value = "";
+        $('#inputAppointmentTime').empty();
+
+				// setTimeout(function(){
+
+				// 	document.getElementById('message').innerHTML = '';
+
+				// }, 5000);
+
+				//document.getElementById('name_error').innerHTML = '';
+
+				// document.getElementById('email_error').innerHTML = '';
+
+				// document.getElementById('website_error').innerHTML = '';
+				// document.getElementById('comment_error').innerHTML = '';
+				// document.getElementById('gender_error').innerHTML = '';
+			
+		
+
+			
+		}
+	}
+}
+
+function showHoursAvailableForAdmin()
+{
+  var appointmentDate = document.getElementById('inputAppointmentDate').value;
+  var professionalID = document.getElementById('inputProfessionalApp').value;
+  if(professionalID === ""){
+    document.getElementById('messageAdminAppAdd').innerHTML = '<div class="alert alert-danger">Choose a Professional</div>';
+    $('#inputAppointmentTimeProfessionalAdd').empty();
+    return false;
+  }
+
+  if(isFutureDateConsulta(appointmentDate)){
+    var appointmentService = document.getElementById('selectServiceNameForAdminAdd').value;
+    
+    if(!(appointmentService == "")){
+      document.getElementById('messageAdminAppAdd').innerHTML = "";
+      
+
+      var form_data = new FormData();
+
+      form_data.append('inputProfessionalApp', professionalID);
+      form_data.append('inputAppointmentDate', appointmentDate);
+      form_data.append('selectServiceNameForAdminAdd', appointmentService);
+      
+
+      //document.getElementById('submit').disabled = true;
+
+      var ajax_request = new XMLHttpRequest();
+
+      ajax_request.open('POST', 'http://localhost/servicewise/ServiceWize/view/includes/admin/appointmentTimeSelect.inc.php');
+
+      ajax_request.send(form_data);
+      
+
+      ajax_request.onreadystatechange = function()
+      {
+        
+        if(ajax_request.readyState == 4 && ajax_request.status == 200)
+        {
+          //document.getElementById('submit').disabled = false;
+
+          
+          //var response = JSON.parse(ajax_request.responseText);
+
+            //document.getElementById('form-add-appointment').reset();
+            //document.getElementById('addSelectProfessionalForClient').reset();
+            
+            
+            document.getElementById('divInputAppointmentTimeProfessional').innerHTML = ajax_request.responseText;
+        }
+      }
+    }else{
+      document.getElementById('messageAdminAppAdd').innerHTML = '<div class="alert alert-danger">Choose a Service</div>';
+      $('#inputAppointmentTimeProfessionalAdd').empty();
+    }
+  }else{
+    document.getElementById('messageAdminAppAdd').innerHTML = '<div class="alert alert-danger">Date Must be future</div>';
+    $('#inputAppointmentTimeProfessionalAdd').empty();
+  }
+}
+
+function saveAppointmentForAdmin(objButton)
+{
+	var form_element = document.getElementById('form-add-appointment').getElementsByClassName('form_data');
+  var appointmentDate = document.getElementById('inputAppointmentDate').value;
+  
+
+	var form_data = new FormData();
+
+  if(!isFutureDateConsulta(appointmentDate)){
+    document.getElementById('messageAdminAppAdd').innerHTML = '<div class="alert alert-danger">Date Must Be Future</div>';
+    return false;
+   }
+
+	for(var count = 0; count < form_element.length; count++)
+	{
+    if(form_element[count].value == ""){
+      document.getElementById('messageAdminAppAdd').innerHTML = '<div class="alert alert-danger">Complete All Fields</div>';
+      for(var count = 0; count < form_element.length; count++)
+      {
+        if(form_element[count].value == ""){
+          form_element[count].classList.add('invalid-form-data');
+        }else{form_element[count].classList.remove('invalid-form-data');}
+      }
+      return false; 
+    }else{
+      form_data.append(form_element[count].name, form_element[count].value);
+    }
+  }
+
+	objButton.disabled = true;
+
+	var ajax_request = new XMLHttpRequest();
+
+	ajax_request.open('POST', 'http://localhost/servicewise/ServiceWize/view/includes/appointment/clientAndAppointmentForAdmin.inc.php');
+
+	ajax_request.send(form_data);
+  
+
+	ajax_request.onreadystatechange = function()
+	{
+    
+		if(ajax_request.readyState == 4 && ajax_request.status == 200)
+		{
+			objButton.disabled = false;
+
+      
+			
+
+      form_element = document.getElementById('form-add-appointment').reset();
+
+      $('form').find('.selectized').each(function(index, element) {
+        element.selectize && element.selectize.clear() 
+       })
+        
+        
+        
+				document.getElementById('messageAdminAppAdd').innerHTML = ajax_request.responseText;
+
+				setTimeout(function(){
+
+					document.getElementById('messageAdminAppAdd').innerHTML = '';
+          
+
+				}, 5000);
+
+        $("#adminContents").load(location.href+" #adminContents>*","");
+        $("#adminCalendarHome").load(location.href+" #adminCalendarHome>*","");
+
+        
+			
+		}
+    // if(ajax_request.readyState == 1 && ajax_request.status == 500)
+		// {
+    //   document.getElementById('messageProfessionalAppAdd').innerHTML = ajax_request.responseText;
+    // }
+	}
+}
+
+function nextWeekDayViewAdmin()
+{ 
+  
+  var today = new Date().toISOString().slice(0, 10);
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  var next = 0;
+
+  if(urlParams.get('date')){
+    var date = urlParams.get('date');
+  }else{var date = today;}
+  if(urlParams.get('texto')){
+    next = parseInt(urlParams.get('texto'))+7;
+  }else{   next = 7; }
+  
+
+  history.pushState({}, null, 'http://localhost/servicewise/ServiceWize/?page=calendar/admin/dayView&date='+date+'&texto='+next);
+  $("#dayViewHeader").load(location.href+" #dayViewHeader>*","");
+  $("#dayViewContent").load(location.href+" #dayViewContent>*","");
+	
+}
+
+function prevWeekDayViewAdmin()
+{
+ 
+  var today = new Date().toISOString().slice(0, 10);
+	//document.getElementById('appointmentButtonForProfessionalAdd').disabled = true;
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  var next = 0;
+
+  if(urlParams.get('date')){
+    var date = urlParams.get('date');
+  }else{var date = today;}
+  if(urlParams.get('texto')){
+    next = parseInt(urlParams.get('texto')) -7;
+  }else{   next = -7; }
+
+
+  history.pushState({}, null, 'http://localhost/servicewise/ServiceWize/?page=calendar/admin/dayView&date='+date+'&texto='+next);
+  $("#dayViewHeader").load(location.href+" #dayViewHeader>*","");
+  $("#dayViewContent").load(location.href+" #dayViewContent>*","");
+
+	
+}
+function dateDayViewAdmin(objButton)
+{
+  buttonID = objButton.id;
+  
+  buttonSplit = buttonID.split('|');
+  date = buttonSplit[0];
+  next = buttonSplit[1];
+
+  history.pushState({}, null, 'http://localhost/servicewise/ServiceWize/?page=calendar/admin/dayView&date='+date+'&texto='+next);
+  $("#dayViewHeader").load(location.href+" #dayViewHeader>*","");
+  $("#dayViewContent").load(location.href+" #dayViewContent>*","");
+
+	
+}
+function todayWeekDayViewAdmin()
+{
+
+  history.pushState({}, null, 'http://localhost/servicewise/ServiceWize/?page=calendar/admin/dayView');
+  $("#dayViewHeader").load(location.href+" #dayViewHeader>*","");
+  $("#dayViewContent").load(location.href+" #dayViewContent>*","");
+}
+
+function loadAppointmentCancelForAdmin(objButton){
+
+  buttonID = objButton.id;
+  
+  appointmentID = buttonID.split('-');
+  document.getElementById("form-cancel-appointment").innerHTML+='<input type="number" id="appointmentCancelNumber" value="'+appointmentID[2]+'"  hidden>';
+}
+
+function cancelAppointmentForAdmin(objButton)
+{
+
+  appointmentID =  document.getElementById("appointmentCancelNumber").value;
+  
+	//var form_element = document.getElementById('form_data_cancel_'+appointmentID[1]);
+	var form_data = new FormData();
+
+	
+	form_data.append('appointmentID', appointmentID);
+
+	 objButton.disabled = true;
+
+	var ajax_request = new XMLHttpRequest();
+
+	ajax_request.open('POST', 'http://localhost/servicewise/ServiceWize/view/includes/appointment/appointmentCancelForAdmin.inc.php');
+
+	ajax_request.send(form_data);
+  
+
+	ajax_request.onreadystatechange = function()
+	{
+    
+		if(ajax_request.readyState == 4 && ajax_request.status == 200)
+		{
+			objButton.disabled = false;
+
+      
+			//var response = JSON.parse(ajax_request.responseText);
+
+				//document.getElementById('form-add-appointment').reset();
+        //document.getElementById('addSelectProfessionalForClient').reset();
+        
+        
+				document.getElementById('messageCancel').innerHTML = ajax_request.responseText;
+
+       
+
+				setTimeout(function(){
+
+					document.getElementById('messageCancel').innerHTML = '';
+          $('#offcanvasCancelAppointment').css("transform", "translateX(-100%)");
+          $('.offcanvas-backdrop').remove();
+          
+				}, 1500);
+        setTimeout(function(){
+          $("#offCanvasDiv").load(location.href+" #offCanvasDiv>*","");
+      }, 2000);
+
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+
+      if(urlParams.get('page') === 'calendar/admin/dayView'){
+        $("#dayViewContent").load(location.href+" #dayViewContent>*","");
+      $("#dayViewHeader").load(location.href+" #dayViewHeader>*","");
+      }
+      if(urlParams.get('page') || urlParams.get('page') === '?page=home'){
+        $("#adminContents").load(location.href+" #adminContents>*","");
+      $("#adminCalendarHome").load(location.href+" #adminCalendarHome>*","");
+      }
+        
+			
+		}
+	}
+}
+
+function loadAppointmentEditForAdmin(objButton)
+{
+  
+  buttonID = objButton.id;
+  
+  appointmentID = buttonID.split('-');
+  appointmentDate = appointmentID[3]+"-"+appointmentID[4]+"-"+appointmentID[5];
+	//var form_element = document.getElementById('form_data_cancel_'+appointmentID[1]);
+	var form_data = new FormData();
+
+	
+	form_data.append('appointmentID', appointmentID[2]);
+  form_data.append('appointmentDate', appointmentDate);
+
+	 objButton.disabled = true;
+
+	var ajax_request = new XMLHttpRequest();
+
+	ajax_request.open('POST', 'http://localhost/servicewise/ServiceWize/view/includes/appointment/adminAppointmentListData.inc.php');
+
+	ajax_request.send(form_data);
+  
+
+	ajax_request.onreadystatechange = function()
+	{
+    
+		if(ajax_request.readyState == 4 && ajax_request.status == 200)
+		{
+			objButton.disabled = false;
+
+      
+			//var response = JSON.parse(ajax_request.responseText);
+
+				//document.getElementById('form-add-appointment').reset();
+        //document.getElementById('addSelectProfessionalForClient').reset();
+        
+        
+				document.getElementById('form-edit-appointment').innerHTML = ajax_request.responseText;
+
+        selectizeClientAppointmentEdit();
+
+				// setTimeout(function(){
+
+				// 	document.getElementById('messageCancel').innerHTML = '';
+          
+
+				// }, 4000);
+
+        //$("#clientContent").load(location.href+" #clientContent>*","");
+
+        
+			
+		}
+    
+	}
+}
+function showServicesEditPerProfessional()
+{
+	var form_element = document.getElementsByClassName('form_data_edit');
+
+	var form_data = new FormData();
+
+	for(var count = 0; count < form_element.length; count++)
+	{
+		form_data.append(form_element[count].name, form_element[count].value);
+	}
+
+	//document.getElementById('submit').disabled = true;
+
+	var ajax_request = new XMLHttpRequest();
+
+	ajax_request.open('POST', 'http://localhost/servicewise/ServiceWize/view/includes/service/serviceListForAdminEdit.inc.php');
+
+	ajax_request.send(form_data);
+  
+
+	ajax_request.onreadystatechange = function()
+	{
+    
+		if(ajax_request.readyState == 4 && ajax_request.status == 200)
+		{
+			//document.getElementById('submit').disabled = false;
+
+      
+			//var response = JSON.parse(ajax_request.responseText);
+
+				//document.getElementById('form-add-appointment').reset();
+        //document.getElementById('addSelectProfessionalForClient').reset();
+        
+        
+				document.getElementById('divInputAppointmentServiceEdit').innerHTML = ajax_request.responseText;
+
+        document.getElementById('inputAppointmentDateEdit').value = "";
+        $('#inputAppointmentTimeEdit').empty();
+
+				// setTimeout(function(){
+
+				// 	document.getElementById('message').innerHTML = '';
+
+				// }, 5000);
+
+				//document.getElementById('name_error').innerHTML = '';
+
+				// document.getElementById('email_error').innerHTML = '';
+
+				// document.getElementById('website_error').innerHTML = '';
+				// document.getElementById('comment_error').innerHTML = '';
+				// document.getElementById('gender_error').innerHTML = '';
+			
+		
+
+			
+		}
+	}
+}
+
+function showHoursAvailableEditForAdmin()
+ {
+  var appointmentDate = document.getElementById('inputAppointmentDateEdit').value;
+  var professionalID = document.getElementById('inputProfessionalAppEdit').value;
+  if(professionalID === ""){
+    document.getElementById('messageAdminAppEdit').innerHTML = '<div class="alert alert-danger">Choose a Professional</div>';
+    $('#inputAppointmentTimeEdit').empty();
+    return false;
+  }
+  debugger;
+  if(isFutureDateConsulta(appointmentDate)){
+    var appointmentService = document.getElementById('selectServiceNameForAdminEdit').value;
+    
+    if(!(appointmentService == "")){
+      document.getElementById('messageAdminAppEdit').innerHTML = "";
+      
+
+      var form_data = new FormData();
+
+      form_data.append('inputProfessionalAppEdit', professionalID);
+      form_data.append('inputAppointmentDateEdit', appointmentDate);
+      form_data.append('selectServiceNameForAdminEdit', appointmentService);
+      
+
+      //document.getElementById('submit').disabled = true;
+
+      var ajax_request = new XMLHttpRequest();
+
+      ajax_request.open('POST', 'http://localhost/servicewise/ServiceWize/view/includes/admin/appointmentTimeSelectEdit.inc.php');
+
+      ajax_request.send(form_data);
+      
+
+      ajax_request.onreadystatechange = function()
+      {
+        
+        if(ajax_request.readyState == 4 && ajax_request.status == 200)
+        {
+          //document.getElementById('submit').disabled = false;
+
+          
+          //var response = JSON.parse(ajax_request.responseText);
+
+            //document.getElementById('form-add-appointment').reset();
+            //document.getElementById('addSelectProfessionalForClient').reset();
+            
+            
+            document.getElementById('divInputAppointmentTimeAdminEdit').innerHTML = ajax_request.responseText;
+        }
+      }
+    }else{
+      document.getElementById('messageAdminAppEdit').innerHTML = '<div class="alert alert-danger">Choose a Service</div>';
+      $('#inputAppointmentTimeProfessionalAdd').empty();
+    }
+  }else{
+    document.getElementById('messageAdminAppEdit').innerHTML = '<div class="alert alert-danger">Date Must be future</div>';
+    $('#inputAppointmentTimeProfessionalAdd').empty();
+  }
+ }
+
+ function saveAppointmentEditForAdmin(objButton)
+ {
+  debugger;
+    buttonID = objButton.id;
+    
+    appointmentID = buttonID.split('-');
+    var appointmentDate = document.getElementById('inputAppointmentDateEdit').value;
+   var form_element = document.getElementById('form-edit-appointment').getElementsByClassName('form_data_edit');
+
+   if(!isFutureDateConsulta(appointmentDate)){
+    document.getElementById('messageAdminAppEdit').innerHTML = '<div class="alert alert-danger">Date Must Be Future</div>';
+    return false;
+   }
+ 
+   var form_data = new FormData();
+ 
+   for(var count = 0; count < form_element.length; count++)
+   {
+     if(form_element[count].value == ""){
+       document.getElementById('messageAdminAppEdit').innerHTML = '<div class="alert alert-danger">Complete All Fields</div>';
+       for(var count = 0; count < form_element.length; count++)
+      {
+        if(form_element[count].value == ""){
+          form_element[count].classList.add('invalid-form-data');
+        }else{form_element[count].classList.remove('invalid-form-data');}
+      }
+      return false;
+     }else{
+       form_data.append(form_element[count].name, form_element[count].value);
+     }
+   }
+   
+   form_data.append('appointmentID', appointmentID[1]);
+
+   document.getElementById(buttonID).disabled = true;
+ 
+   var ajax_request = new XMLHttpRequest();
+ 
+   ajax_request.open('POST', 'http://localhost/servicewise/ServiceWize/view/includes/appointment/appointmentEditForAdmin.inc.php');
+ 
+   ajax_request.send(form_data);
+   
+ 
+   ajax_request.onreadystatechange = function()
+   {
+     
+     if(ajax_request.readyState == 4 && ajax_request.status == 200)
+     {
+       document.getElementById(buttonID).disabled = false;
+ 
+       
+         
+         document.getElementById('messageAdminAppEdit').innerHTML = ajax_request.responseText;
+ 
+         setTimeout(function(){
+ 
+           document.getElementById('messageAdminAppEdit').innerHTML = '';
+           
+ 
+         }, 5000);
+
+         const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+
+      if(urlParams.get('page') === 'calendar/admin/dayView'){
+        $("#dayViewContent").load(location.href+" #dayViewContent>*","");
+      $("#dayViewHeader").load(location.href+" #dayViewHeader>*","");
+      }
+      if(!(urlParams.get('page')) || urlParams.get('page') === '?page=home'){
+        $("#adminContents").load(location.href+" #adminContents>*","");
+      $("#adminCalendarHome").load(location.href+" #adminCalendarHome>*","");
+      }
+ 
+       
+ 
+         
+       
+     }
+   
+   }
+ }
+
+
+
+
+
+
+
+
+ function ONprofessionalPreview(objButton){
+  var button = document.getElementById('lineBreak1');
+  button.style.borderColor = "transparent";
+
+ }
+ function OUTprofessionalPreview(objButton){
+  var button = document.getElementById('lineBreak1');
+  button.style.borderColor = "#5898738f";
+ }
+ 
+ function ONclientPreview(objButton){
+  var button = document.getElementById('lineBreak1');
+  var button2 = document.getElementById('lineBreak2');
+  button.style.borderColor = "transparent";
+  button2.style.borderColor = "transparent";
+
+ }
+ function OUTclientPreview(objButton){
+  var button = document.getElementById('lineBreak1');
+  var button2 = document.getElementById('lineBreak2');
+  button.style.borderColor = "#5898738f";
+  button2.style.borderColor = "#5898738f";
+ }
+
+ function ONservicePreview(objButton){
+  var button = document.getElementById('lineBreak2');
+  var button2 = document.getElementById('lineBreak3');
+  button.style.borderColor = "transparent";
+  button2.style.borderColor = "transparent";
+
+ }
+ function OUTservicePreview(objButton){
+  var button = document.getElementById('lineBreak2');
+  var button2 = document.getElementById('lineBreak3');
+  button.style.borderColor = "#5898738f";
+  button2.style.borderColor = "#5898738f";
+ }
+
+ function ONappPreview(objButton){
+  var button = document.getElementById('lineBreak3');
+  button.style.borderColor = "transparent";
+
+ }
+ function OUTappPreview(objButton){
+  var button = document.getElementById('lineBreak3');
+  button.style.borderColor = "#5898738f";
+ }
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function login(objButton)
+{
+	var email = document.getElementById('email').value;
+  var password = document.getElementById('password').value;
+
+
+	var form_data = new FormData();
+
+	
+    if(email === "" || password === ""){
+      document.getElementById('messageLogin').innerHTML = '<div class="alert alert-danger">Complete All Fields</div>';
+      return false; 
+    }else{
+      form_data.append('email', email);
+      form_data.append('password', password);
+    }
+  
+
+	objButton.disabled = true;
+
+	var ajax_request = new XMLHttpRequest();
+
+	ajax_request.open('POST', 'http://localhost/servicewise/ServiceWize/view/includes/login.inc.php');
+
+	ajax_request.send(form_data);
+  
+
+	ajax_request.onreadystatechange = function()
+	{
+    
+		if(ajax_request.readyState == 4 && ajax_request.status == 200)
+		{
+			objButton.disabled = false;
+      if(ajax_request.responseText==='?page=home'){
+        location.href = ajax_request.responseText;
+      }else{
+      document.getElementById('messageLogin').innerHTML = ajax_request.responseText;
+
+      setTimeout(function(){
+
+        document.getElementById('messageLogin').innerHTML = '';
+        
+
+      }, 4000);
+    }
+			
+		}
+
+  }
+}
+function register(objButton)
+{
+  
+	var form_element = document.getElementById('singIn').getElementsByClassName('form_data_user');
+
+	var form_data = new FormData();
+
+	for(var count = 0; count < form_element.length; count++)
+	{
+    if(form_element[count].value == ""){
+      document.getElementById('messageRegister').innerHTML = '<div class="alert alert-danger">Complete All Fields</div>';
+      form_element[count].classList.add('invalid-form-data');
+      return false;
+    }else{
+      form_element[count].classList.remove('invalid-form-data');
+      form_data.append(form_element[count].name, form_element[count].value);
+    }
+    
+  }
+  var email = document.getElementById('email');
+  if (!emailCheck(email)) {
+    document.getElementById('messageRegister').innerHTML = '<div class="alert alert-danger">Invalid Email</div>';
+    email.classList.add('invalid-form-data');
+    return false;
+  }
+  var password = document.getElementById('password');
+  var repeatPassword = document.getElementById('repeatPassword');
+  if (password === repeatPassword) {
+    document.getElementById('messageRegister').innerHTML = '<div class="alert alert-danger">Password Do Not Match</div>';
+    mobile.classList.add('invalid-form-data');
+    return false;
+  }
+  
+
+	objButton.disabled = true;
+
+	var ajax_request = new XMLHttpRequest();
+
+	ajax_request.open('POST', 'http://localhost/servicewise/ServiceWize/view/includes/cadastro.inc.php');
+
+	ajax_request.send(form_data);
+  
+
+	ajax_request.onreadystatechange = function()
+	{
+    
+		if(ajax_request.readyState == 4 && ajax_request.status == 200)
+		{
+			objButton.disabled = false;
+
+      
+      if(ajax_request.responseText==='?page=login'){
+        
+        document.getElementById('messageRegister').innerHTML = '<div class="alert alert-success">User Registered Successfully</div>';
+
+        setTimeout(function(){
+  
+          location.href = ajax_request.responseText;
+          
+  
+        }, 4000);
+        
+      }else{
+        document.getElementById('messageRegister').innerHTML = ajax_request.responseText;        
+    }
+
+        
+			
+		}
+    // if(ajax_request.readyState == 1 && ajax_request.status == 500)
+		// {
+    //   document.getElementById('messageProfessionalAppAdd').innerHTML = ajax_request.responseText;
+    // }
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function isOver18(dateOfBirth) {
+  // find the date 18 years ago
+  const date18YrsAgo = new Date();
+  date18YrsAgo.setFullYear(date18YrsAgo.getFullYear() - 18);
+  // check if the date of birth is before that date
+  return dateOfBirth <= date18YrsAgo;
+}
+
 function isFutureDateConsulta(idate) {
   var today = new Date().getTime();
   idate = idate.split("-");

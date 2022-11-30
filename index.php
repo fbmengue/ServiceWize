@@ -1,7 +1,7 @@
 <?php
 
  // add the pagenames In session login
-$allowedLogin = array('index','home','calendar/dayView','user/account');
+$allowedLogin = array('index','home','calendar/admin/dayView','user/account','admin/adminSetup');
  // add the pagenames In session login
  $allowedLoginProfessional = array('index','professional/home','calendar/professional/dayView','user/account');
   // add the pagenames In session login

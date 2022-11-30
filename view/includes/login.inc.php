@@ -2,7 +2,7 @@
 
 use controller\LoginContr;
 
-if (isset($_POST) || !empty($_POST)) {
+if (isset($_POST["email"]) && isset($_POST["password"])) {
     //Get dados
     $email = $_POST["email"];
     $pwd = $_POST["password"];
@@ -37,5 +37,5 @@ if (isset($_POST) || !empty($_POST)) {
     //     echo $teste;
     // }
     //volta para a home do login
-    header("location: ../../index.php?page=home");
+    echo '?page=home';
 }

@@ -60,19 +60,11 @@ if (!empty($myClientAppointmentList)) {
                             <div class="appointment-dot-actions"> </div>
                         </div>
                         <ul class="dropdown-menu">
-                            <li>
-                                <button class="dropdown-item"
-                                    id="edit-button-<?php echo $item['appointmentID'] . "-" . $item['appointmentDate']; ?>"
-                                    data-bs-toggle="offcanvas" data-bs-target="#offcanvasEditAppointment"
-                                    aria-controls="offcanvasEditAppointment"
-                                    onclick="loadAppointmentForClientEdit(this); return false;">Edit</button>
-                            </li>
                             <li><button class="dropdown-item" id="cancel-button-<?php echo $item['appointmentID']; ?>"
                                     data-bs-toggle="offcanvas" data-bs-target="#offcanvasCancelAppointment"
                                     aria-controls="offcanvasCancelAppointment"
                                     onclick="loadAppointmentCancelForClient(this); return false;">Cancel</button>
                             </li>
-                            <li><button class="dropdown-item">Something else here</button></li>
                         </ul>
 
 
@@ -101,7 +93,7 @@ if (!empty($myClientAppointmentList)) {
 
 <?php
 } else {
-    echo "Sem marcações";
+    echo "No Appointments";
 }
 
 ?>

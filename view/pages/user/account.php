@@ -9,10 +9,11 @@ include __DIR__ . '/../../../model/db.classes.php';
 include __DIR__ . '/../../../model/user.classe.php';
 include __DIR__ . '/../../../model/service.classe.php';
 include __DIR__ . '/../../../model/professional.classe.php';
+include __DIR__ . '/../../../model/client.classe.php';
 include __DIR__ . '/../../../controller/service-contr.classes.php';
 include __DIR__ . '/../../../controller/professional-contr.classes.php';
 include __DIR__ . '/../../../controller/user-contr.classes.php';
-
+include __DIR__ . '/../../../controller/client-contr.classes.php';
 
 ?>
 
@@ -61,7 +62,7 @@ include __DIR__ . '/../../../controller/user-contr.classes.php';
 
 
 
-
+    <?php if ($_SESSION["userType"] === 'client') {?>
     <div class="quick-bottom-add">
         <div class="client-new-appointment">
             <div class="container">
@@ -98,7 +99,8 @@ include __DIR__ . '/../../../controller/user-contr.classes.php';
                     <div class="col-md-12">
                         <label for="inputAppointmentDate" class="form-label">Date</label>
                         <input type="date" class="form-control form_data" id="inputAppointmentDate"
-                            name="inputAppointmentDate" onchange="showHoursAvailable(); return false;" required>
+                            name="inputAppointmentDate" onchange="showHoursAvailableForClient(); return false;"
+                            required>
                     </div>
 
                     <div class="col-md-12" id="divInputAppointmentTime">
@@ -117,12 +119,65 @@ include __DIR__ . '/../../../controller/user-contr.classes.php';
                 </form>
             </div>
         </div>
+    </div>
+    <?php } elseif ($_SESSION["userType"] === 'professional') {?>
+    <div class="quick-bottom-add">
+        <div class="client-new-appointment">
+            <div class="container">
+                <button type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAppoint"
+                    aria-controls="offcanvasAppoint">
+                    <span>+</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="offcanvas form-popup offcanvas-start" tabindex="-1" id="offcanvasAppoint"
+            aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Add New Appointment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <span id="messageProfessionalAppAdd"></span>
+                <form class="row g-3" id="form-add-appointment" method="POST">
+                    <div class="col-md-12">
+                        <?php include __DIR__ . '/../../includes/client/clientList.inc.php'; ?>
+                    </div>
+
+                    <div class="col-md-12">
+                        <?php include __DIR__ . '/../../includes/service/myServiceList.inc.php'; ?>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="inputAppointmentDateProfessionalAdd" class="form-label">Date</label>
+                        <input type="date" class="form-control form_data_professional"
+                            id="inputAppointmentDateProfessionalAdd" name="inputAppointmentDateProfessionalAdd"
+                            onchange="showHoursAvailableForProfessional(); return false;" required>
+                    </div>
+
+
+                    <div class="col-md-12" id="divInputAppointmentTimeProfessional">
+
+
+                    </div>
 
 
 
-        <footer class="mt-7 mb-4">
-            <p class="m-0 text-secondary text-sm">footer
-                <a class="text-1DB968 fw-semibold" href="?page=login">pensar em ffooter</a>
-            </p>
-        </footer>
+                    <div class="col-12">
+                        <button type="submit" id="appointmentButtonForProfessionalAdd" class="btn btn-primary"
+                            name="submit" onclick="saveAppointmentForProfessional(); return false;">Add
+                            Client and Appointment</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <?php }?>
+
+
+
+    <footer class="mt-7 mb-4">
+        <p class="m-0 text-secondary text-sm">footer
+            <a class="text-1DB968 fw-semibold" href="?page=login">pensar em ffooter</a>
+        </p>
+    </footer>
 </section>

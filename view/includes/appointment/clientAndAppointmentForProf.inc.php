@@ -21,8 +21,8 @@ if (isset($_SESSION["userEmail"])) {
     $appointmentStartTime = $_POST["inputAppointmentTimeProfessionalAdd"];
 
     $serviceID = $serviceArrayID[0];
-    $serviceDuration = $serviceArrayDuration[1];
-    $servicePrice = $serviceArrayPrice[2];
+    $serviceDuration = $serviceArrayID[1];
+    $servicePrice = $serviceArrayID[2];
 
     $appointmentStartDateTime = strtotime($appointmentDate . " " . $appointmentStartTime);
     $appointmentEndDateTime = strtotime($appointmentDate . " " . $serviceDuration);

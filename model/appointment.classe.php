@@ -54,6 +54,31 @@ class Appointment extends Database
         $stmt3 = null;
     }
 
+    protected function getClientAge($clientID)
+    {
+        $stmt = $this->connect()->prepare('SELECT clientBirthDate from client WHERE clientID=?;');
+
+        // print_r($name . "\n");
+        // print_r($duration . "\n");
+        // print_r($price . "\n");
+        // exit;
+
+        if (!$stmt->execute([$clientID])) {
+            $stmt = null;
+            header("location: ../../../index.php?error=stmtfailed");
+
+            exit();
+        }
+
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $clientBirthDate = $results[0]['clientBirthDate'];
+
+        $stmt = null;
+        return $clientBirthDate;
+    }
+
+
+
     protected function setClientAndAppointment($fullName, $birthDate, $email, $mobile, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice)
     {
 
@@ -225,17 +250,35 @@ class Appointment extends Database
 
         $stmt = null;
     }
-
-    protected function cancelAppointmentByID($appointmentID)
+    protected function setAdminAppointmentByID($appointmentID, $clientID, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice)
     {
+
         $stmt = $this->connect()->prepare('UPDATE appointment
-        INNER JOIN client ON client_clientID=clientID
-        SET appointmentCanceled=?
+        SET client_clientID=?, service_serviceID=?,professional_professionalID=?, appointmentDate=?, appointmentStartTime=?, appointmentEndTime=?,appointmentDuration=?,appointmentPrice=?
         WHERE appointmentID=?;');
 
 
 
+        if (!$stmt->execute(array($clientID,$serviceID,$professionalID, $appointmentDate,$appointmentStartTime,$appointmentEndTime, $serviceDuration, $servicePrice,$appointmentID))) {
+            $stmt = null;
+            echo "Server Connection Fail, tray again!";
+            exit;
 
+            exit();
+        }
+
+
+
+        $stmt = null;
+    }
+
+
+
+    protected function cancelAppointmentByID($appointmentID)
+    {
+        $stmt = $this->connect()->prepare('UPDATE appointment
+        SET appointmentCanceled=?
+        WHERE appointmentID=?;');
 
         $appointmentCanceled = 1;
 
@@ -311,21 +354,23 @@ class Appointment extends Database
         $stmt = $this->connect()->prepare('SELECT * from appointment
         INNER JOIN client ON client_clientID=clientID
         INNER JOIN professional ON professional_professionalID=professionalID
-        INNER JOIN service ON service_serviceID=serviceID WHERE appointmentDate=?;');
+        INNER JOIN service ON service_serviceID=serviceID 
+        WHERE appointmentDate=? AND appointmentCanceled=?
+        ORDER BY appointmentStartTime;');
 
         // print_r($name . "\n");
         // print_r($duration . "\n");
 
+        $appointmentCanceled = 0;
 
-
-        if (!$stmt->execute([$date])) {
+        if (!$stmt->execute(array($date,$appointmentCanceled))) {
             $stmt = null;
             header("location: ../../../index.php?error=stmtfailed");
 
             exit();
         }
 
-        $results = $stmt->fetchAll();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
         $stmt = null;
@@ -474,16 +519,41 @@ class Appointment extends Database
         return $results;
     }
 
+    protected function getAdminAppointmentDataByIDDate($appointmentID, $appointmentDate)
+    {
+        $stmt = $this->connect()->prepare('SELECT *, date_format(appointmentStartTime, "%H:%i") as "appointmentTime" from appointment
+        INNER JOIN client ON client_clientID=clientID
+        INNER JOIN professional ON professional_professionalID=professionalID
+        INNER JOIN service ON service_serviceID=serviceID 
+        WHERE appointmentID=? and appointmentDate=? and appointmentCanceled=?;');
+
+
+        $appointmentCanceled = 0;
+
+
+        if (!$stmt->execute(array($appointmentID,$appointmentDate,$appointmentCanceled))) {
+            $stmt = null;
+            //header("location: ../../../index.php?error=stmtfailed");
+            echo "Server Error";
+            exit();
+        }
+
+
+
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+
+        $stmt = null;
+        return $results;
+    }
+
 
 
 
     protected function getProfessionalID($email)
     {
         $stmt = $this->connect()->prepare('SELECT professionalID FROM professional WHERE professionalEmail = ?;');
-
-        // print_r($name . "\n");
-        // print_r($duration . "\n");
-
 
 
         if (!$stmt->execute([$email])) {
@@ -503,14 +573,12 @@ class Appointment extends Database
 
     protected function getAppointmentsPerDay()
     {
-        $stmt = $this->connect()->prepare('SELECT COUNT(*) as servicesPerDay, appointmentDate FROM appointment GROUP BY appointmentDate;');
+        $stmt = $this->connect()->prepare('SELECT COUNT(*) as servicesPerDay, appointmentDate FROM appointment where appointmentCanceled=? GROUP BY appointmentDate;');
 
-        // print_r($name . "\n");
-        // print_r($duration . "\n");
-        // print_r($price . "\n");
-        // exit;
 
-        if (!$stmt->execute()) {
+        $appointmentNotCanceled = 0;
+
+        if (!$stmt->execute([$appointmentNotCanceled])) {
             $stmt = null;
             header("location: ../../../index.php?error=stmtfailed");
 
@@ -531,10 +599,6 @@ class Appointment extends Database
         GROUP BY appointmentDate;');
 
         $appointmentNotCanceled = 0;
-        // print_r($name . "\n");
-        // print_r($duration . "\n");
-        // print_r($price . "\n");
-        // exit;
 
         if (!$stmt->execute(array($userEmail,$appointmentNotCanceled))) {
             $stmt = null;
@@ -553,11 +617,6 @@ class Appointment extends Database
     protected function getAppointments()
     {
         $stmt = $this->connect()->prepare('SELECT * from appointment;');
-
-        // print_r($name . "\n");
-        // print_r($duration . "\n");
-        // print_r($price . "\n");
-        // exit;
 
         if (!$stmt->execute()) {
             $stmt = null;
@@ -580,11 +639,6 @@ class Appointment extends Database
         $stmt3 = $this->connect()->prepare('SELECT COUNT(*) clientID FROM client;');
         $stmt4 = $this->connect()->prepare('SELECT COUNT(*) professionalID FROM professional;');
 
-
-        // print_r($name . "\n");
-        // print_r($duration . "\n");
-        // print_r($price . "\n");
-        // exit;
 
         if (!$stmt->execute() || !$stmt2->execute() || !$stmt3->execute() || !$stmt4->execute()) {
             $stmt = null;
@@ -622,11 +676,6 @@ class Appointment extends Database
         where professionalEmail = ?;');
 
 
-
-        // print_r($name . "\n");
-        // print_r($duration . "\n");
-        // print_r($price . "\n");
-        // exit;
 
         if (!$stmt->execute([$userEmail]) || !$stmt2->execute([$userEmail]) || !$stmt3->execute([$userEmail])) {
             $stmt = null;

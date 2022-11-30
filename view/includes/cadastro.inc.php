@@ -56,5 +56,5 @@ if (isset($_POST) || !empty($_POST)) {
 
 
     // //volta para a home
-    header("location: ../../index.php?page=login");
+    echo '?page=login';
 }

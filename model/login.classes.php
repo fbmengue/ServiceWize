@@ -13,16 +13,14 @@ class Login extends Database
         $stmtRow = $this->connect()->prepare('SELECT COUNT(*) FROM user WHERE userEmail = ?;');
 
         if (!$stmtRow->execute(array($email)) || !$stmtPass->execute(array($email))) {
-            header("location: ./../index.php?page=login&error=" . $stmtRow);
+            echo '<div class="alert alert-danger">Failed to connect to server</div>';
             exit();
         }
 
         if ($stmtRow->fetchColumn() == 0) {
             $stmtRow = null;
             $stmtPass = null;
-            $textMsg = "Usuário não Registado!";
-            $display = "falha";
-            header("location: ../marcaConsultoria.php?error=" . $textMsg . "&status=" . $display);
+            echo '<div class="alert alert-danger">User Not Registered</div>';
             exit();
         }
 
@@ -35,9 +33,7 @@ class Login extends Database
         if ($checkPwd == false) {
             $stmtRow = null;
             $stmtPass = null;
-            $textMsg = "Senha incorreta!";
-            $display = "falha";
-            header("location: ../marcaConsultoria.php?error=" . $textMsg . "&status=" . $display);
+            echo '<div class="alert alert-danger">Invalid Password</div>';
             exit();
         } elseif ($checkPwd == true) {
             $stmtEmailPass = $this->connect()->prepare('SELECT * FROM user WHERE userEmail = ? AND userPassword = ?;');
@@ -46,7 +42,7 @@ class Login extends Database
             if (!$stmtEmailPass->execute(array($email,$pwdHashed[0]["userPassword"])) || !$stmtRow->execute(array($email,$pwdHashed[0]["userPassword"]))) {
                 $stmtEmailPass = null;
                 $stmtPass = null;
-                header("location: ../marcaConsultoria.php?error=stmtfailed2");
+                echo '<div class="alert alert-danger">Failed to connect to server</div>';
                 exit();
             }
 
@@ -56,9 +52,7 @@ class Login extends Database
             if ($stmtRow->fetchColumn() == 0) {
                 $stmtEmailPass = null;
                 $stmtPass = null;
-                $textMsg = "Utilizador não registado!";
-                $display = "falha";
-                header("location: ../../index.php?page=login&error=" . $textMsg . "&status=" . $display);
+                echo '<div class="alert alert-danger">User Not Registered</div>';
                 exit();
             }
 
@@ -73,6 +67,8 @@ class Login extends Database
             $_SESSION["userID"] = $user[0]["userID"];
             $_SESSION["userFullName"] = $user[0]["userFullName"];
             $_SESSION["userEmail"] = $user[0]["userEmail"];
+            $_SESSION["userMobile"] = $user[0]["userMobile"];
+            $_SESSION["userBirthDate"] = $user[0]["userBirthDate"];
             $_SESSION["userType"] = $user[0]["userType"];
             $stmtEmailPass = null;
             $stmtPass = null;

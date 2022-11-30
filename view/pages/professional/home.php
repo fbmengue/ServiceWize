@@ -28,24 +28,22 @@ include __DIR__ . '/../../../controller/service-contr.classes.php';
             <div class="profile d-flex flex-row pt-1 justify-content-between">
                 <div class="welcome-container d-flex flex-wrap flex-row justify-content-between">
                     <div class="name w-50 d-flex flex-column">
-                        <p class="title-label">Welcome back,</p>
+                        <h2 class="widget-title" translate="">Welcome back,</h2>
                         <p class="name-label"><?php echo $_SESSION["userFullName"]?> </p>
                     </div>
                     <div class="balance w-50 flex-column">
-                        <p class="title-label" translate="">overall balance</p>
-                        <p class="title-label">€ <strong class="balance-value"></strong>
+
                     </div>
                     <div class="info-list d-flex w-100 flex-row justify-content-between">
                         <div class="info-label amount">
-                            <p class="title" translate="">monthly earning</p>
-                            <p class="amount earning">€ 189,30</p>
+                            <p class="title" translate="">Monthly Earning</p>
+                            <p class="amount earning"># Coming Soon #</p>
                         </div>
                         <div class="info-label amount">
-                            <p class="title" translate="">monthly services</p>
-                            <p class="amount expense">€ -1.367,20</p>
-                        </div><a class="info-label report" href="">
-                            <i class="icon-report"></i>
-                            <p translate="" class="">see reports</p>
+                            <p class="title" translate="">Monthly Services</p>
+                            <p class="amount expense"># Coming Soon #</p>
+                        </div><a class="info-label report" href="#">
+                            See Reports Coming Soon
                         </a>
                     </div>
                 </div>
@@ -274,11 +272,6 @@ include __DIR__ . '/../../../controller/service-contr.classes.php';
             <div class="offcanvas-body" id="offcanvas-body-edit">
                 <span id="messageProfessionalAppEdit"></span>
                 <form class="row g-3" id="form-professional-edit-appointment" method="POST">
-
-
-                    <?php //include __DIR__ . '/../../includes/appointment/clientAppointmentListData.inc.php'; ?>
-
-
 
                 </form>
             </div>

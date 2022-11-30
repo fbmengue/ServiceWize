@@ -26,7 +26,7 @@ if (isset($_POST["selectProfessionalForClientAdd"])) {
     //Get dados
     $professionalID = $_POST["selectProfessionalForClientAdd"];
 
-    $serviceArrayID = explode('|', $_POST['selectServiceName-' . $professionalID]);
+    $serviceArrayID = explode('|', $_POST['selectServiceNameForClientAdd']);
     $serviceID = $serviceArrayID[0];
 
     $clientDataList = $newClientData->getClientDataListByUserEmail($_SESSION["userEmail"]);
@@ -56,9 +56,20 @@ if (isset($_POST["selectProfessionalForClientAdd"])) {
     $timeList = $newAppointment->getTimeAvailableByProfessionalDateService($professionalID, $serviceID, $appointmentDate);
 
 
+    function prefix_get_next_key_array($arr, $key)
+    {
+        $keys     = array_keys($arr);
+        $position = array_search($key, $keys, true);
+        if (array_key_exists($key, $arr)) {
+            if (isset($keys[ $position + 1 ])) {
+                $next_key = $keys[ $position + 1 ];
+            }
+        }
 
-    //volta para a home
-    //header("location: ../../../index.php?page=home");
+        return $next_key;
+    }
+
+
     $timeAvailableArray = [
         "09:00",
         "09:30",
@@ -88,7 +99,7 @@ if (isset($_POST["selectProfessionalForClientAdd"])) {
     foreach ($timeList as $item) {
         $start = substr($item['appointmentStartTime'], 0, -3);
         $timeNotAvailable[] = $start;
-        //$arrayTeste[] = $end;
+        //$arrayAvailableFinal[] = $end;
 
         $one = strtotime($item['appointmentStartTime']);
         $two = strtotime($item['appointmentEndTime']);
@@ -98,15 +109,65 @@ if (isset($_POST["selectProfessionalForClientAdd"])) {
             $timeNotAvailable[] = date('H:i', $interval_timestamp);//output as needed.
         }
     }
-    // print_r("<pre>");
-    // print_r($arrayTeste);
-    // print_r("</pre>");
-    // print_r("<pre>");
-    // print_r($timeAvailableArray);
-    // print_r("</pre>");
-    // print_r("<pre>");
-    // print_r($horasADD);
-    // print_r("</pre>");
+
+    $serviceDurationBegin = '00:00';
+    $serviceDurationBeginTimeStamp = strtotime($serviceDurationBegin);
+    $serviceDurationTimeStamp = strtotime($serviceDuration);
+
+    while ($serviceDurationTimeStamp > $serviceDurationBeginTimeStamp) {
+        $interval_timestamp = $serviceDurationBeginTimeStamp += 60 * 30;
+        $timeDurationAvailable[] = date('H:i', $interval_timestamp);//output as needed.
+    }
+    if (!empty($timeNotAvailable)) {
+        $arrayAvailableFinal = array_diff($timeAvailableArray, $timeNotAvailable);
+    } else {
+        $arrayAvailableFinal = $timeAvailableArray;
+    }
+
+    if (!empty($arrayAvailableFinal)) {
+        foreach ($arrayAvailableFinal as $key => $item) {
+            $currentElement = $item;
+            $nextElement = next($arrayAvailableFinal);
+
+            $durationSlots = count($timeDurationAvailable);
+
+            $startSlots = 0;
+            unset($arrayTemp);
+            $arrayTemp[] = [];
+
+            while ($startSlots < $durationSlots) {
+                $nextKey = key($arrayAvailableFinal);
+
+                $nextKeyFunction = prefix_get_next_key_array($arrayAvailableFinal, $key + $startSlots);
+
+
+                if (($key + $startSlots + 1) === $nextKeyFunction) {
+                    $arrayTemp[] = $key . " " . $startSlots . " " . $nextKeyFunction ;
+                    $timeNotAvailableTESTE3[] = $currentElement;
+                }
+
+                $timeNotAvailableTESTE[] = $key   . " " . $startSlots . " " . $nextKeyFunction . " " . $currentElement;
+                $nextElement = next($arrayAvailableFinal);
+
+
+                $startSlots += 1;
+            }
+            $teste[] = count($arrayTemp) - 1 . " " . $durationSlots;
+            if ((!empty($arrayTemp)) && count($arrayTemp) - 1 == $durationSlots) {
+                $arrayAvailableAppService[] = $currentElement;
+            }
+        }
+    } else {
+        $arrayAvailableAppService[] = "No time Available";
+    }
+
+
+
+
+
+
+
+
 
 
     if (!empty($timeList)) {
@@ -117,18 +178,25 @@ if (isset($_POST["selectProfessionalForClientAdd"])) {
     <option value=""></option>
 
     <?php
+        if (empty($arrayAvailableAppService)) {
+            ?>
 
-        foreach ($timeAvailableArray as $AllTimes) {
-            if (!in_array($AllTimes, $timeNotAvailable)) {
+    <option value="">No time Available</option>
+
+
+
+    <?php
+        } else {
+            foreach ($arrayAvailableAppService as $AllTimes) {
                 ?>
-    <option value="<?php echo $AllTimes ?>"><?php echo $AllTimes ?></option>
+
+    <option value=" <?php echo $AllTimes ?>"><?php echo $AllTimes; ?></option>
 
 
 
     <?php
             }
         }
-
         ?>
 
 </select>
@@ -142,7 +210,7 @@ if (isset($_POST["selectProfessionalForClientAdd"])) {
     <option value=""></option>
     <?php
 
-        foreach ($timeAvailableArray as $AllTimes) {
+        foreach ($arrayAvailableAppService as $AllTimes) {
             ?>
     <option value="<?php echo $AllTimes ?>"><?php echo $AllTimes ?></option>
 
@@ -153,15 +221,10 @@ if (isset($_POST["selectProfessionalForClientAdd"])) {
 
         ?>
 
-
-
-
-
-
 </select>
 
 <?php
     }
 } else {
-    echo "Error";
+    echo "No time Available";
 }

@@ -13,8 +13,15 @@ class AppointmentContr extends Appointment
     public function addAppointment($clientID, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice)
     {
         if ($this->campoVazio($clientID, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice) == false) {
-            //header("location:../../index.php?page=register&error=campovazio");
-            echo '<div class="alert alert-danger">Fill all Fields</div>';
+            echo '<div class="alert alert-danger">Complete all Fields</div>';
+            exit();
+        }
+        $clientAge = $this->getClientAge($clientID);
+
+        $then = strtotime($clientAge);
+        $min = strtotime('+18 years', $then);
+        if (time() < $min) {
+            echo '<div class="alert alert-danger">You Must Be 18 years old</div>';
             exit();
         }
 
@@ -32,6 +39,13 @@ class AppointmentContr extends Appointment
     {
 
         $this->setMyProfessionalAppointmentByID($appointmentID, $clientID, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice);
+    }
+
+    public function editAdminAppointmentByID($appointmentID, $clientID, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice)
+    {
+
+
+        $this->setAdminAppointmentByID($appointmentID, $clientID, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice);
     }
 
     public function cancelAppointment($appointmentID)
@@ -73,13 +87,26 @@ class AppointmentContr extends Appointment
     public function addClientAndAppointmentForClient($fullName, $birthDate, $email, $mobile, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice)
     {
         if (
-            empty($fullName) || empty($birthDate) || empty($email) || empty($mobile)
-            || empty($professionalID) || empty($serviceID) || empty($appointmentDate) || empty($appointmentStartTime)
+            empty($professionalID) || empty($serviceID) || empty($appointmentDate) || empty($appointmentStartTime)
             || empty($appointmentEndTime) || empty($serviceDuration) || empty($servicePrice)
         ) {
-            header("location: ../../../index.php?page=home&error=campovazio");
+            echo '<div class="alert alert-danger">Complete all Fields</div>';
             exit();
         }
+        if (empty($fullName) || empty($birthDate) || empty($email) || empty($mobile)) {
+            echo '<div class="alert alert-danger">Complete your Profile</div>';
+            exit();
+        }
+
+
+
+        $then = strtotime($birthDate);
+        $min = strtotime('+18 years', $then);
+        if (time() < $min) {
+            echo '<div class="alert alert-danger">You Must Be 18 years old' . $birthDate . '</div>';
+            exit();
+        }
+
         $this->setClientAndAppointment($fullName, $birthDate, $email, $mobile, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice);
     }
 
@@ -97,6 +124,13 @@ class AppointmentContr extends Appointment
 
 
         $results = $this->getProfAppointmentDataByIDEmail($appointmentID, $userEmail, $appointmentDate);
+
+        return $results;
+    }
+    public function getAdminAppointmentDataListByIDDate($appointmentID, $appointmentDate)
+    {
+
+        $results = $this->getAdminAppointmentDataByIDDate($appointmentID, $appointmentDate);
 
         return $results;
     }

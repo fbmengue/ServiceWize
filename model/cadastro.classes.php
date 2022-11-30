@@ -11,7 +11,7 @@ class Cadastro extends Database
         $stmt = $this->connect()->prepare('SELECT userEmail FROM user WHERE userEmail = ?;');
         if (!$stmt->execute(array($email))) {
             $stmt = null;
-            header("location: ../marcaConsultoria.php?error=stmtfailed");
+            echo '<div class="alert alert-danger">Server Connection Failed</div>';
             exit();
         }
         $resultCheck = false;
@@ -32,7 +32,7 @@ class Cadastro extends Database
 
         if (!$stmt->execute(array($fullName,$hashedPwd, $email, $tel,$userType))) {
             $stmt = null;
-            header("location: ../marcaConsultoria.php?error=stmtfailed");
+            echo '<div class="alert alert-danger">Server Connection Failed</div>';
             exit();
         }
 

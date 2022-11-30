@@ -57,6 +57,7 @@ if (isset($_POST["selectProfessionalForClientAdd"])) {
     if (is_numeric($clientID)) {
         $newAppointment->addAppointment($clientID, $professionalID, $serviceID, $appointmentDate, $appointmentStartTime, $appointmentEndTime, $serviceDuration, $servicePrice);
     } else {
+        session_start();
         $fullName = $_SESSION["userFullName"];
         $email = $_SESSION["userEmail"];
         $birthDate = $_SESSION["userBirthDate"];

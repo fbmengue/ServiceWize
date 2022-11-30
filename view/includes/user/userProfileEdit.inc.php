@@ -26,8 +26,15 @@ if (isset($_SESSION["userID"])) {
     //New Professional
     $newUser = new UserContr();
 
+
+
     //Roda erros
     $newUser->setMyUserProfileByID($userID, $fullName, $email, $mobile, $birthDate);
+
+    $_SESSION["userFullName"] = $fullName;
+    $_SESSION["userEmail"] = $email;
+    $_SESSION["userBirthDate"] = $birthDate;
+    $_SESSION["userMobile"] = $mobile;
 
 
     //volta para a home

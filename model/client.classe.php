@@ -18,7 +18,7 @@ class Client extends Database
 
         if (!$stmt->execute(array($fullName, $birthDate, $email, $mobile))) {
             $stmt = null;
-            header("location: ../../../index.php?error=stmtfailed");
+            echo '<div class="alert alert-danger">Server Error Try Again in a Moment</div>';
 
             exit();
         }

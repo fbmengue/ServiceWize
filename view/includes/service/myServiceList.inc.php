@@ -36,7 +36,7 @@ session_start();
 </div>
 <div class="col-md-6">
     <label for="selectServiceDuration" class="form-label">Duration</label>
-    <select id="selectServiceDuration" name="selectServiceDuration" class="form-select form_data_professional"
+    <select id="selectServiceDuration" name="selectServiceDuration" class="form-select form_data_professional" disabled
         placeholder="">
         <option value=""></option>
         <?php
@@ -55,7 +55,8 @@ session_start();
 </div>
 <div class="col-md-6">
     <label for="selectServicePrice" class="form-label">Price</label>
-    <select id="selectServicePrice" name="selectServicePrice" class="form-select form_data_professional" placeholder="">
+    <select id="selectServicePrice" name="selectServicePrice" class="form-select form_data_professional" disabled
+        placeholder="">
         <option value=""></option>
         <?php
         foreach ($myServiceList as $itemMyService) {

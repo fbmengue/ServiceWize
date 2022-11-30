@@ -20,14 +20,13 @@
         </a>
     </header>
     <div class="d-flex flex-column w-100 align-items-center p-5 px-6 bg-white rounded-2" style="max-width: 490px">
-        <h2 class="font-semibold text-center text-2xl text-[#525252] mb-2">Acesse sua conta</h2>
+        <h2 class="font-semibold text-center text-2xl text-[#525252] mb-2">Access your account</h2>
         <div class="w-100 mt-4 mb-3">
             <form method="post" action="#" enctype="application/x-www-form-urlencoded">
                 <button
                     class="button-facebook hover-transition w-100 d-flex align-items-center justify-content-center px-4 mb-3 bg-white border rounded-2 h-50px">
                     <img src="assets/images/facebook-f.svg" class="hover-transition" alt="facebook-login" width="14">
-                    <p class="fw-semibold hover-transition w-100 m-0">Entre
-                        com o Facebook</p>
+                    <p class="fw-semibold hover-transition w-100 m-0">Login with Facebook</p>
                 </button>
             </form>
 
@@ -35,39 +34,38 @@
                 <button
                     class="button-google hover-transition w-100 d-flex align-items-center justify-content-center px-4 mb-3 bg-white border rounded-2 h-50px">
                     <img src="assets/images/google-g.svg" class="hover-transition" alt="google-login" width="20">
-                    <p class="fw-semibold hover-transition w-100 m-0">Entre
-                        com o Google</p>
+                    <p class="fw-semibold hover-transition w-100 m-0">Login with Google</p>
                 </button>
             </form>
         </div>
         <div class="w-100 d-flex align-items-center justify-content-center my-2 text-center position-relative">
             <div class="w-100 border-bottom position-absolute top-50 start-0"></div>
             <span class="d-flex m-0 px-2 bg-white align-items-center justify-content-center text-black-50"
-                style="z-index: 1;height: 23px;">ou</span>
+                style="z-index: 1;height: 23px;">or</span>
         </div>
-        <form method="post" action="view/includes/login.inc.php" id="singIn"
-            class="w-100 d-flex flex-column align-items-center">
+        <span id="messageLogin"></span>
+        <form method="post" id="singIn" class="w-100 d-flex flex-column align-items-center">
             <div class="w-100 d-flex flex-column mb-3">
-                <label class="mb-2 fw-semibold" for="email">Seu email</label>
+                <label class="mb-2 fw-semibold" for="email">Email</label>
                 <input required="" class="border h-12 px-3 rounded-1 w-100 input-outline" type="email" name="email"
                     id="email">
             </div>
-            <div class="w-100 d-flex flex-column mb-3"><label class="mb-2 fw-semibold" for="email">Sua senha</label>
+            <div class="w-100 d-flex flex-column mb-3"><label class="mb-2 fw-semibold" for="email">Password</label>
                 <div class="w-100 d-d-flex flex-column mb-3">
                     <input required="" style="margin-bottom: 3px;"
                         class="border h-12 px-3 rounded-1 w-100 input-outline" type="password" name="password"
                         id="password">
                     <a class="text-secondary text-sm pb-1 px-2 bg-white w-100 text-decoration-none"
-                        href="?page=forgotPassword">Esqueci minha senha</a>
+                        href="?page=forgotPassword">Forgot my password</a>
                 </div>
             </div>
-            <button type="submit"
-                class="w-100 exemplo h-50px text-white font-semibold mt-7 rounded-2 border-0 bg-green-medium">Entrar</button>
+            <button type="submit" onclick="login(this);"
+                class="w-100 exemplo h-50px text-white font-semibold mt-7 rounded-2 border-0 bg-green-medium">Login</button>
         </form>
     </div>
     <footer class="mt-7 mb-4">
-        <p class="m-0 text-secondary text-sm">Ainda não possui conta?
-            <a class="text-1DB968 fw-semibold" href="?page=register">Faça o cadastro!</a>
+        <p class="m-0 text-secondary text-sm">Don't have an account yet?
+            <a class="text-1DB968 fw-semibold" href="?page=register">Register Here!</a>
         </p>
     </footer>
 </section>

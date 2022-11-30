@@ -4,7 +4,7 @@ use controller\ProfessionalContr;
 
 session_start();
 
-if (isset($_POST["submit"])) {
+if (isset($_POST["inputProfessionalEmail"])) {
     //Get dados
     $fullName = $_POST["inputProfessionalFullName"];
     $email = $_POST["inputProfessionalEmail"];
@@ -27,6 +27,5 @@ if (isset($_POST["submit"])) {
     $newProfessional->addProfessional($fullName, $email);
 
 
-    //volta para a home
-    header("location: ../../../index.php?page=home");
+    echo '<div class="alert alert-success">Professional Saved</div>';
 }

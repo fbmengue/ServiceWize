@@ -13,7 +13,7 @@ class ClientContr extends Client
     public function addClient($fullName, $birthDate, $email, $mobile)
     {
         if ($this->campoVazio($fullName, $birthDate, $email, $mobile) == false) {
-            header("location:../../index.php?page=register&error=campovazio");
+            echo '<div class="alert alert-danger">Complete All Fields</div>';
             exit();
         }
 

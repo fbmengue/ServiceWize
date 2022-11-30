@@ -59,7 +59,7 @@ if (isset($_SESSION["userID"])) {
             <div>
                 <input class="profile-data profile-email form_data_profile" id="inputUserEmail" name="inputUserEmail"
                     placeholder="<?php echo $myProfile[0]['userEmail'];?>"
-                    value="<?php echo $myProfile[0]['userEmail'];?>" maxlength="70" onchange="validaEmail(this)">
+                    value="<?php echo $myProfile[0]['userEmail'];?>" maxlength="70" onchange="emailChangeCheck(this)">
             </div>
             <div>
                 <span id="email-span" class="hide" style="margin: 0;padding: 2px;"></span>
@@ -75,7 +75,7 @@ if (isset($_SESSION["userID"])) {
             <div>
                 <input class="profile-data profile-mobile form_data_profile" id="inputUserMobile" name="inputUserMobile"
                     placeholder="<?php echo $myProfile[0]['userMobile'];?>"
-                    value="<?php echo $myProfile[0]['userMobile'];?>" maxlength="70" onchange="validaTel(this)">
+                    value="<?php echo $myProfile[0]['userMobile'];?>" maxlength="70" onchange="mobileChangeCheck(this)">
             </div>
             <div class="col-5">
                 <span id="telemovel-span" class="hide" style="margin: 0;padding: 2px;"></span>

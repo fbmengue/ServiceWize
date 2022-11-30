@@ -85,5 +85,5 @@ if (isset($_POST['selectProfessionalForClientAdd'])) {
 </div>
 <?php
 } else {
-    echo "nao entrou no if";
+    echo "Error";
 }

@@ -110,6 +110,23 @@ box-shadow: 2px 1px 12px -7px #01261c7a;
 .text-green:hover {
   color: #008f26;
 }
+.welcome-container .name-label,
+.welcome-container .title{
+  font-weight: 500;
+}
+.welcome-container .report{
+  display: flex;
+    align-items: center;
+  border: 0px;
+  padding: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  background: #adadad;
+  color: #faf9f6;
+  text-decoration: none;
+  height: 43px;
+}
 
 /* CSS for Input */
 .selectize-control .selectize-input.disabled{
@@ -291,6 +308,26 @@ box-shadow: 2px 1px 12px -7px #01261c7a;
   border-bottom: 2px solid #5898738f;
     margin: 0px 20px;
 }
+#adminContents a{
+  text-decoration: none;
+}
+.professional-preview,
+.clients-preview,
+.services-preview,
+.appointments-preview{
+  border: 1px solid transparent;
+  border-radius: 12px;
+}
+.professional-preview:hover,
+.clients-preview:hover,
+.services-preview:hover,
+.appointments-preview:hover{
+  background: #eaeaea;
+    box-shadow: 3px 4px 12px 0px #c7c5c5;
+    transition: all 0.2s ease-in;
+    border-radius: 12px;
+    border: 1px solid #3FB6A8;
+}
 
 /* CSS for Layout */
 .container{
@@ -304,11 +341,38 @@ box-shadow: 2px 1px 12px -7px #01261c7a;
 
 /* CSS for Calendar Layout */
 
+
+.dropdown-menu .dropdown-item-coming-soon:hover,
+.dropdown-menu .dropdown-item-coming-soon:active{
+background-color: #fff;
+
+}
+.date-header{
+  background: #eaeaea;
+    box-shadow: 3px 4px 12px 0px #c7c5c5;
+    border: 1px solid #3FB6A8;
+    padding: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
 .navbar-week-header{
   
 }
+.navbar-week-header .next-week a,
+.navbar-week-header .prev-week a{
+    padding: 5px 8px 8px 8px;    
+}
 .navbar-week-header a{
   text-decoration: none;
+    border: 1px solid #F25270;
+    color: #F25270;
+    padding: 8px 8px 8px 8px;
+    border-radius: 8px;
+    font-weight: 500;
+}
+.navbar-week-header a:hover{
+  background: #f4eee1;
 }
 .mobile-container-calendar{
   padding: 15px !important;
@@ -697,16 +761,115 @@ background: #589873;
 }
 
 
+
+
+/* ######## ADMIN SETUP PAGE ######## */
+.col-id{
+  display: flex;
+    flex-direction: column;
+    font-size: 13px;
+    gap: 5px;
+    margin-top: 5px;
+}
+.label-control{
+  text-align: initial;
+    padding-left: 5px;
+}
+.edit-button{
+  border: 0px;
+    padding: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    background: #589873;
+    color: #f4eee1;
+   width: 70px;
+   height: 36px;
+}
+.filter-button{
+  border: 0px;
+  padding: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  background: #589873;
+  color: #f4eee1;
+ width: 70px;
+ height: 36px;
+}
+
+
+.send-button,
+.cancel-button,
+.delete-button{
+  border: 0px;
+    padding: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    margin-bottom: 0px;
+    
+}
+.gap-button{
+  gap: 14px;
+}
+.send-button{
+
+}
+.cancel-button{
+
+}
+.delete-button{
+
+}
+.lds-ring-show{
+  display: inline-block !important;
+}
+.lds-ring {
+  display: none;
+  position: relative;
+  width: 14px;
+  height: 14px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+
+
+
 @media only screen and (max-width: 600px) {
 
-  /* .form-popup{
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    transition-duration: 0.3s !important;
-    bottom: 0;
-    transition: transform .3s ease-in-out !important;
-    } */
+  .gap-button{
+    gap: 44px;
+  }
   .main-content{
     padding-top: 0px !important;
   }

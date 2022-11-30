@@ -14,7 +14,7 @@ class ProfessionalContr extends Professional
     {
 
         if ($this->campoVazio($fullName, $email) == false) {
-            header("location:../../index.php?page=register&error=campovazio");
+            echo '<div class="alert alert-danger">Complete All Fields</div>';
             exit();
         }
 
