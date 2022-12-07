@@ -16,8 +16,8 @@ session_start();
                 <label>Current Password:</label>
             </div>
             <div>
-                <input class="profile-data account-current-password" id="currentPassword" name="utilizadorNome"
-                    maxlength="70" onchange="validatePassword(this)">
+                <input type="password" class="profile-data account-current-password" id="currentPassword"
+                    name="currentPassword" maxlength="70">
             </div>
         </div>
 
@@ -29,8 +29,8 @@ session_start();
                 <label>new password:</label>
             </div>
             <div>
-                <input class="profile-data account-new-password" id="newPassword" name="utilizadorEmail" maxlength="70"
-                    onchange="validatePassword(this)">
+                <input type="password" class="profile-data account-new-password" id="newPassword" name="newPassword"
+                    maxlength="70">
             </div>
             <div>
                 <span id="email-span" class="hide" style="margin: 0;padding: 2px;"></span>
@@ -44,8 +44,8 @@ session_start();
                 <label>new password repeat:</label>
             </div>
             <div>
-                <input class="profile-data account-new-password-reapeat" id="newPasswordRepeat" name="newPasswordRepeat"
-                    maxlength="70" onchange="validatePasswordReapeat(this)">
+                <input type="password" class="profile-data account-new-password-reapeat" id="newPasswordRepeat"
+                    name="newPasswordRepeat" maxlength="70">
             </div>
             <div>
                 <span id="email-span" class="hide" style="margin: 0;padding: 2px;"></span>
@@ -65,8 +65,8 @@ session_start();
 
         </div>
         <div>
-            <button id="edit-my-profile" class="edit-my-profile p-3 font-semibold rounded-2 border-0 bg-green-medium"
-                type="submit" form="form-user-password" name="submit" formaction=""> Change password </button>
+            <button id="edit-my-password" class="edit-my-profile p-3 font-semibold rounded-2 border-0 bg-green-medium"
+                type="submit" onclick="updateUserPassword(this);return false;"> Change password </button>
 
         </div>
         <div class="col-5">

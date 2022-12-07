@@ -942,6 +942,65 @@ function updateUseProfile()
 	}
 }
 
+function updateUserPassword()
+{
+	var currentPassword = document.getElementById('currentPassword').value;
+  var newPassword = document.getElementById('newPassword').value;
+  var newPasswordRepeat = document.getElementById('newPasswordRepeat').value;
+
+  if(newPassword != newPasswordRepeat){
+    document.getElementById('messageAccount').innerHTML = '<div class="alert alert-danger">New Password Do not Match</div>';
+    return false;
+  }
+
+	var form_data = new FormData();
+
+  form_data.append('currentPassword', currentPassword);
+  form_data.append('newPassword', newPassword);
+  form_data.append('newPasswordRepeat', newPasswordRepeat);
+
+	document.getElementById('edit-my-password').disabled = true;
+
+	var ajax_request = new XMLHttpRequest();
+
+	ajax_request.open('POST', 'http://localhost/servicewise/ServiceWize/view/includes/user/userPasswordEdit.inc.php');
+
+	ajax_request.send(form_data);
+  
+
+	ajax_request.onreadystatechange = function()
+	{
+    
+		if(ajax_request.readyState == 4 && ajax_request.status == 200)
+		{
+			document.getElementById('edit-my-password').disabled = false;
+
+      
+			//var response = JSON.parse(ajax_request.responseText);
+
+				//document.getElementById('form-add-appointment').reset();
+        //document.getElementById('addSelectProfessionalForClient').reset();
+        
+        
+				document.getElementById('messageAccount').innerHTML = ajax_request.responseText;
+
+				setTimeout(function(){
+
+					document.getElementById('messageAccount').innerHTML = '';
+          
+
+				}, 3000);
+
+        $("#accountContent").load(location.href+" #accountContent>*","");
+        $("#navUserFullName").load(location.href+" #navUserFullName>*","");
+        
+
+        
+			
+		}
+	}
+}
+
 
 
 

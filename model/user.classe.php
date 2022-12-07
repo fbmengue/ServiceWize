@@ -88,10 +88,6 @@ class User extends Database
             }
         }
 
-
-
-
-
         if (!$stmt->execute(array($fullName, $email, $mobile, $birthDate,$userID))) {
             $stmt = null;
             header("location: ../../../index.php?error=stmtfailed");
@@ -102,5 +98,55 @@ class User extends Database
 
 
         $stmt = null;
+    }
+
+
+
+    protected function setUserPasswordByID($userID, $currentPassword, $newPassword, $newPasswordRepeat)
+    {
+
+        $stmt = $this->connect()->prepare("SELECT userPassword from user WHERE userID=?;");
+
+
+
+        if (!$stmt->execute([$userID])) {
+            $stmt = null;
+            echo '<div class="alert alert-danger">Server Error!</div>';
+
+            exit();
+        }
+        $pwdHashed = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $checkPwd = password_verify($currentPassword, $pwdHashed[0]["userPassword"]);
+
+
+
+        if ($checkPwd == false) {
+            $stmt = null;
+            echo '<div class="alert alert-danger">Invalid Password!</div>';
+            exit();
+        } elseif ($checkPwd == true) {
+            $stmt2 = $this->connect()->prepare("UPDATE user SET userPassword=? WHERE userID=?;");
+            if (!$stmt2->execute(array($newPassword,$userID))) {
+                $stmt2 = null;
+                echo 'Server Error!';
+                exit();
+            }
+
+            if ($stmt2->rowCount() == 0) {
+                $stmt2 = null;
+                echo '<div class="alert alert-danger">Invalid Password!</div>';
+                exit();
+            }
+
+            $newPasswordHashed = password_hash($newPassword, PASSWORD_DEFAULT);
+            $stmt2->execute(array($newPasswordHashed,$userID)); // execute
+        }
+
+
+
+
+        $stmt = null;
+        $stmt2 = null;
     }
 }

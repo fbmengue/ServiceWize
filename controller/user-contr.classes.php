@@ -28,4 +28,9 @@ class UserContr extends User
 
         $this->setUserProfileByID($userID, $fullName, $email, $mobile, $birthDate);
     }
+    public function setMyUserPasswordByID($userID, $currentPassword, $newPassword, $newPasswordRepeat)
+    {
+
+        $this->setUserPasswordByID($userID, $currentPassword, $newPassword, $newPasswordRepeat);
+    }
 }
